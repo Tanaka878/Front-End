@@ -18,7 +18,7 @@ const PayBills = (props) => {
     //function to update the details
     function updateDetails(){
     //
-        fetch(`http://localhost:8080/${props.AccountHolder}?balance=${value-transactionData.amountTobePayed}`,{
+        fetch(`http://localhost:8082/${props.AccountHolder}?balance=${value-transactionData.amountTobePayed}`,{
       method:"PUT",
       body:JSON.stringify(transactionData),
       headers:{
@@ -37,7 +37,7 @@ const PayBills = (props) => {
             amount:transactionData.amountTobePayed,
         };
 
-        fetch(`http://localhost:8080/receiveHistory`,{
+        fetch(`http://localhost:8082/receiveHistory`,{
       method:"POST",
       body:JSON.stringify(objectToSend),
       headers:{

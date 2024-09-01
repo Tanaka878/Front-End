@@ -9,7 +9,7 @@ const RequestBalance = (props) => {
 
     //fetching the data from the server
     React.useEffect(function (){
-      fetch(`http://localhost:8080/history/${props.AccountHolder}`)
+      fetch(`http://localhost:8082/history/${props.AccountHolder}`)
       .then(res=> res.json())
       .then(result=>{
       // eslint-disable-next-line react-hooks/exhaustive-deps

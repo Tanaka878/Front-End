@@ -23,7 +23,7 @@ const BuyAirTime = (props) => {
   //handling changes in user data
   function UpdateUserDetails(){
 
-    fetch(`http://localhost:8080/${props.AccountHolder}?balance=${AirTimeData.amount}`,{
+    fetch(`http://localhost:8082/${props.AccountHolder}?balance=${AirTimeData.amount}`,{
       method:"PUT",
       body:JSON.stringify(AirTimeData),
       headers:{
@@ -48,7 +48,7 @@ const BuyAirTime = (props) => {
 
 
     //sending the data
-    fetch(`http://localhost:8080/receiveHistory`,{
+    fetch(`http://localhost:8082/receiveHistory`,{
       method:"POST",
       body:JSON.stringify(objectToSend),
       headers:{

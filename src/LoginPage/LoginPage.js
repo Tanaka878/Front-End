@@ -29,7 +29,7 @@ const LoginPage = (props) => {
 
     React.useEffect(function(){
         console.log(count)
-        fetch(`http://localhost:8080/${count}`)
+        fetch(`http://localhost:8082/${count}`)
         .then(res=>res.json()
         .then(data=> setUserData(function(prev){
 
@@ -119,10 +119,8 @@ const LoginPage = (props) => {
 
         <button className='submitButton' onClick={()=>props.getDetails(userData.name, userData.balance,userData.accountNumber)
         }>Login</button>
-      
-    </form>
 
-    <footer>
+<footer>
         <br></br>
         <Link to={'/newUser'}>Register</Link>
         <br></br>
@@ -132,6 +130,10 @@ const LoginPage = (props) => {
         
         <small>All Rights Reserved</small>
     </footer>
+      
+    </form>
+
+    
 
     </div>
     

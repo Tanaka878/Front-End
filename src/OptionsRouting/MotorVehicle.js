@@ -26,7 +26,7 @@ const MotorVehicle = (props) => {
       
       
           //sending the data
-          fetch(`http://localhost:8080/receiveHistory`,{
+          fetch(`http://localhost:8082/receiveHistory`,{
             method:"POST",
             body:JSON.stringify(objectToSend),
             headers:{

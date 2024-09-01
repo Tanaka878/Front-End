@@ -23,7 +23,7 @@ const InterBankTransfer = (props) => {
       amount: InterBankData.amount,
     };
     //sending the data
-    fetch(`http://localhost:8080/receiveHistory`,{
+    fetch(`http://localhost:8082/receiveHistory`,{
       method:"POST",
       body:JSON.stringify(objectToSend),
       headers:{
@@ -41,7 +41,7 @@ const InterBankTransfer = (props) => {
   //handling change in user deatils
   function UpdateUserDetails(){
 
-    fetch(`http://localhost:8080/${props.AccountHolder}?balance=${InterBankData.amount}`,{
+    fetch(`http://localhost:8082/${props.AccountHolder}?balance=${InterBankData.amount}`,{
       method:"PUT",
       body:JSON.stringify(InterBankData),
       headers:{

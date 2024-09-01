@@ -30,7 +30,7 @@ const FeesPayment = (props) => {
 
 
     //sending the data
-    fetch(`http://localhost:8080/receiveHistory`,{
+    fetch(`http://localhost:8082/receiveHistory`,{
       method:"POST",
       body:JSON.stringify(objectToSend),
       headers:{
@@ -49,7 +49,7 @@ const FeesPayment = (props) => {
 
   function UpdateUserDetails(){
 
-    fetch(`http://localhost:8080/${props.AccountHolder}?balance=${feesData.amount}`,{
+    fetch(`http://localhost:8082/${props.AccountHolder}?balance=${feesData.amount}`,{
       method:"PUT",
       body:JSON.stringify(feesData),
       headers:{
