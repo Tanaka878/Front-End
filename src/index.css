@@ -241,3 +241,129 @@ footer small {
   display: block;
   margin-top: 5px;
 }
+
+/* Style for the main container */
+.optionPageContainer {
+  font-family: Arial, sans-serif;
+  color: #333;
+  padding: 20px;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+}
+
+/* Style for the navigation header */
+.OptionDivHeader {
+  background-color: royalblue;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Style for header text in the navigation */
+.OptionDivHeader h6,
+.OptionDivHeader h5 {
+  margin: 5px 0;
+}
+
+/* Style for the options container */
+.optionDivs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Style for individual option pages */
+.optionDivs > div {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  width: calc(25% - 20px); /* Adjust width to fit four cards per row, considering the gap */
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.optionDivs > div:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-5px);
+}
+
+/* Option text styling */
+.optionDivs h3 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+/* Style for the navigation header */
+.OptionDivHeader {
+  background: linear-gradient(135deg, #4a90e2, #0056b3); /* Gradient background */
+  color: white;
+  padding: 20px;
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px; /* Adjust font size for readability */
+  position: relative; /* For positioning pseudo-elements */
+}
+
+/* Additional style for header text in the navigation */
+.OptionDivHeader h6,
+.OptionDivHeader h5 {
+  margin: 5px 0;
+}
+
+/* Optional: Decorative pseudo-element for extra flair */
+.OptionDivHeader::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+}
+
+/* Optional: Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .OptionDivHeader {
+      font-size: 14px; /* Slightly smaller font on smaller screens */
+      padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .OptionDivHeader {
+      font-size: 12px; /* Further reduction for very small screens */
+      padding: 10px;
+  }
+}
+
+
+/* Style for the navigation header */
+.OptionDivHeader {
+  background: linear-gradient(135deg, #4a90e2, #0056b3); /* Gradient background */
+  color: white;
+  padding: 20px;
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px; /* Adjust font size for readability */
+  position: relative; /* For positioning pseudo-elements */
+}
+
+/* Additional style for header text in the navigation */
+.OptionDivHeader h6,
+.OptionDivHeader h5 {
+  margin: 5px 0;
+  text-transform: uppercase; /* Capitalize text */
+}
