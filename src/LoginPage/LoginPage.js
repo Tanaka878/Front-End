@@ -9,6 +9,7 @@ const LoginPage = (props) => {
     const[count, chnageCount] = React.useState(20000);
 
     // a new state to save the values from the form
+    let va1 = 2;
 
     const[enteredValues, setEnteredValues] = React.useState({
         accountNumber:"",
