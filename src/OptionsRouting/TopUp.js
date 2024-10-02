@@ -1,46 +1,70 @@
-import React from 'react'
+import React from 'react';
 
 const TopUp = (props) => {
+  const [topUp, changeData] = React.useState({
+    number: '',
+    amount: ''
+  });
 
-  const[TopUp, changeData] = React.useState({
-    number:'0780001234',
-    amount:'10'
-  })
+  // Handle form input changes
+  function handleChange(event) {
+    const { name, value } = event.target;
+    changeData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  }
 
-    function HandleTopUp(){
+  function handleTopUp(event) {
+    event.preventDefault(); // Prevent page reload
 
-    fetch(`http://localhost:8082/accountNumber${props.AccountHolder}?balance=${TopUp.amount}?phoneNumber=${TopUp.number}`,{
-      method:"PUT",
-      body:JSON.stringify(),
-      headers:{
-        "Content-type":"application/json; charset=UTF-8",
-        },
-      
+    fetch(`http://localhost:8082/accountNumber${props.AccountHolder}?balance=${topUp.amount}&phoneNumber=${topUp.number}`, {
+      method: "PUT",
+      body: JSON.stringify(topUp),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
     })
-        
-    }
+    .then(response => response.json())
+    .then(data => {
+      // handle response
+      console.log("TopUp successful:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+  }
 
   return (
     <div>
-       
-        <form onSubmit={HandleTopUp}>
-                <h1>TopUp Account with ecocash</h1>
-                <label htmlFor='ecocashNumber'>Ecocash Number : </label>
-                <input type='text' placeholder='Enter phone number' />
+      <form onSubmit={handleTopUp}>
+        <h1>TopUp Account with Ecocash</h1>
+        
+        <label htmlFor="ecocashNumber">Ecocash Number: </label>
+        <input
+          type="text"
+          name="number"
+          value={topUp.number}
+          onChange={handleChange}
+          placeholder="Enter phone number"
+        />
+        <br />
 
-                <br></br>
+        <label htmlFor="amount">Amount: </label>
+        <input
+          type="number"
+          name="amount"
+          value={topUp.amount}
+          onChange={handleChange}
+          placeholder="Enter Amount"
+        />
+        <br />
 
-                <label htmlFor='amount'>Amount :</label>
-                <input type='number' placeholder='Enter Amount' />
-
-                <button>Top Up</button>
-
-
-
-        </form>
-      
+        <button type="submit">Top Up</button>
+      </form>
     </div>
-  )
+  );
 }
 
-export default TopUp
+export default TopUp;
+

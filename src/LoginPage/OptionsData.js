@@ -40,9 +40,9 @@ export default[
     ,
     {
         "id":6,
-        "itemName":"Top Up",
+        "itemName":"Bills",
+        "url":"Paypal.png",
+        "textValue":"Top Up"
+    }
     
-        'url':'Paypal.png',
-        'textValue':'Top Up'
-    },
 ]
