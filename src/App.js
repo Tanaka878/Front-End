@@ -26,7 +26,7 @@ function App() {
 
  console.log("User Details from loging")
  console.log(`User name ${userDetails.name}`)
- console.log(`Bank balance ${userDetails.AccBalance}`)
+ 
 
 
  //function to borrow state from the Log In page
