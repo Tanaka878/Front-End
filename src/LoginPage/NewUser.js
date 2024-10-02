@@ -2,16 +2,15 @@ import React from 'react'
 
 const NewUser = () => {
   
+  
 
   const[User, changeUser] = React.useState({
     firstName:"",
     lastName:"",
     email:"",
-    pin:"",
-    confirmPin:"",
-    date:"",
-    checked:false
-
+    password:"",
+    confirmPassword:"",
+    
   })
 
   function handleChange(event){
@@ -37,6 +36,27 @@ const NewUser = () => {
 
     }else{
       console.log("Submitted Information");
+
+      let objectToSend ={
+        name : User.firstName,
+        surname : User.lastName,
+        email: User.email,
+        accountNumber:'000',
+        password:User.password,
+        balance:'00.00'
+      }
+
+      //
+      fetch(`http://localhost:8082/addCustomer`, {
+        method: "POST",
+        body: JSON.stringify(objectToSend),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      }).then(response => response.text())
+        .then(data => alert(data));
+      
+      //
     }
 
   }
@@ -70,13 +90,7 @@ const NewUser = () => {
                 
                 <br></br>
 
-                <div className='formElement'>
-
-                    <label htmlFor='date'>DOB :</label>
-                    <input type='date' name='date' onChange={handleChange}/>
-
-                </div>
-
+               
               <div className='formElement'>
                   <label className='form-group' htmlFor='email'>Email :</label>
                   <input type='email' required onChange={handleChange} name='email'/>
@@ -87,23 +101,16 @@ const NewUser = () => {
 
               <div className='formElement'>
 
-                  <label htmlFor='newsletter'>Subscribe for monthly Newsletter</label>
-                  <input type='checkbox' name='newsletter' className='element'/>
-              </div>
-              <br></br>
-
-              <div className='formElement'>
-
                   <h2>Enter New Pin</h2>
                   <label>New Pin</label>
-                  <input type='password'required onChange={handleChange} name='pin'/>
+                  <input type='password'required onChange={handleChange} name='password'/>
               </div>
             
               <br></br>
               
             <div className='formElement'>
                   <label>Confirm Pin :</label>
-                  <input type='password' required onChange={handleChange} name='confirmPin'/>
+                  <input type='password' required onChange={handleChange} name='confirmPassword'/>
             </div>
 
             

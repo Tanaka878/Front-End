@@ -10,6 +10,7 @@ import RequestBalance from './OptionsRouting/RequestBalance';
 import NewUser from './LoginPage/NewUser';
 import PayBills from './OptionsRouting/PayBills';
 import MotorVehicle from './OptionsRouting/MotorVehicle';
+import TopUp from './OptionsRouting/TopUp';
 
 function App() {
 
@@ -72,6 +73,11 @@ function App() {
 
 
          <Route exact path='/MotorVehicle' element={<MotorVehicle name={userDetails.name} 
+         bal={Math.trunc(userDetails.AccBalance)} 
+         AccountHolder={userDetails.AccountHolder}/> }
+         />
+
+<Route exact path='/TopUp' element={<TopUp name={userDetails.name} 
          bal={Math.trunc(userDetails.AccBalance)} 
          AccountHolder={userDetails.AccountHolder}/> }
          />

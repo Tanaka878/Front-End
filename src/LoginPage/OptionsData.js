@@ -37,4 +37,12 @@ export default[
         "url":"paying.webp",
         "textValue":"Bill Payments"
     }
+    ,
+    {
+        "id":6,
+        "itemName":"Top Up",
+    
+        'url':'Paypal.png',
+        'textValue':'Top Up'
+    },
 ]

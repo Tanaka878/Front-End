@@ -27,13 +27,22 @@ const OptionLinkPage = (props) => {
         if (itemId === 2) {
             navigate('/feesPayment');
         } else if (itemId === 3) {
+            
             navigate('/buyAirTime');
         } else if (itemId === 4) {
+
             navigate('/ZIPIT');
         } else if (itemId === 1) {
+
             navigate('/RequestBalance');
         } else if (itemId === 5) {
+
             navigate('/PayBills');
+
+        }else if(itemId ===6){
+
+            navigate('/TopUp');
+
         }
     }
 

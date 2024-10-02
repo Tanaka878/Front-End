@@ -3,13 +3,13 @@ import {Link, useNavigate} from 'react-router-dom'
 
 
 const LoginPage = (props) => {
-    let value1 = null;
+    
     const navigate = useNavigate()
 
-    const[count, chnageCount] = React.useState(20000);
+    const[count, chnageCount] = React.useState();
 
     // a new state to save the values from the form
-    let va1 = 2;
+    
 
     const[enteredValues, setEnteredValues] = React.useState({
         accountNumber:"",
@@ -99,7 +99,7 @@ const LoginPage = (props) => {
         <form onSubmit={submitButton} className='loginPage'>
         <h1 className='LoginHeader'>Welcome To Accute banking online services</h1>
 
-        <label htmlFor='AccountNumber'>Account Number #:</label>
+        <label htmlFor='AccountNumber'>Account Number :</label>
         <input type='text' 
         placeholder='Enter Account Number'
          id='AccountNumber' 
@@ -108,7 +108,7 @@ const LoginPage = (props) => {
         <br></br>
         <br></br>
 
-        <label htmlFor='pinNumber'>PIN Number# :</label>
+        <label htmlFor='pinNumber'>PIN Number :</label>
         <input type='password' id='pinNumber' 
         placeholder='Enter Pin ' name='Pin'
         onChange={handleChange}/>
