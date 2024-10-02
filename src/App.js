@@ -24,6 +24,7 @@ function App() {
 
  })
 
+ console.log();
  console.log("User Details from loging")
  console.log(`User name ${userDetails.name}`)
  
