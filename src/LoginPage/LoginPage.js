@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react'
 import {Link, useNavigate} from 'react-router-dom'
+
 
 
 const LoginPage = (props) => {
@@ -30,7 +32,7 @@ const LoginPage = (props) => {
 
     React.useEffect(function(){
         console.log(count)
-        fetch(`http://localhost:8082/${count}`)
+        fetch(`http://localhost:8082/customer/${count}`)
         .then(res=>res.json()
         .then(data=> setUserData(function(prev){
 
@@ -96,6 +98,8 @@ const LoginPage = (props) => {
     }
   return (
     <div>
+    <img src="/src/LoginPage/Images/Money.png" alt="Bank Images" />
+
         <form onSubmit={submitButton} className='loginPage'>
         <h1 className='LoginHeader'>Welcome To Accute banking online services</h1>
 
