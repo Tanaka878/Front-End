@@ -41,9 +41,9 @@ const NewUser = () => {
         name : User.firstName,
         surname : User.lastName,
         email: User.email,
-        accountNumber:'000',
+        //accountNumber:'000',
         password:User.password,
-        balance:'00.00'
+        //balance:'00.00'
       }
 
       //
