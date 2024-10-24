@@ -32,7 +32,7 @@ const LoginPage = (props) => {
 
     React.useEffect(function(){
         console.log(count)
-        fetch(`http://localhost:8082/customer/${count}`)
+        fetch(`https://distinguished-happiness-production.up.railway.app/customer/${count}`)
         .then(res=>res.json()
         .then(data=> setUserData(function(prev){
 
