@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const NewUser = () => {
   const [User, changeUser] = React.useState({
     firstName: "",
@@ -35,7 +36,7 @@ const NewUser = () => {
         password: User.password
       };
 
-      fetch(`http://localhost:8082/customer/createAccount`, {
+      fetch(`https://distinguished-happiness-production.up.railway.app/customer/createAccount`, {
         method: "POST",
         body: JSON.stringify(objectToSend),
         headers: {
@@ -48,13 +49,14 @@ const NewUser = () => {
     }
   }
 
-  console.log(User);
-
   return (
-    <div>
+    <div className="newUser-container">
       <nav className='NewUserHeader'>
         <h1>Accute Banking Services</h1>
       </nav>
+
+      {/* New Header for Signing Up */}
+      <h2 className='signup-header'>User is Signing Up for Accute Banking Services</h2>
 
       <form className='newUser' onSubmit={handleSubmit}>
         <div className='formElement'>
@@ -67,22 +69,16 @@ const NewUser = () => {
           <input name='lastName' required onChange={handleChange} />
         </div>
 
-        <br></br>
-
         <div className='formElement'>
-          <label className='form-group' htmlFor='email'>Email :</label>
+          <label htmlFor='email'>Email :</label>
           <input type='email' required onChange={handleChange} name='email' />
         </div>
-
-        <br></br>
 
         <div className='formElement'>
           <h2>Enter New Pin</h2>
           <label>New Pin</label>
           <input type='password' required onChange={handleChange} name='password' />
         </div>
-
-        <br></br>
 
         <div className='formElement'>
           <label>Confirm Pin :</label>
@@ -94,8 +90,8 @@ const NewUser = () => {
         </div>
       </form>
 
-      <footer className='NewUserHeader'>
-        <small> Accute Banking Services 2024 All rights reserved </small>
+      <footer className='NewUserFooter'>
+        <small>Accute Banking Services 2024 &copy; All rights reserved</small>
       </footer>
     </div>
   );
