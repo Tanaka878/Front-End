@@ -80,16 +80,16 @@ const LoginPage = (props) => {
             <form onSubmit={submitButton} className='loginPage'>
                 <h1 className='LoginHeader'>Welcome To Accute Banking Online Services</h1>
 
-                <label htmlFor='AccountNumber'>Account Number:</label>
+                <label htmlFor='AccountNumber'>Email Account:</label>
                 <input type='text'
                     id='AccountNumber'
                     name='accountNumber'
-                    placeholder='Account Number'
+                    placeholder='Email'
                     onChange={handleChange} />
                 
                 <br/><br/>
 
-                <label htmlFor='pinNumber'>Pin:</label>
+                <label htmlFor='pinNumber'>Password:</label>
                 <input type='password' 
                     id='pinNumber' 
                     placeholder='Enter Pin' 
