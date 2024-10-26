@@ -27,7 +27,7 @@ const LoginPage = (props) => {
         email:"",
         accountNumber:{},
         password:"",
-        balance:{}
+        balance:""
     })
 
     React.useEffect(function(){
