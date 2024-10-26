@@ -103,18 +103,20 @@ const LoginPage = (props) => {
         <form onSubmit={submitButton} className='loginPage'>
         <h1 className='LoginHeader'>Welcome To Accute banking online services</h1>
 
-        <label htmlFor='AccountNumber'>Account Number :</label>
+        <label htmlFor='AccountNumber'>Email :</label>
         <input type='text' 
-        placeholder='Enter Account Number'
+        
          id='AccountNumber' 
          name='accountNumber'
+         placeholder='someone@gmail.com'
+
         onChange={handleChange}/>
         <br></br>
         <br></br>
 
-        <label htmlFor='pinNumber'>PIN Number :</label>
+        <label htmlFor='pinNumber'>Password :</label>
         <input type='password' id='pinNumber' 
-        placeholder='Enter Pin ' name='Pin'
+        placeholder='Enter Password ' name='Pin'
         onChange={handleChange}/>
 
         {conditionalRender? <nav className='conditionalRender'>Wrong Credentilas</nav> : <nav></nav>}

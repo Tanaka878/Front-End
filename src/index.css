@@ -368,3 +368,110 @@ footer small {
   text-transform: uppercase; /* Capitalize text */
 }
 
+/* Main Container for new user sign up*/
+.newUser-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center;     /* Center horizontally */
+  font-family: Arial, sans-serif;
+  background-color: #f5f7fa;
+  padding: 20px;
+  height: 100vh;
+  width: 100vw;            /* Full width */
+  box-sizing: border-box;   /* Ensure padding and border are included in the width/height */
+}
+
+/* Header */
+.NewUserHeader {
+  background-color: #003366;
+  color: #ffffff;
+  width: 100%;
+  text-align: center;
+  padding: 15px 0;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.NewUserHeader h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+/* Signup Header */
+.signup-header {
+  font-size: 1.5rem;
+  color: #333333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Form Styling */
+.newUser {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 350px;
+}
+
+.formElement {
+  margin-bottom: 15px;
+}
+
+.formElement label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.formElement input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Button Styling */
+.form-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #003366;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+  background-color: #004080;
+}
+
+/* Footer */
+.NewUserFooter {
+  margin-top: 20px;
+  background-color: #003366;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.NewUserFooter small {
+  font-size: 0.9rem;
+}
+
+.form-button-cancel {
+  width: 100%;
+  padding: 10px;
+  background-color: #cc120c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}

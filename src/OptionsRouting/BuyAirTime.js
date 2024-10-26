@@ -15,7 +15,7 @@ const BuyAirTime = (props) => {
 
   // Handling changes in user data
   function UpdateUserDetails() {
-    fetch(`http://localhost:8082/${props.AccountHolder}?balance=${AirTimeData.amount}`, {
+    fetch(`https://distinguished-happiness-production.up.railway.app/${props.AccountHolder}?balance=${AirTimeData.amount}`, {
       method: "PUT",
       body: JSON.stringify(AirTimeData),
       headers: {
@@ -32,7 +32,7 @@ const BuyAirTime = (props) => {
     };
 
     // Sending the data
-    fetch(`http://localhost:8082/receiveHistory`, {
+    fetch(`https://distinguished-happiness-production.up.railway.app/receiveHistory`, {
       method: "POST",
       body: JSON.stringify(objectToSend),
       headers: {
