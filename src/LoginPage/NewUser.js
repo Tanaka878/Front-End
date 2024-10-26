@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const NewUser = () => {
@@ -19,6 +20,14 @@ const NewUser = () => {
         [name]: type === 'checkbox' ? checked : value
       };
     });
+  }
+
+  function Cancel_CreateAccount(){
+    const navigate = useNavigate()
+    navigate("/")
+    //back to home page
+    
+
   }
 
   function handleSubmit(event) {
@@ -75,6 +84,16 @@ const NewUser = () => {
         </div>
 
         <div className='formElement'>
+          <label htmlFor='accountType'>Type of Account:</label>
+          <select name='accountType' required onChange={handleChange}>
+            <option value=''>Select Account Type</option>
+            <option value='USD'>USD</option>
+           
+          </select>
+        </div>
+
+
+        <div className='formElement'>
           <h2>Enter New Pin</h2>
           <label>New Pin</label>
           <input type='password' required onChange={handleChange} name='password' />
@@ -87,6 +106,10 @@ const NewUser = () => {
 
         <div className='formElement'>
           <button className='form-button'>Create Account</button>
+        </div>
+
+        <div className='formElement'>
+          <button className='form-button-cancel' onClick={Cancel_CreateAccount}>Cancel</button>
         </div>
       </form>
 

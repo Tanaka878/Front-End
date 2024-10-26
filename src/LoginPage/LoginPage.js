@@ -116,7 +116,7 @@ const LoginPage = (props) => {
 
         <label htmlFor='pinNumber'>Password :</label>
         <input type='password' id='pinNumber' 
-        placeholder='Enter Pin ' name='Pin'
+        placeholder='Enter Password ' name='Pin'
         onChange={handleChange}/>
 
         {conditionalRender? <nav className='conditionalRender'>Wrong Credentilas</nav> : <nav></nav>}
