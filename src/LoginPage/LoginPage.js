@@ -103,7 +103,7 @@ const LoginPage = (props) => {
         <form onSubmit={submitButton} className='loginPage'>
         <h1 className='LoginHeader'>Welcome To Accute banking online services</h1>
 
-        <label htmlFor='AccountNumber'>Email :</label>
+        <label htmlFor='AccountNumber'>Email Account:</label>
         <input type='text' 
         
          id='AccountNumber' 
