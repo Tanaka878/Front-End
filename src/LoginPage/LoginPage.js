@@ -1,4 +1,6 @@
 import React from 'react';
+import accuteImage from './Images/accute.jpg';
+
 import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = (props) => {
@@ -29,13 +31,12 @@ const LoginPage = (props) => {
                 if (data.password === enteredValues.Pin) {
                     props.getDetails(data.name, data.balance, data.accountNumber);
                     navigate('/optionPage');
-                    console.log('Authenticated');
                 } else {
-                    console.log("Failed to authenticate");
+                   
                     changeConditionalRender(true);
                 }
             } else {
-                console.log("No data found for this account number");
+                
                 changeConditionalRender(true);
             }
         } catch (error) {
@@ -54,23 +55,25 @@ const LoginPage = (props) => {
 
     return (
         <div>
-            <img src="/src/LoginPage/Images/Money.png" alt="Bank Image" />
+          
+
             <form onSubmit={submitButton} className='loginPage'>
+            <img src={accuteImage} alt="bank logo"  height={150} width={300}/>
                 <h1 className='LoginHeader'>Welcome To Accute Banking Online Services</h1>
 
-                <label htmlFor='AccountNumber'>Account Number:</label>
+                <label htmlFor='AccountNumber'>Email Account:</label>
                 <input type='text'
                     id='AccountNumber'
                     name='accountNumber'
-                    placeholder='Account Number'
+                    placeholder='Email Account'
                     onChange={handleChange} />
                 
                 <br /><br />
 
-                <label htmlFor='pinNumber'>Pin:</label>
+                <label htmlFor='pinNumber'>Password:</label>
                 <input type='password'
                     id='pinNumber'
-                    placeholder='Enter Pin'
+                    placeholder='Enter Password'
                     name='Pin'
                     onChange={handleChange} />
 
