@@ -40,7 +40,7 @@ export default[
     ,
     {
         "id":6,
-        "itemName":"Bills",
+        "itemName":"PayPal",
         "url":"Paypal.png",
         "textValue":"Top Up"
     }
