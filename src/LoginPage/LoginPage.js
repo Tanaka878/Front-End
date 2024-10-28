@@ -88,6 +88,8 @@ const LoginPage = (props) => {
                 <footer>
                     <br />
                     <Link to={'/newUser'}>Register</Link>
+                    <br></br>
+                    <Link to={'/ResetPassword'}>Forgot Password</Link>
                     <br /><br />
                     <small>@Copyright AccuteBanking 2023</small>
                     <br />

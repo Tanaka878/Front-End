@@ -11,6 +11,7 @@ import NewUser from './LoginPage/NewUser';
 import PayBills from './OptionsRouting/PayBills';
 import MotorVehicle from './OptionsRouting/MotorVehicle';
 import TopUp from './OptionsRouting/TopUp';
+import ResetPassword from './OptionsRouting/ResetPassword'
 
 function App() {
 
@@ -78,10 +79,15 @@ function App() {
          AccountHolder={userDetails.AccountHolder}/> }
          />
 
-<Route exact path='/TopUp' element={<TopUp name={userDetails.name} 
-         bal={Math.trunc(userDetails.AccBalance)} 
-         AccountHolder={userDetails.AccountHolder}/> }
-         />
+        <Route exact path='/TopUp' element={<TopUp name={userDetails.name} 
+                bal={Math.trunc(userDetails.AccBalance)} 
+                AccountHolder={userDetails.AccountHolder}/> }
+                />
+
+        <Route exact path='/ResetPassword' element={<ResetPassword name={userDetails.name} 
+                bal={Math.trunc(userDetails.AccBalance)} 
+                AccountHolder={userDetails.AccountHolder}/> }
+                />
 
 
          

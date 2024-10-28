@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
     const [email, setEmail] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
 
+    const navigate = useNavigate()
+
+    function LoginPage(){
+        
+        navigate("/");
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault(); // Prevent default form submission
         
         try {
-            const response = await fetch(`/resetPassword/${encodeURIComponent(email)}`, {
+            const response = await fetch(`https://distinguished-happiness-production.up.railway.app/customer/resetPassword/${encodeURIComponent(email)}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -20,7 +28,9 @@ const ResetPassword = () => {
                 setResponseMessage(data); // Display success message
                 setEmail(''); // Clear the input field
             } else {
-                throw new Error('Customer not found'); // Handle not found error
+                window.alert("No customer with that email")
+                throw new Error('Customer not found');
+                 // Handle not found error
             }
         } catch (error) {
             setResponseMessage(error.message); // Display error message
@@ -42,6 +52,9 @@ const ResetPassword = () => {
                 />
                 <button type="submit">Reset Password</button>
             </form>
+            <br></br>
+            
+            <button onClick={LoginPage}>Home</button>
             {responseMessage && (
                 <div className="response-message">{responseMessage}</div>
             )}
