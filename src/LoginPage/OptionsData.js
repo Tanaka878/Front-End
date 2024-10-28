@@ -43,6 +43,14 @@ export default[
         "itemName":"PayPal",
         "url":"Paypal.png",
         "textValue":"Top Up"
-    }
+    },
+
+    {
+        "id":7,
+        "itemName":"Change Password",
+        "url":"pay.png",
+        "textValue":"Change Password"
+    },
+
     
 ]
