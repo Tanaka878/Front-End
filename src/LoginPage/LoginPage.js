@@ -3,65 +3,43 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = (props) => {
     const navigate = useNavigate();
-    const [count, chnageCount] = React.useState();
-
-    // State for form values
     const [enteredValues, setEnteredValues] = React.useState({
         accountNumber: "",
         Pin: ""
     });
 
-    // State for user data fetched from the API
-    const [userData, setUserData] = React.useState({
-        id: "",
-        name: "",
-        surname: "",
-        email: "",
-        accountNumber: {},
-        password: "",
-        balance: ""
-    });
-
-    // Fetch user data when `count` changes
-    React.useEffect(() => {
-        if (count) {
-            fetch(`https://distinguished-happiness-production.up.railway.app/customer/${count}`)
-                .then(res => res.json())
-                .then(data => {
-                    console.log("Fetched data:", data); // Log to check response
-                    setUserData({
-                        id: data.id,
-                        name: data.name,
-                        surname: data.surname,
-                        email: data.email,
-                        accountNumber: data.accountNumber,
-                        password: data.password,
-                        balance: data.balance
-                    });
-                });
-        }
-    }, [count]);
-
-    console.log("User Data:", userData); // Check if balance is present
+    // State for user data
+    const [userData, setUserData] = React.useState(null);
 
     // Conditional render for wrong credentials
     const [conditionalRender, changeConditionalRender] = React.useState(false);
 
-    // Form submission
-    function submitButton(event) {
+    // Form submission: fetch user data and validate
+    async function submitButton(event) {
         event.preventDefault();
-        console.log("Submitted");
 
-        chnageCount(enteredValues.accountNumber);
-        console.log("Count state updated");
+        try {
+            const response = await fetch(`https://distinguished-happiness-production.up.railway.app/customer/${enteredValues.accountNumber}`);
+            const data = await response.json();
 
-        // Authenticate after fetching data
-        if (userData.password === enteredValues.Pin) {
-            props.getDetails(userData.name, userData.balance, userData.accountNumber); // Pass latest userData to getDetails
-            navigate('/optionPage');
-            console.log('Authenticated');
-        } else {
-            console.log("Failed to authenticate");
+            if (data) {
+                setUserData(data); // Store data in state
+
+                // Validate credentials
+                if (data.password === enteredValues.Pin) {
+                    props.getDetails(data.name, data.balance, data.accountNumber);
+                    navigate('/optionPage');
+                    console.log('Authenticated');
+                } else {
+                    console.log("Failed to authenticate");
+                    changeConditionalRender(true);
+                }
+            } else {
+                console.log("No data found for this account number");
+                changeConditionalRender(true);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
             changeConditionalRender(true);
         }
     }
@@ -80,25 +58,25 @@ const LoginPage = (props) => {
             <form onSubmit={submitButton} className='loginPage'>
                 <h1 className='LoginHeader'>Welcome To Accute Banking Online Services</h1>
 
-                <label htmlFor='AccountNumber'>Email Account:</label>
+                <label htmlFor='AccountNumber'>Account Number:</label>
                 <input type='text'
                     id='AccountNumber'
                     name='accountNumber'
-                    placeholder='Email'
+                    placeholder='Account Number'
                     onChange={handleChange} />
                 
-                <br/><br/>
+                <br /><br />
 
-                <label htmlFor='pinNumber'>Password:</label>
-                <input type='password' 
-                    id='pinNumber' 
-                    placeholder='Enter Pin' 
-                    name='Pin' 
+                <label htmlFor='pinNumber'>Pin:</label>
+                <input type='password'
+                    id='pinNumber'
+                    placeholder='Enter Pin'
+                    name='Pin'
                     onChange={handleChange} />
 
                 {conditionalRender && <nav className='conditionalRender'>Wrong Credentials</nav>}
 
-                <br/><br/>
+                <br /><br />
 
                 <button className='submitButton'>
                     Login
