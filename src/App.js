@@ -21,7 +21,7 @@ function App() {
   name:"",
   AccBalance:{},
   AccountHolder:{},
-  accountNumber:""
+  Email:""
   
 
 
@@ -34,14 +34,16 @@ function App() {
 
 
  //function to borrow state from the Log In page
- function User(username,balance, AccHolder){
+ function User(username,balance, AccHolder, userEmail){
 
 
   changeUserDetails(function(prev){
     return {
       name:username,
       AccBalance:balance,
-      AccountHolder:AccHolder
+      AccountHolder:AccHolder,
+      Email:userEmail
+
     
 
     };
@@ -94,7 +96,7 @@ function App() {
         <Route exact path='/ChangePassword' element={<ChangePassword name={userDetails.name} 
                         bal={Math.trunc(userDetails.AccBalance)} 
                         AccountHolder={userDetails.AccountHolder}
-                        Email={userDetails.accountNumber}/> 
+                        Email={userDetails.Email}/> 
                     }
                         />
 
