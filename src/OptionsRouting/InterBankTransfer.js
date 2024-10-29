@@ -23,7 +23,7 @@ const InterBankTransfer = (props) => {
       amount: InterBankData.amount,
     };
     //sending the data
-    fetch(`http://localhost:8082/receiveHistory`,{
+    fetch(`https://distinguished-happiness-production.up.railway.app/receiveHistory`,{
       method:"POST",
       body:JSON.stringify(objectToSend),
       headers:{

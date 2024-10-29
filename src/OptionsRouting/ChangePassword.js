@@ -31,7 +31,7 @@ const ChangePassword = ({ Email }) => {  // Pass userEmail as a prop if availabl
     }
 
     try {
-      const response = await fetch(`https://distinguished-happiness-production.up.railway.app/changePassword/${Email}/${formData.newPassword}`, {
+      const response = await fetch(`https://distinguished-happiness-production.up.railway.app/customer/changePassword/${Email}/${formData.newPassword}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

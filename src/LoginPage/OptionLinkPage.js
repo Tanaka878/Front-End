@@ -43,6 +43,8 @@ const OptionLinkPage = (props) => {
 
             navigate('/TopUp');
 
+        }else if(itemId ===7){
+            navigate('/ChangePassword')
         }
     }
 
