@@ -40,7 +40,7 @@ const ChangePassword = ({ Email }) => {  // Pass userEmail as a prop if availabl
 
       if (response.ok) {
         setSuccessMessage("Password changed successfully!");
-        navigate('/login'); // Redirect to login or another page
+        navigate('/'); // Redirect to login or another page
       } else {
         const data = await response.json();
         setError(data.message || "Failed to change password.");
