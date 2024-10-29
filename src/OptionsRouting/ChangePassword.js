@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ChangePassword = ({ Email }) => {  // Pass userEmail as a prop if available
+const ChangePassword = ({ userEmail }) => {  // Pass userEmail as a prop if available
   const navigate = useNavigate();
 
   const [formData, setFormData] = React.useState({
@@ -31,14 +31,16 @@ const ChangePassword = ({ Email }) => {  // Pass userEmail as a prop if availabl
     }
 
     try {
-      const response = await fetch(`https://distinguished-happiness-production.up.railway.app/customer/changePassword/${Email}/${formData.newPassword}`, {
+      const response = await fetch(`https://your-backend-url.com/changePassword/${userEmail}/${formData.newPassword}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      if (response.ok) {
+      if (response.status === 404) {
+        setError("No account found with the specified email.");
+      } else if (response.ok) {
         setSuccessMessage("Password changed successfully!");
         navigate('/'); // Redirect to login or another page
       } else {
