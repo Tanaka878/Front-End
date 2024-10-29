@@ -1,11 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ChangePassword = () => {
+const ChangePassword = ({ Email }) => {  // Pass userEmail as a prop if available
   const navigate = useNavigate();
 
   const [formData, setFormData] = React.useState({
-    currentPassword: '',
     newPassword: '',
     confirmPassword: ''
   });
@@ -21,7 +20,7 @@ const ChangePassword = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
     setSuccessMessage('');
@@ -31,33 +30,25 @@ const ChangePassword = () => {
       return;
     }
 
-    // Here, you would typically send the formData to your backend.
-    const objectToSend = {
-      currentPassword: formData.currentPassword,
-      newPassword: formData.newPassword
-    };
-
-    fetch(`https://your-api-url.com/changePassword`, {
-      method: "POST",
-      body: JSON.stringify(objectToSend),
-      headers: {
-        "Content-Type": "application/json; charset=UTF-8",
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          setSuccessMessage("Password changed successfully!");
-          // Optionally, navigate away or reset the form
-          navigate('/login'); // Redirect to login or another page
-        } else {
-          setError(data.message || "Failed to change password.");
-        }
-      })
-      .catch(err => {
-        console.error('Error:', err);
-        setError("An error occurred. Please try again later.");
+    try {
+      const response = await fetch(`https://distinguished-happiness-production.up.railway.app/changePassword/${Email}/${formData.newPassword}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
+
+      if (response.ok) {
+        setSuccessMessage("Password changed successfully!");
+        navigate('/login'); // Redirect to login or another page
+      } else {
+        const data = await response.json();
+        setError(data.message || "Failed to change password.");
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      setError("An error occurred. Please try again later.");
+    }
   };
 
   return (
@@ -65,22 +56,13 @@ const ChangePassword = () => {
       <h2>Change Password</h2>
       <form onSubmit={handleSubmit} className="change-password-form">
         <div className="formElement">
-          <label htmlFor="currentPassword">Current Password:</label>
-          <input
-            type="password"
-            name="currentPassword"
-            required
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="formElement">
           <label htmlFor="newPassword">New Password:</label>
           <input
             type="password"
             name="newPassword"
             required
             onChange={handleChange}
+            value={formData.newPassword}
           />
         </div>
 
@@ -91,6 +73,7 @@ const ChangePassword = () => {
             name="confirmPassword"
             required
             onChange={handleChange}
+            value={formData.confirmPassword}
           />
         </div>
 

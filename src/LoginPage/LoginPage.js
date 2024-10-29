@@ -29,7 +29,7 @@ const LoginPage = (props) => {
 
                 // Validate credentials
                 if (data.password === enteredValues.Pin) {
-                    props.getDetails(data.name, data.balance, data.accountNumber);
+                    props.getDetails(data.name, data.balance, data.accountNumber, data.accountNumber);
                     navigate('/optionPage');
                 } else {
                    

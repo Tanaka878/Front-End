@@ -20,7 +20,8 @@ function App() {
  const[userDetails, changeUserDetails] = React.useState({
   name:"",
   AccBalance:{},
-  AccountHolder:{}
+  AccountHolder:{},
+  accountNumber:""
   
 
 
@@ -28,7 +29,7 @@ function App() {
 
  console.log();
  console.log("User Details from loging")
- console.log(`User name ${userDetails.name}`)
+ console.log(`User name ${userDetails.name} +:: ${userDetails.accountNumber}`)
  
 
 
@@ -90,9 +91,11 @@ function App() {
                 AccountHolder={userDetails.AccountHolder}/> }
                 />
 
-        <Route exact path='/ResetPassword' element={<ResetPassword name={userDetails.name} 
+        <Route exact path='/ChangePassword' element={<ChangePassword name={userDetails.name} 
                         bal={Math.trunc(userDetails.AccBalance)} 
-                        AccountHolder={userDetails.AccountHolder}/> }
+                        AccountHolder={userDetails.AccountHolder}
+                        Email={userDetails.accountNumber}/> 
+                    }
                         />
 
 
