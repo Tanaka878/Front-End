@@ -1,6 +1,5 @@
 import React from 'react';
 import accuteImage from './Images/accute.jpg';
-
 import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = (props) => {
@@ -24,19 +23,25 @@ const LoginPage = (props) => {
             const response = await fetch(`https://distinguished-happiness-production.up.railway.app/customer/${enteredValues.accountNumber}`);
             const data = await response.json();
 
+            // Log the entire data received from the endpoint
+            console.log("Response data:", data);
+
             if (data) {
-                setUserData(data); // Store data in state
+                setUserData(data);
+                console.log("First item in data:", data[0]); // Log specific item if needed
+
+                // Access the email from the data object
+                const userEmail = data.email; 
+                console.log("User Email:", userEmail); // Log the email
 
                 // Validate credentials
                 if (data.password === enteredValues.Pin) {
-                    props.getDetails(data.name, data.balance, data.accountNumber, data.accountNumber);
+                    props.getDetails(data.name, data.balance, data.accountNumber, userEmail); // Pass the email to props
                     navigate('/optionPage');
                 } else {
-                   
                     changeConditionalRender(true);
                 }
             } else {
-                
                 changeConditionalRender(true);
             }
         } catch (error) {
@@ -55,10 +60,8 @@ const LoginPage = (props) => {
 
     return (
         <div>
-          
-
             <form onSubmit={submitButton} className='loginPage'>
-            <img src={accuteImage} alt="bank logo"  height={150} width={300}/>
+                <img src={accuteImage} alt="bank logo" height={150} width={300} />
                 <h1 className='LoginHeader'>Welcome To Accute Banking Online Services</h1>
 
                 <label htmlFor='AccountNumber'>Email Account:</label>
@@ -88,7 +91,7 @@ const LoginPage = (props) => {
                 <footer>
                     <br />
                     <Link to={'/newUser'}>Register</Link>
-                    <br></br>
+                    <br />
                     <Link to={'/ResetPassword'}>Forgot Password</Link>
                     <br /><br />
                     <small>@Copyright AccuteBanking 2023</small>
