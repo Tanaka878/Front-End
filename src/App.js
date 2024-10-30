@@ -29,7 +29,7 @@ function App() {
 
  console.log();
  console.log("User Details from loging")
- console.log(`User name ${userDetails.name} +:: ${userDetails.accountNumber}`)
+ console.log(`User name ${userDetails.name} +:: ${userDetails.Email}`)
  
 
 

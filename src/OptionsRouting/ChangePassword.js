@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const ChangePassword = ({ userEmail }) => {  // Pass userEmail as a prop if available
+const ChangePassword = ({ Email }) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = React.useState({
@@ -31,25 +32,27 @@ const ChangePassword = ({ userEmail }) => {  // Pass userEmail as a prop if avai
     }
 
     try {
-      const response = await fetch(`https://your-backend-url.com/changePassword/${userEmail}/${formData.newPassword}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.post(
+        `https://distinguished-happiness-production.up.railway.app/customer/changePassword/${Email}/${formData.newPassword}`,
+        {}, // Axios requires an empty object as the body for POST without data
+        {
+          headers: {
+            "Content-Type": "application/json",
+          }
+        }
+      );
 
-      if (response.status === 404) {
-        setError("No account found with the specified email.");
-      } else if (response.ok) {
+      if (response.status === 200) {
         setSuccessMessage("Password changed successfully!");
         navigate('/'); // Redirect to login or another page
-      } else {
-        const data = await response.json();
-        setError(data.message || "Failed to change password.");
       }
     } catch (err) {
+      if (err.response && err.response.status === 404) {
+        setError("No account found with the specified email.");
+      } else {
+        setError("Failed to change password. Please try again later.");
+      }
       console.error('Error:', err);
-      setError("An error occurred. Please try again later.");
     }
   };
 
