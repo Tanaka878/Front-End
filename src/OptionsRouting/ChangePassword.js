@@ -56,36 +56,91 @@ const ChangePassword = ({ Email }) => {
     }
   };
 
+  const styles = {
+    container: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100vh',
+      fontFamily: 'Arial, sans-serif',
+    },
+    form: {
+      width: '300px',
+      padding: '20px',
+      borderRadius: '10px',
+      boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+      backgroundColor: '#f9f9f9',
+      textAlign: 'center',
+    },
+    heading: {
+      fontSize: '24px',
+      marginBottom: '20px',
+      color: '#333',
+    },
+    label: {
+      display: 'block',
+      marginBottom: '8px',
+      fontSize: '16px',
+      color: '#555',
+    },
+    input: {
+      width: '100%',
+      padding: '10px',
+      marginBottom: '15px',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+      fontSize: '16px',
+    },
+    button: {
+      width: '100%',
+      padding: '10px',
+      fontSize: '16px',
+      color: '#fff',
+      backgroundColor: '#007bff',
+      border: 'none',
+      borderRadius: '5px',
+      cursor: 'pointer',
+    },
+    message: {
+      marginTop: '10px',
+      fontSize: '14px',
+      color: error ? 'red' : 'green',
+    },
+  };
+
   return (
-    <div className="change-password-container">
-      <h2>Change Password</h2>
-      <form onSubmit={handleSubmit} className="change-password-form">
-        <div className="formElement">
-          <label htmlFor="newPassword">New Password:</label>
+    <div style={styles.container}>
+      <h2 style={styles.heading}>Change Password</h2>
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <div>
+          <label htmlFor="newPassword" style={styles.label}>New Password:</label>
           <input
             type="password"
             name="newPassword"
             required
             onChange={handleChange}
             value={formData.newPassword}
+            style={styles.input}
           />
         </div>
 
-        <div className="formElement">
-          <label htmlFor="confirmPassword">Confirm New Password:</label>
+        <div>
+          <label htmlFor="confirmPassword" style={styles.label}>Confirm New Password:</label>
           <input
             type="password"
             name="confirmPassword"
             required
             onChange={handleChange}
             value={formData.confirmPassword}
+            style={styles.input}
           />
         </div>
 
-        {error && <div className="error-message">{error}</div>}
-        {successMessage && <div className="success-message">{successMessage}</div>}
+        {error && <div style={{ ...styles.message, color: 'red' }}>{error}</div>}
+        {successMessage && <div style={{ ...styles.message, color: 'green' }}>{successMessage}</div>}
 
-        <button type="submit" className="form-button">Change Password</button>
+        <button type="submit" style={styles.button}>Change Password</button>
       </form>
     </div>
   );
