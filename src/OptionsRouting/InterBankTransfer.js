@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
-import axios from 'axios';
+import api from './api'; // Import the configured Axios instance
 import feesPayment from './Images/Money.png';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ const InterBankTransfer = (props) => {
 
   const [conditionalRender, changeConditionalRender] = React.useState(false);
 
-  // Function to send transaction details using axios
+  // Function to send transaction details using Axios instance
   function sendTransactionDetails() {
     const objectToSend = {
       senderAccount: props.AccountHolder,
@@ -24,7 +24,7 @@ const InterBankTransfer = (props) => {
       bankName: InterBankData.bankType
     };
 
-    axios.post("https://distinguished-happiness-production.up.railway.app/api/interbankTransfer", objectToSend, {
+    api.post("/api/interbankTransfer", objectToSend, {
       headers: { "Content-Type": "application/json" }
     })
       .then(response => {
@@ -32,7 +32,7 @@ const InterBankTransfer = (props) => {
         nav('/optionPage');  // Navigate on successful transfer
       })
       .catch(error => {
-        console.error('Error:', error);
+        console.error('Error:', error.message, error.response, error.request);
         alert('An error occurred during the transaction.');
       });
   }
