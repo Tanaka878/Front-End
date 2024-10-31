@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
-import api from './api'; // Import the configured Axios instance
 import feesPayment from './Images/Money.png';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -15,7 +14,7 @@ const InterBankTransfer = (props) => {
 
   const [conditionalRender, changeConditionalRender] = React.useState(false);
 
-  // Function to send transaction details using Axios instance
+  // Function to send transaction details using fetch API
   function sendTransactionDetails() {
     const objectToSend = {
       senderAccount: props.AccountHolder,
@@ -24,17 +23,27 @@ const InterBankTransfer = (props) => {
       bankName: InterBankData.bankType
     };
 
-    api.post("/api/interbankTransfer", objectToSend, {
-      headers: { "Content-Type": "application/json" }
+    fetch("https://distinguished-happiness-production.up.railway.app/banking/interbankTransfer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(objectToSend)
     })
-      .then(response => {
-        alert(response.data);
-        nav('/optionPage');  // Navigate on successful transfer
-      })
-      .catch(error => {
-        console.error('Error:', error.message, error.response, error.request);
-        alert('An error occurred during the transaction.');
-      });
+    .then(response => {
+      console.log('Response:', response); // Log the full response
+      return response.text(); // Change to text to see raw response
+    })
+    .then(data => {
+      console.log('Response data:', data); // Log the raw data
+      const jsonData = JSON.parse(data); // Parse the response as JSON
+      alert(jsonData.message || jsonData.error);
+      nav('/optionPage');  // Navigate on successful transfer
+    })
+    .catch(error => {
+      console.error('Error:', error.message);
+      alert('An error occurred during the transaction.');
+    });
   }
 
   function handleFormChange(event) {
