@@ -9,12 +9,11 @@ const InterBankTransfer = (props) => {
   const [InterBankData, changeInterBankData] = React.useState({
     AccountNumber: "",
     amount: "",
-    bankType: "CBZ" // Default bank selection
+    bankType: "CBZ"
   });
 
   const [conditionalRender, changeConditionalRender] = React.useState(false);
 
-  // Function to send transaction details using fetch API
   function sendTransactionDetails() {
     const objectToSend = {
       senderAccount: props.AccountHolder,
@@ -30,15 +29,11 @@ const InterBankTransfer = (props) => {
       },
       body: JSON.stringify(objectToSend)
     })
-    .then(response => {
-      console.log('Response:', response); // Log the full response
-      return response.text(); // Change to text to see raw response
-    })
+    .then(response => response.text())
     .then(data => {
-      console.log('Response data:', data); // Log the raw data
-      const jsonData = JSON.parse(data); // Parse the response as JSON
+      const jsonData = JSON.parse(data);
       alert(jsonData.message || jsonData.error);
-      nav('/optionPage');  // Navigate on successful transfer
+      nav('/optionPage');
     })
     .catch(error => {
       console.error('Error:', error.message);
@@ -62,57 +57,129 @@ const InterBankTransfer = (props) => {
       changeConditionalRender(true);
     } else if (InterBankData.AccountNumber.length > 3 && InterBankData.amount <= balance) {
       sendTransactionDetails();
-      console.log("Data sent", InterBankData.bankType, InterBankData.AccountNumber, InterBankData.amount);
     } else {
       console.error('Invalid receiver details');
     }
   }
 
   return (
-    <div>
-      <nav>
-        <img src={feesPayment} height={200} width={250} className='feesPayment' />
+    <div style={styles.container}>
+      <nav style={styles.header}>
+        <img src={feesPayment} style={styles.image} />
         <h2>ZIP IT Transfer</h2>
       </nav>
 
-      <nav className='feesHeader'>
+      <nav style={styles.feesHeader}>
         <small>Account Holder: {props.name}</small>
         <hr />
         <small>Remaining Balance: {props.bal}</small>
       </nav>
 
-      <form onSubmit={handleSubmit} className='feesSubmitForm'>
-        <nav className='feesNav'>
+      <form onSubmit={handleSubmit} style={styles.feesSubmitForm}>
+        <div style={styles.feesNav}>
           <label htmlFor='AccountNumber'>Receiver Account:</label>
-          <input placeholder='0780001324' name='AccountNumber' size={30} onChange={handleFormChange} />
-        </nav>
+          <input placeholder='0780001324' name='AccountNumber' onChange={handleFormChange} style={styles.input} />
+        </div>
 
-        <nav>
+        <div style={styles.feesNav}>
           <label htmlFor='bankType'>Bank Type:</label>
-          <select name="bankType" value={InterBankData.bankType} onChange={handleFormChange} style={{ marginLeft: '10px' }}>
+          <select name="bankType" value={InterBankData.bankType} onChange={handleFormChange} style={styles.input}>
             <option value="CBZ">CBZ</option>
             <option value="FBC">FBC</option>
             <option value="STANBIC">STANBIC</option>
           </select>
-        </nav>
+        </div>
 
-        <nav>
+        <div style={styles.feesNav}>
           <label htmlFor='amount'>Amount:</label>
-          <input placeholder='Enter Amount' name='amount' size={35} onChange={handleFormChange} />
-        </nav>
+          <input placeholder='Enter Amount' name='amount' onChange={handleFormChange} style={styles.input} />
+        </div>
 
-        <nav>
-          <button type="submit" className='AirTimeSubmitButton'>Transact</button>
-        </nav>
+        <div>
+          <button type="submit" style={styles.button}>Transact</button>
+        </div>
       </form>
 
       {conditionalRender && (
-        <nav style={{ color: 'red' }}>Insufficient funds</nav>
+        <nav style={styles.error}>Insufficient funds</nav>
       )}
 
-      <Link to={'/optionPage'}>Home Page</Link>
+      <Link to={'/optionPage'} style={styles.homeLink}>Home Page</Link>
     </div>
   );
+}
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
+    fontSize: '1.1em',
+    margin: '0 auto',
+    maxWidth: '500px',
+    padding: '20px',
+    backgroundColor: '#f9f9f9',
+    borderRadius: '10px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'
+  },
+  header: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  image: {
+    width: '100%',
+    maxWidth: '200px'
+  },
+  feesHeader: {
+    width: '100%',
+    marginTop: '10px',
+    fontSize: '1.2em',
+    color: '#555'
+  },
+  feesSubmitForm: {
+    width: '100%',
+    marginTop: '20px'
+  },
+  feesNav: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    marginBottom: '15px'
+  },
+  input: {
+    width: '100%',
+    padding: '8px',
+    fontSize: '1em',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+    marginTop: '5px'
+  },
+  button: {
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    padding: '10px 20px',
+    fontSize: '1.1em',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    width: '100%',
+    marginTop: '15px'
+  },
+  buttonHover: {
+    backgroundColor: '#45a049'
+  },
+  error: {
+    color: 'red',
+    marginTop: '15px',
+    fontWeight: 'bold'
+  },
+  homeLink: {
+    marginTop: '20px',
+    color: '#007BFF',
+    textDecoration: 'none'
+  }
 }
 
 export default InterBankTransfer;
