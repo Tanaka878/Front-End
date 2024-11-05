@@ -1,42 +1,60 @@
-/* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const TopUp = (props) => {
+const ChangePassword = ({ Email }) => {
   const navigate = useNavigate();
-  const [topUp, changeData] = React.useState({
-    number: '',
-    amount: ''
+
+  const [formData, setFormData] = React.useState({
+    newPassword: '',
+    confirmPassword: ''
   });
 
-  // Handle form input changes
-  function handleChange(event) {
+  const [error, setError] = React.useState('');
+  const [successMessage, setSuccessMessage] = React.useState('');
+
+  const handleChange = (event) => {
     const { name, value } = event.target;
-    changeData((prevData) => ({
-      ...prevData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value
     }));
-  }
+  };
 
-  function handleTopUp(event) {
-    event.preventDefault(); // Prevent page reload
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError('');
+    setSuccessMessage('');
 
-    fetch(`http://localhost:8082/accountNumber${props.AccountHolder}?balance=${topUp.amount}&phoneNumber=${topUp.number}`, {
-      method: "PUT",
-      body: JSON.stringify(topUp),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-    .then(response => response.json())
-    .then(data => {
-      // handle response
-      console.log("TopUp successful:", data);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-  }
+    if (formData.newPassword !== formData.confirmPassword) {
+      setError("New password and confirmation do not match.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `https://distinguished-happiness-production.up.railway.app/customer/changePassword/${Email}/${formData.newPassword}`,
+        {}, // Axios requires an empty object as the body for POST without data
+        {
+          headers: {
+            "Content-Type": "application/json",
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        setSuccessMessage("Password changed successfully!");
+        navigate('/'); // Redirect to login or another page
+      }
+    } catch (err) {
+      if (err.response && err.response.status === 404) {
+        setError("No account found with the specified email.");
+      } else {
+        setError("Failed to change password. Please try again later.");
+      }
+      console.error('Error:', err);
+    }
+  };
 
   const styles = {
     container: {
@@ -88,7 +106,7 @@ const TopUp = (props) => {
     message: {
       marginTop: '10px',
       fontSize: '14px',
-      color: 'green',
+      color: error ? 'red' : 'green',
     },
     navButton: {
       marginTop: '15px',
@@ -104,40 +122,42 @@ const TopUp = (props) => {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.heading}>Top Up Account with Ecocash</h1>
-      <form onSubmit={handleTopUp} style={styles.form}>
+      <h2 style={styles.heading}>Change Password</h2>
+      <form onSubmit={handleSubmit} style={styles.form}>
         <div>
-          <label htmlFor="ecocashNumber" style={styles.label}>Ecocash Number:</label>
+          <label htmlFor="newPassword" style={styles.label}>New Password:</label>
           <input
-            type="text"
-            name="number"
-            value={topUp.number}
+            type="password"
+            name="newPassword"
+            required
             onChange={handleChange}
-            placeholder="Enter phone number"
+            value={formData.newPassword}
             style={styles.input}
           />
         </div>
 
         <div>
-          <label htmlFor="amount" style={styles.label}>Amount:</label>
+          <label htmlFor="confirmPassword" style={styles.label}>Confirm New Password:</label>
           <input
-            type="number"
-            name="amount"
-            value={topUp.amount}
+            type="password"
+            name="confirmPassword"
+            required
             onChange={handleChange}
-            placeholder="Enter Amount"
+            value={formData.confirmPassword}
             style={styles.input}
           />
         </div>
 
-        <button type="submit" style={styles.button}>Top Up</button>
+        {error && <div style={{ ...styles.message, color: 'red' }}>{error}</div>}
+        {successMessage && <div style={{ ...styles.message, color: 'green' }}>{successMessage}</div>}
+
+        <button type="submit" style={styles.button}>Change Password</button>
       </form>
-
       <button style={styles.navButton} onClick={() => navigate('/')}>
         Back to Home
       </button>
     </div>
   );
-}
+};
 
-export default TopUp;
+export default ChangePassword;
