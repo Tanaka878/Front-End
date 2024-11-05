@@ -1,21 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import feesPayment from './Images/PayFees.png';
 import { Link, useNavigate } from 'react-router-dom';
 
 const FeesPayment = (props) => {
-  const nav = useNavigate();
+  const navigate = useNavigate();
 
-  
-  const [feesData, changeFeesData] = React.useState({
+  const [feesData, setFeesData] = useState({
     schoolAccount: "",
     amount: "",
     bankName: "FBC" // Set a default value if desired
   });
 
-  const [conditionalRender, changeConditionalRender] = React.useState(false);
+  const [conditionalRender, setConditionalRender] = useState(false);
 
   function sendTransactionDetails() {
-    let objectToSend = {
+    const objectToSend = {
       accountHolder: props.AccountHolder,
       receiver: feesData.schoolAccount,
       amount: feesData.amount,
@@ -29,8 +28,9 @@ const FeesPayment = (props) => {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then(response => response.text())
-      .then(data => alert(data));
+    .then(response => response.text())
+    .then(data => alert(data))
+    .catch(error => console.error("Error sending transaction:", error));
   }
 
   function updateUserDetails() {
@@ -40,24 +40,25 @@ const FeesPayment = (props) => {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
-    });
+    })
+    .catch(error => console.error("Error updating user details:", error));
   }
 
   function handleFormChange(event) {
-    changeFeesData(prev => ({
+    const { name, value } = event.target;
+    setFeesData(prev => ({
       ...prev,
-      [event.target.name]: event.target.value
+      [name]: value
     }));
   }
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    const value = props.bal;
-    if (feesData.amount > value) {
-      changeConditionalRender(true);
-    } else if (feesData.schoolAccount.length > 4 && feesData.amount <= value) {
-      nav('/optionPage');
+    if (feesData.amount > props.bal) {
+      setConditionalRender(true);
+    } else if (feesData.schoolAccount.length > 4 && feesData.amount <= props.bal) {
+      navigate('/optionPage');
       sendTransactionDetails();
       updateUserDetails();
     }
@@ -111,9 +112,7 @@ const FeesPayment = (props) => {
           </select>
         </div>
 
-        <div>
-          <button type="submit" style={styles.button}>Transact</button>
-        </div>
+        <button type="submit" style={styles.button}>Transact</button>
       </form>
 
       {conditionalRender && (
