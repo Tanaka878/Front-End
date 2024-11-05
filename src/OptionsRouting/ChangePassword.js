@@ -63,14 +63,15 @@ const ChangePassword = ({ Email }) => {
       alignItems: 'center',
       justifyContent: 'center',
       height: '100vh',
-      fontFamily: 'Arial, sans-serif',
+      fontFamily: 'Roboto, sans-serif',
+      backgroundColor: '#f9f9f9',
     },
     form: {
       width: '300px',
       padding: '20px',
       borderRadius: '10px',
       boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-      backgroundColor: '#f9f9f9',
+      backgroundColor: '#fff',
       textAlign: 'center',
     },
     heading: {
@@ -107,6 +108,16 @@ const ChangePassword = ({ Email }) => {
       fontSize: '14px',
       color: error ? 'red' : 'green',
     },
+    navButton: {
+      marginTop: '15px',
+      padding: '10px 15px',
+      fontSize: '16px',
+      color: '#fff',
+      backgroundColor: '#6c757d',
+      border: 'none',
+      borderRadius: '5px',
+      cursor: 'pointer',
+    }
   };
 
   return (
@@ -142,6 +153,9 @@ const ChangePassword = ({ Email }) => {
 
         <button type="submit" style={styles.button}>Change Password</button>
       </form>
+      <button style={styles.navButton} onClick={() => navigate('/')}>
+        Back to Home
+      </button>
     </div>
   );
 };
