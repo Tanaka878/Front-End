@@ -1,152 +1,182 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from 'react'
-import feesPayment from './Images/PayFees.png'
-import { Link, useNavigate } from 'react-router-dom'
+import React from 'react';
+import feesPayment from './Images/PayFees.png';
+import { Link, useNavigate } from 'react-router-dom';
 
 const FeesPayment = (props) => {
-
   const nav = useNavigate();
 
-  
-
-  //to hold the state of the data being entered in the form
-  const[feesData, changeFeesData] =React.useState({
-    schoolAccount:"",
-    amount:{}
-
-
+  const [feesData, changeFeesData] = React.useState({
+    schoolAccount: "",
+    amount: ""
   });
 
-  //a function to send the data to the server for storage
-  function sendTransationDetails(){
-   
-    let objectToSend = {
-      accountHolder:props.AccountHolder,
-      receiver:feesData.schoolAccount,
-      amount:feesData.amount,
-     
+  const [conditionalRender, changeConditionalRender] = React.useState(false);
 
+  function sendTransactionDetails() {
+    let objectToSend = {
+      accountHolder: props.AccountHolder,
+      receiver: feesData.schoolAccount,
+      amount: feesData.amount,
     };
 
-
-    //sending the data
-    fetch(`http://localhost:8082/receiveHistory`,{
-      method:"POST",
-      body:JSON.stringify(objectToSend),
-      headers:{
-        "Content-type":"application/json; charset=UTF-8",
-        },
-      
-    }).then(response=>response.text())
-    .then(data=>alert(data))
-
-
-   
-    
-  }
-
-
-
-  function UpdateUserDetails(){
-
-    fetch(`http://localhost:8082/${props.AccountHolder}?balance=${feesData.amount}`,{
-      method:"PUT",
-      body:JSON.stringify(feesData),
-      headers:{
-        "Content-type":"application/json; charset=UTF-8",
-        },
-      
+    fetch(`http://localhost:8082/receiveHistory`, {
+      method: "POST",
+      body: JSON.stringify(objectToSend),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
     })
-
+      .then(response => response.text())
+      .then(data => alert(data));
   }
 
-  //to determine when to display The error message
-  const[conditionalRender, changeConditionalRender] = React.useState(false);
-  
-
-  //logging the value of feesData
-  console.log(feesData);
-  function handleFormChange(event){
-
-    changeFeesData((prev)=>{
-      return {
-        ...prev,
-        [event.target.name ]:event.target.value
-
-      };
+  function updateUserDetails() {
+    fetch(`http://localhost:8082/${props.AccountHolder}?balance=${feesData.amount}`, {
+      method: "PUT",
+      body: JSON.stringify(feesData),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
     });
-    
   }
 
-  function handleSubmit(event){
-    console.log("fees Payed");
-    event.preventDefault()
+  function handleFormChange(event) {
+    changeFeesData(prev => ({
+      ...prev,
+      [event.target.name]: event.target.value
+    }));
+  }
 
-    //logic for allowing the fees transaction
-    let value = props.bal;
+  function handleSubmit(event) {
+    event.preventDefault();
 
-    if(feesData.amount> value){
-      console.log("Insuficient balance");
-
+    const value = props.bal;
+    if (feesData.amount > value) {
       changeConditionalRender(true);
-      
-
-    }else if(feesData.schoolAccount.length>4 && feesData.amount<value){
+    } else if (feesData.schoolAccount.length > 4 && feesData.amount <= value) {
       nav('/optionPage');
-
-      sendTransationDetails();
-      UpdateUserDetails();
-
-    }else{
-      console.log('Error in The receiver account Number');
+      sendTransactionDetails();
+      updateUserDetails();
     }
-
   }
 
   return (
-    <div >
+    <div style={styles.container}>
+      <nav style={styles.header}>
+        <img src={feesPayment} style={styles.image} />
+        <h2>Fees Payment</h2>
+      </nav>
 
-        
+      <nav style={styles.feesHeader}>
+        <small>Account Holder: {props.name}</small>
+        <hr />
+        <small>Remaining Balance: {props.bal}</small>
+      </nav>
 
-        <img src={feesPayment} height={200} width={250} className='feesPayment'/>
+      <form onSubmit={handleSubmit} style={styles.feesSubmitForm}>
+        <div style={styles.feesNav}>
+          <label htmlFor="schoolAccount">School Account Number:</label>
+          <input
+            placeholder="Enter School Account Number"
+            name="schoolAccount"
+            onChange={handleFormChange}
+            style={styles.input}
+          />
+        </div>
 
-        <nav className='feesHeader'>
-          <small>Account Holder :{props.name}</small>
-          <hr></hr>
-          <small> Remaining Balance : {props.bal}</small>
-        </nav>
-        
-        <form onSubmit={handleSubmit} className='feesSubmitForm'>
-          <nav className='feesNav'>
-          <label htmlFor='schoolAccount'>Account Number :</label>
-          <input placeholder='School Account Number' name='schoolAccount' size={30} onChange={handleFormChange}/>
+        <div style={styles.feesNav}>
+          <label htmlFor="amount">Amount:</label>
+          <input
+            placeholder="Enter Amount"
+            name="amount"
+            onChange={handleFormChange}
+            style={styles.input}
+          />
+        </div>
 
+        <div>
+          <button type="submit" style={styles.button}>Transact</button>
+        </div>
+      </form>
 
-          </nav>
+      {conditionalRender && (
+        <nav style={styles.error}>Insufficient funds</nav>
+      )}
 
-          <nav2>
-          <label htmlFor='amount'> Amount :</label>
-          <input placeholder='Enter Amount' name='amount' size={35} onChange={handleFormChange}/>
-          </nav2>
-
-          <nav>
-          <button className='feesSubmitButton'>Transact</button>
-
-          </nav>
-        
-        </form>
-        {
-            conditionalRender ? <nav style={{color:'red'}}>Insuficient funds
-            </nav> : <nav></nav>
-        }
-
-          
-
-<Link to={'/OptionPage'}>Home Page</Link>
-      
-      
+      <Link to="/optionPage" style={styles.homeLink}>Home Page</Link>
     </div>
-  )
+  );
 }
 
-export default FeesPayment
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
+    fontSize: '1.1em',
+    margin: '0 auto',
+    maxWidth: '500px',
+    padding: '20px',
+    backgroundColor: '#f9f9f9',
+    borderRadius: '10px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'
+  },
+  header: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  image: {
+    width: '100%',
+    maxWidth: '200px'
+  },
+  feesHeader: {
+    width: '100%',
+    marginTop: '10px',
+    fontSize: '1.2em',
+    color: '#555'
+  },
+  feesSubmitForm: {
+    width: '100%',
+    marginTop: '20px'
+  },
+  feesNav: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    marginBottom: '15px'
+  },
+  input: {
+    width: '100%',
+    padding: '8px',
+    fontSize: '1em',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+    marginTop: '5px'
+  },
+  button: {
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    padding: '10px 20px',
+    fontSize: '1.1em',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    width: '100%',
+    marginTop: '15px'
+  },
+  error: {
+    color: 'red',
+    marginTop: '15px',
+    fontWeight: 'bold'
+  },
+  homeLink: {
+    marginTop: '20px',
+    color: '#007BFF',
+    textDecoration: 'none'
+  }
+}
+
+export default FeesPayment;
