@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import feesPayment from './Images/PayFees.png';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,9 +5,11 @@ import { Link, useNavigate } from 'react-router-dom';
 const FeesPayment = (props) => {
   const nav = useNavigate();
 
+  
   const [feesData, changeFeesData] = React.useState({
     schoolAccount: "",
-    amount: ""
+    amount: "",
+    bankName: "FBC" // Set a default value if desired
   });
 
   const [conditionalRender, changeConditionalRender] = React.useState(false);
@@ -18,6 +19,7 @@ const FeesPayment = (props) => {
       accountHolder: props.AccountHolder,
       receiver: feesData.schoolAccount,
       amount: feesData.amount,
+      bankName: feesData.bankName,
     };
 
     fetch(`http://localhost:8082/receiveHistory`, {
@@ -64,7 +66,7 @@ const FeesPayment = (props) => {
   return (
     <div style={styles.container}>
       <nav style={styles.header}>
-        <img src={feesPayment} style={styles.image} />
+        <img src={feesPayment} style={styles.image} alt="Fees Payment" />
         <h2>Fees Payment</h2>
       </nav>
 
@@ -93,6 +95,20 @@ const FeesPayment = (props) => {
             onChange={handleFormChange}
             style={styles.input}
           />
+        </div>
+
+        <div style={styles.feesNav}>
+          <label htmlFor="bankName">Bank Name:</label>
+          <select
+            name="bankName"
+            value={feesData.bankName}
+            onChange={handleFormChange}
+            style={styles.input}
+          >
+            <option value="FBC">FBC</option>
+            <option value="CBZ">CBZ</option>
+            <option value="Stanbic">Stanbic</option>
+          </select>
         </div>
 
         <div>
