@@ -6,13 +6,13 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import FeesPayment from './OptionsRouting/FeesPayment';
 import BuyAirTime from './OptionsRouting/BuyAirTime';
 import InterBankTransfer from './OptionsRouting/InterBankTransfer';
-import RequestBalance from './OptionsRouting/RequestBalance';
 import NewUser from './LoginPage/NewUser';
 import PayBills from './OptionsRouting/PayBills';
 import MotorVehicle from './OptionsRouting/MotorVehicle';
 import TopUp from './OptionsRouting/TopUp';
 import ResetPassword from './OptionsRouting/ResetPassword'
 import ChangePassword from './OptionsRouting/ChangePassword';
+import TransactionHistory from './OptionsRouting/TransactionHistory';
 
 function App() {
 
@@ -68,8 +68,8 @@ function App() {
         <Route exact path='/ZIPIT' element={<InterBankTransfer name={userDetails.name}
          bal={Math.trunc(userDetails.AccBalance)} AccountHolder={userDetails.AccountHolder}/>}/> 
 
-         <Route exact path='/RequestBalance' element={<RequestBalance name={userDetails.name}
-         bal={Math.trunc(userDetails.AccBalance)} AccountHolder={userDetails.AccountHolder}/>}/>
+         <Route exact path='/TransactionHistory' element={<TransactionHistory name={userDetails.name}
+         bal={Math.trunc(userDetails.AccBalance)} AccountHolder={userDetails.AccountHolder} Email={userDetails.Email}/>}/>
 
          <Route exact path='/newUser' element={<NewUser/>}/>
 
