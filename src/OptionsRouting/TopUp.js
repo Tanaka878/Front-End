@@ -17,26 +17,29 @@ const TopUp = (props) => {
       [name]: value
     }));
   }
-
   function handleTopUp(event) {
     event.preventDefault(); // Prevent page reload
-
-    fetch(`http://localhost:8082/accountNumber${props.AccountHolder}?balance=${topUp.amount}&phoneNumber=${topUp.number}`, {
-      method: "PUT",
-      body: JSON.stringify(topUp),
+  
+    fetch(`https://distinguished-happiness-production.up.railway.app/banking/top-up/${props.Email}/${topUp.amount}/${topUp.number}`, {
+      method: "POST",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Top-up failed.");
+      }
+      return response.text(); // Assuming backend returns a plain text message
+    })
     .then(data => {
-      // handle response
-      console.log("TopUp successful:", data);
+      console.log("Top-up successful:", data);
     })
     .catch((error) => {
       console.error("Error:", error);
     });
   }
+  
 
   return (
     <div className="topup-container">

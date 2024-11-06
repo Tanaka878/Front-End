@@ -65,6 +65,7 @@ const ChangePassword = ({ Email }) => {
       height: '100vh',
       fontFamily: 'Roboto, sans-serif',
       backgroundColor: '#f9f9f9',
+      marginLeft:"400px"
     },
     form: {
       width: '300px',

@@ -85,7 +85,8 @@ function App() {
 
         <Route exact path='/TopUp' element={<TopUp name={userDetails.name} 
                 bal={Math.trunc(userDetails.AccBalance)} 
-                AccountHolder={userDetails.AccountHolder}/> }
+                AccountHolder={userDetails.AccountHolder}
+                Email={userDetails.Email}/> }
                 />
 
         <Route exact path='/ResetPassword' element={<ResetPassword name={userDetails.name} 
