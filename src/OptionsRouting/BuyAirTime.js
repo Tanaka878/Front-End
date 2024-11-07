@@ -112,7 +112,7 @@ const BuyAirTime = (props) => {
             placeholder='Enter Amount'
             name='amount'
             value={AirTimeData.amount}
-            value={AirTimeData.amount}
+           
             onChange={handleFormChange}
             className="input"
           />
