@@ -5,7 +5,7 @@ import BillImage from './Images/paying.webp';
 import { Link } from 'react-router-dom';
 
 const PayBills = (props) => {
-  // amount in the account before transaction
+  // Initial balance in the account before transaction
   let value = props.bal;
 
   const [transactionData, changeTransactionData] = React.useState({
@@ -14,57 +14,77 @@ const PayBills = (props) => {
   });
 
   // Function to update the account details
-  function updateDetails() {
-    fetch(`http://localhost:8082/${props.AccountHolder}?balance=${value - transactionData.amountTobePayed}`, {
-      method: "PUT",
-      body: JSON.stringify(transactionData),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
+  async function updateDetails() {
+    try {
+      const response = await fetch(
+        `http://localhost:8082/${props.AccountHolder}?balance=${value - parseFloat(transactionData.amountTobePayed)}`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+      if (!response.ok) throw new Error('Failed to update account details');
+    } catch (error) {
+      console.error(error);
+      alert('There was an error processing your request. Please try again.');
+    }
   }
 
   // Function to send transaction history
-  function sendTransactionHistory() {
-    let objectToSend = {
-      accountHolder: props.AccountHolder,
-      receiver: transactionData.receiverOption,
-      amount: transactionData.amountTobePayed,
-    };
+  async function sendTransactionHistory() {
+    try {
+      const objectToSend = {
+        accountHolder: props.AccountHolder,
+        receiver: transactionData.receiverOption,
+        amount: transactionData.amountTobePayed,
+      };
 
-    fetch(`http://localhost:8082/receiveHistory`, {
-      method: "POST",
-      body: JSON.stringify(objectToSend),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    }).then(response => response.text())
-      .then(data => alert(data));
+      const response = await fetch(`http://localhost:8082/receiveHistory`, {
+        method: "POST",
+        body: JSON.stringify(objectToSend),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+      if (!response.ok) throw new Error('Failed to record transaction');
+      const data = await response.text();
+      alert(data);
+    } catch (error) {
+      console.error(error);
+      alert('Transaction failed. Please try again.');
+    }
   }
 
-  function transaction() {
-    updateDetails();
-    sendTransactionHistory();
+  async function transaction() {
+    await updateDetails();
+    await sendTransactionHistory();
   }
 
   function handleSubmit(event) {
     event.preventDefault();
+    const amount = parseFloat(transactionData.amountTobePayed);
 
-    // Making decisions on whether to process the transaction
-    if (props.bal > transactionData.amountTobePayed) {
-      transaction();
-    } else {
-      console.log("Insufficient Funds");
-      console.log(props.bal);
+    // Validate input amount
+    if (isNaN(amount) || amount <= 0) {
+      alert('Please enter a valid amount.');
+      return;
     }
-    console.log("submitted");
+
+    // Check for sufficient balance
+    if (value > amount) {
+      transaction().then(() => {
+        changeTransactionData({ receiverOption: "", amountTobePayed: "" });
+      });
+    } else {
+      alert("Insufficient funds.");
+    }
   }
 
   function handleFormChange(event) {
     const { name, value } = event.target;
     changeTransactionData((prev) => ({
       ...prev,
-      [name]: value // Directly assign value
+      [name]: value
     }));
   }
 
@@ -85,6 +105,7 @@ const PayBills = (props) => {
           name='receiverOption'
           value={transactionData.receiverOption}
         >
+          <option value='' disabled>Select an option</option>
           <option value='ZINARA'>ZINARA</option>
           <option value='ZIMRA'>ZIMRA</option>
           <option value='ZINWA'>ZINWA</option>
@@ -99,6 +120,7 @@ const PayBills = (props) => {
           placeholder='Amount $'
           name='amountTobePayed'
           onChange={handleFormChange}
+          value={transactionData.amountTobePayed}
         />
 
         <button className='pay-bills'>Transact</button>
@@ -123,7 +145,7 @@ const PayBills = (props) => {
             align-items: center;
             justify-content: center;
             text-align: center;
-            margin-left: 400px
+            margin-left: 400px;
           }
 
           .bill-image {
@@ -133,15 +155,15 @@ const PayBills = (props) => {
           /* Balance display styling */
           .balance-display {
             margin: 20px 0;
-            font-size: 24px; /* Increased font size */
+            font-size: 24px;
             font-weight: bold;
-            color: #4CAF50; /* Green color for emphasis */
+            color: #4CAF50;
           }
 
           /* Form styling */
           .pay-bills-form {
             background-color: white;
-            padding: 20px; /* Increased padding for larger area */
+            padding: 20px;
             border-radius: 12px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             width: 100%;
@@ -151,20 +173,20 @@ const PayBills = (props) => {
 
           label {
             display: block;
-            margin: 15px 0 5px; /* Increased margins for spacing */
+            margin: 15px 0 5px;
             font-weight: 700;
             color: #555;
-            font-size: 18px; /* Increased font size */
+            font-size: 18px;
           }
 
           select, input {
             width: 100%;
-            padding: 12px; /* Increased padding for inputs */
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 8px;
             box-sizing: border-box;
-            font-size: 18px; /* Increased font size */
-            margin-bottom: 20px; /* Increased spacing */
+            font-size: 18px;
+            margin-bottom: 20px;
           }
 
           select:focus, input:focus {
@@ -176,14 +198,14 @@ const PayBills = (props) => {
             background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 12px; /* Increased padding for button */
+            padding: 12px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 18px; /* Increased font size */
+            font-size: 18px;
             font-weight: 700;
             transition: background-color 0.3s ease;
             display: block;
-            margin: 20px auto; /* Increased margins */
+            margin: 20px auto;
           }
 
           .pay-bills:hover {
@@ -195,9 +217,9 @@ const PayBills = (props) => {
             color: #4CAF50;
             text-decoration: none;
             font-weight: 700;
-            margin-top: 20px; /* Increased margin */
+            margin-top: 20px;
             display: block;
-            font-size: 18px; /* Increased font size */
+            font-size: 18px;
           }
 
           a:hover {
@@ -211,8 +233,8 @@ const PayBills = (props) => {
             }
 
             .pay-bills-form {
-              padding: 15px; /* Adjusted padding */
-              width: 90%; /* Responsive width */
+              padding: 15px;
+              width: 90%;
             }
 
             label,
@@ -220,7 +242,7 @@ const PayBills = (props) => {
             input,
             .pay-bills,
             a {
-              font-size: 16px; /* Adjusted font size for smaller screens */
+              font-size: 16px;
             }
           }
         `}
