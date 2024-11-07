@@ -13,6 +13,7 @@ import TopUp from './OptionsRouting/TopUp';
 import ResetPassword from './OptionsRouting/ResetPassword'
 import ChangePassword from './OptionsRouting/ChangePassword';
 import TransactionHistory from './OptionsRouting/TransactionHistory';
+import ATMMap from './OptionsRouting/ATMMap';
 
 function App() {
 
@@ -100,6 +101,12 @@ function App() {
                         Email={userDetails.Email}/> 
                     }
                         />
+
+        <Route exact path='/ATM Finder' element={<ATMMap /> 
+                    }
+                        />
+
+
 
 
          

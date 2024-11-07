@@ -48,5 +48,13 @@ export default [
         "val": true, // or false, depending on your requirement
         "url": "pay.png",
         "textValue": "Change Password"
+    },
+
+    {
+        "id": 8,
+        "itemName": "ATM Finder",
+        "val": true, 
+        "url": "pay.png",
+        "textValue": "ATM Finder"
     }
 ];
