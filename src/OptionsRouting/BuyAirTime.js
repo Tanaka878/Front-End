@@ -11,6 +11,7 @@ const BuyAirTime = (props) => {
   });
 
   const [conditionalRender, changeConditionalRender] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   function handleFormChange(event) {
     changeAirTimeData((prev) => ({
@@ -33,6 +34,7 @@ const BuyAirTime = (props) => {
   }
 
   function buyAirtimeTransaction() {
+    setIsSubmitting(true);
     fetch(`https://distinguished-happiness-production.up.railway.app/banking/buyAirtime/${props.AccountHolder}/${AirTimeData.phoneNumber}/${AirTimeData.amount}`, {
       method: "POST",
       headers: {
@@ -41,12 +43,14 @@ const BuyAirTime = (props) => {
     })
       .then(response => response.text())
       .then(data => {
+        setIsSubmitting(false);
         alert(data);
         if (data.includes("successful")) {
           nav('/optionPage');
         }
       })
       .catch(error => {
+        setIsSubmitting(false);
         console.error("Error:", error);
         alert("Transaction failed. Please try again.");
       });
@@ -61,9 +65,9 @@ const BuyAirTime = (props) => {
 
       <div className="account-info">
         <small>Account Holder: {props.name}</small>
-        <br></br>
+        <br />
         <small>Account Number: {props.AccountHolder}</small>
-        <br></br>
+        <br />
         <small>Remaining Balance: ${props.bal}</small>
       </div>
 
@@ -73,6 +77,8 @@ const BuyAirTime = (props) => {
           <input
             placeholder='0780001324'
             name='phoneNumber'
+            type="text"
+            pattern="\d{9}"
             value={AirTimeData.phoneNumber}
             onChange={handleFormChange}
             className="input"
@@ -84,14 +90,17 @@ const BuyAirTime = (props) => {
           <input
             placeholder='Enter Amount'
             name='amount'
+            type="number"
+            min="0"
             value={AirTimeData.amount}
-           
             onChange={handleFormChange}
             className="input"
           />
         </div>
 
-        <button type="submit" className="button">Transact</button>
+        <button type="submit" className="button" disabled={isSubmitting}>
+          {isSubmitting ? "Processing..." : "Transact"}
+        </button>
       </form>
 
       {conditionalRender && (
@@ -102,10 +111,8 @@ const BuyAirTime = (props) => {
 
       <style>
         {`
-          /* Importing Google font */
           @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-          /* General styling */
           .buy-airtime-container {
             font-family: 'Roboto', sans-serif;
             color: #333;
@@ -124,14 +131,12 @@ const BuyAirTime = (props) => {
             margin-bottom: 20px;
           }
 
-          /* Account info styling */
           .account-info {
             margin: 20px 0;
             font-size: 16px;
             color: #555;
           }
 
-          /* Form styling */
           .buy-airtime-form {
             background-color: white;
             padding: 20px;
@@ -186,7 +191,6 @@ const BuyAirTime = (props) => {
             background-color: #45a049;
           }
 
-          /* Error message styling */
           .error {
             color: red;
             font-weight: 700;
@@ -194,7 +198,6 @@ const BuyAirTime = (props) => {
             font-size: 16px;
           }
 
-          /* Link styling */
           .home-link {
             color: #4CAF50;
             text-decoration: none;
@@ -208,7 +211,6 @@ const BuyAirTime = (props) => {
             text-decoration: underline;
           }
 
-          /* Responsive styling */
           @media (max-width: 768px) {
             .buy-airtime-container {
               padding: 10px;
