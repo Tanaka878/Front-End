@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable react/jsx-no-comment-textnodes */
+/* eslint-disable react/jsx-no-comment-text */
 import React from 'react';
 import BillImage from './Images/paying.webp';
 import { Link } from 'react-router-dom';
 
 const PayBills = (props) => {
-  // Initial balance in the account before transaction
   let value = props.bal;
 
   const [transactionData, changeTransactionData] = React.useState({
@@ -13,40 +12,19 @@ const PayBills = (props) => {
     amountTobePayed: ""
   });
 
-  // Function to update the account details
-  async function updateDetails() {
+  // Function to call the payBills endpoint
+  async function payBillsTransaction() {
     try {
       const response = await fetch(
-        `http://localhost:8082/${props.AccountHolder}?balance=${value - parseFloat(transactionData.amountTobePayed)}`, {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
-      if (!response.ok) throw new Error('Failed to update account details');
-    } catch (error) {
-      console.error(error);
-      alert('There was an error processing your request. Please try again.');
-    }
-  }
-
-  // Function to send transaction history
-  async function sendTransactionHistory() {
-    try {
-      const objectToSend = {
-        accountHolder: props.AccountHolder,
-        receiver: transactionData.receiverOption,
-        amount: transactionData.amountTobePayed,
-      };
-
-      const response = await fetch(`http://localhost:8082/receiveHistory`, {
-        method: "POST",
-        body: JSON.stringify(objectToSend),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
-      if (!response.ok) throw new Error('Failed to record transaction');
+        `https://distinguished-happiness-production.up.railway.app/banking/payBills/${props.AccountHolder}/${transactionData.receiverOption}/${transactionData.amountTobePayed}`, 
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          }
+        }
+      );
+      if (!response.ok) throw new Error('Failed to process payment');
       const data = await response.text();
       alert(data);
     } catch (error) {
@@ -56,28 +34,24 @@ const PayBills = (props) => {
   }
 
   async function transaction() {
-    await updateDetails();
-    await sendTransactionHistory();
+    if (value >= parseFloat(transactionData.amountTobePayed)) {
+      await payBillsTransaction();
+      changeTransactionData({ receiverOption: "", amountTobePayed: "" });
+    } else {
+      alert("Insufficient funds.");
+    }
   }
 
   function handleSubmit(event) {
     event.preventDefault();
     const amount = parseFloat(transactionData.amountTobePayed);
 
-    // Validate input amount
     if (isNaN(amount) || amount <= 0) {
       alert('Please enter a valid amount.');
       return;
     }
 
-    // Check for sufficient balance
-    if (value > amount) {
-      transaction().then(() => {
-        changeTransactionData({ receiverOption: "", amountTobePayed: "" });
-      });
-    } else {
-      alert("Insufficient funds.");
-    }
+    transaction();
   }
 
   function handleFormChange(event) {
@@ -92,7 +66,6 @@ const PayBills = (props) => {
     <div className="pay-bills-container">
       <img src={BillImage} height={200} width={250} className="bill-image" />
 
-      {/* Balance Display */}
       <div className="balance-display">
         <h2>Your Current Balance: ${value}</h2>
       </div>
