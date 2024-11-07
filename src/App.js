@@ -14,6 +14,8 @@ import ResetPassword from './OptionsRouting/ResetPassword'
 import ChangePassword from './OptionsRouting/ChangePassword';
 import TransactionHistory from './OptionsRouting/TransactionHistory';
 import ATMMap from './OptionsRouting/ATMMap';
+import Maps from './OptionsRouting/Maps';
+import AddressSearch from './OptionsRouting/AdressSearch';
 
 function App() {
 
@@ -105,6 +107,14 @@ function App() {
         <Route exact path='/ATM Finder' element={<ATMMap /> 
                     }
                         />
+
+        <Route exact path='/Maps' element={<Maps /> 
+                    }
+                        />
+
+        <Route exact path='/AdressSearch' element={<AddressSearch /> 
+                            }
+                                />
 
 
 

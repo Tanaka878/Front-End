@@ -38,7 +38,7 @@ const OptionLinkPage = (props) => {
         } else if(itemId ===7){
             navigate('/ChangePassword');
         }else if(itemId){
-            navigate("/ATM Finder");
+            navigate("/Maps");
 
 
         }
