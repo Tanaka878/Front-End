@@ -88,7 +88,7 @@ const BuyAirTime = (props) => {
           <label htmlFor='amount'>Amount:</label>
           <input
             placeholder='Enter Amount'
-            name='amount'
+            name='amount' 
             onChange={handleFormChange}
             style={styles.input}
           />
