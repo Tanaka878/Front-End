@@ -16,6 +16,7 @@ import TransactionHistory from './OptionsRouting/TransactionHistory';
 import ATMMap from './OptionsRouting/ATMMap';
 import Maps from './OptionsRouting/Maps';
 import AddressSearch from './OptionsRouting/AdressSearch';
+import LoanApplication from './OptionsRouting/LoanApplication';
 
 function App() {
 
@@ -113,6 +114,13 @@ function App() {
                         />
 
         <Route exact path='/AdressSearch' element={<AddressSearch /> 
+                            }
+                                        />
+
+        <Route exact path='/LoanApplication' element={<LoanApplication name={userDetails.name} 
+                                bal={Math.trunc(userDetails.AccBalance)} 
+                                AccountHolder={userDetails.AccountHolder}
+                                Email={userDetails.Email}/> 
                             }
                                 />
 

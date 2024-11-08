@@ -57,4 +57,16 @@ export default [
         "url": "pay.png",
         "textValue": "ATM Finder"
     }
+
+    ,
+
+    {
+        "id": 9,
+        "itemName": "Instant Loan",
+        "val": true, 
+        "url": "pay.png",
+        "textValue": "Instant Loan"
+    }
+
+
 ];

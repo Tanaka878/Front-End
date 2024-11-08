@@ -37,10 +37,11 @@ const OptionLinkPage = (props) => {
             navigate('/TopUp');
         } else if(itemId ===7){
             navigate('/ChangePassword');
-        }else if(itemId){
+        }else if(itemId===8){
             navigate("/Maps");
-
-
+        }
+        else if(itemId ==9){
+            navigate("LoanApplication")
         }
     }
 
