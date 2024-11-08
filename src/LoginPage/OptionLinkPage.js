@@ -41,7 +41,7 @@ const OptionLinkPage = (props) => {
             navigate("/Maps");
         }
         else if(itemId ==9){
-            navigate("LoanApplication")
+            navigate("Loan Application")
         }
     }
 
