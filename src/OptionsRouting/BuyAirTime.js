@@ -1,17 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import feesPayment from './Images/phone.png';
 import { Link, useNavigate } from 'react-router-dom';
 
 const BuyAirTime = (props) => {
   const nav = useNavigate();
 
-  const [AirTimeData, changeAirTimeData] = React.useState({
+  const [AirTimeData, changeAirTimeData] = useState({
     phoneNumber: "",
     amount: ""
   });
+  const [balance, setBalance] = useState(props.bal);
+  const [conditionalRender, changeConditionalRender] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [conditionalRender, changeConditionalRender] = React.useState(false);
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  // Separate fetchBalance function
+  const fetchBalance = async () => {
+    try {
+      const response = await fetch(`https://distinguished-happiness-production.up.railway.app/banking/getBalance/${props.Email}`);
+      const updatedBalance = await response.text();
+      setBalance(updatedBalance);
+    } catch (error) {
+      console.error("Failed to fetch balance:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch balance initially and when props.AccountHolder changes
+    fetchBalance();
+  }, [props.AccountHolder]);
 
   function handleFormChange(event) {
     changeAirTimeData((prev) => ({
@@ -23,7 +39,6 @@ const BuyAirTime = (props) => {
   function handleSubmit(event) {
     event.preventDefault();
 
-    const balance = props.bal;
     const { phoneNumber, amount } = AirTimeData;
 
     if (amount > balance) {
@@ -47,6 +62,7 @@ const BuyAirTime = (props) => {
         alert(data);
         if (data.includes("successful")) {
           nav('/optionPage');
+          fetchBalance();  // Re-fetch balance after a successful transaction
         }
       })
       .catch(error => {
@@ -68,7 +84,7 @@ const BuyAirTime = (props) => {
         <br />
         <small>Account Number: {props.AccountHolder}</small>
         <br />
-        <small>Remaining Balance: ${props.bal}</small>
+        <small>Remaining Balance: ${balance}</small>
       </div>
 
       <form onSubmit={handleSubmit} className="buy-airtime-form">
@@ -90,7 +106,7 @@ const BuyAirTime = (props) => {
           <input
             placeholder='Enter Amount'
             name='amount'
-            type="number"
+            type='number'
             min="0"
             value={AirTimeData.amount}
             onChange={handleFormChange}
@@ -111,121 +127,99 @@ const BuyAirTime = (props) => {
 
       <style>
         {`
-          @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
           .buy-airtime-container {
-            font-family: 'Roboto', sans-serif;
-            color: #333;
-            padding: 20px;
-            background-color: #f9f9f9;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            margin-left: 400px;
-          }
-
-          .airtime-image {
-            margin-bottom: 20px;
-          }
-
-          .account-info {
-            margin: 20px 0;
-            font-size: 16px;
-            color: #555;
-          }
-
-          .buy-airtime-form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 400px;
             margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
           }
 
-          .form-group {
+          .header {
+            text-align: center;
+            margin-bottom: 20px;
+          }
+
+          .airtime-image {
+            border: 5px solid #2f86a6;
+            border-radius: 50%;
+            animation: rotate-border 10s infinite linear;
+          }
+
+          .header h2 {
+            color: #333;
+            font-size: 24px;
+            margin-top: 15px;
+          }
+
+          .account-info {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+          }
+
+          .buy-airtime-form .form-group {
             margin-bottom: 15px;
           }
 
-          label {
+          .buy-airtime-form label {
             display: block;
-            margin: 15px 0 5px;
-            font-weight: 700;
-            color: #555;
-            font-size: 18px;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #333;
           }
 
-          .input {
+          .buy-airtime-form .input {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
+            font-size: 14px;
             border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 18px;
-          }
-
-          .input:focus {
-            border-color: #4CAF50;
-            outline: none;
+            border-radius: 4px;
           }
 
           .button {
-            background-color: #4CAF50;
-            color: white;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #2f86a6;
             border: none;
-            padding: 12px;
-            border-radius: 8px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 18px;
-            font-weight: 700;
-            transition: background-color 0.3s ease;
-            display: block;
-            margin: 20px auto;
           }
 
-          .button:hover {
-            background-color: #45a049;
+          .button:disabled {
+            background-color: #aaa;
           }
 
           .error {
             color: red;
-            font-weight: 700;
+            font-size: 14px;
             margin-top: 15px;
-            font-size: 16px;
+            text-align: center;
           }
 
           .home-link {
-            color: #4CAF50;
-            text-decoration: none;
-            font-weight: 700;
-            margin-top: 20px;
             display: block;
-            font-size: 18px;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #2f86a6;
+            text-decoration: none;
           }
 
           .home-link:hover {
             text-decoration: underline;
           }
 
-          @media (max-width: 768px) {
-            .buy-airtime-container {
-              padding: 10px;
+          @keyframes rotate-border {
+            0% {
+              transform: rotate(0deg);
             }
-
-            .buy-airtime-form {
-              padding: 15px;
-              width: 90%;
-            }
-
-            label,
-            .input,
-            .button,
-            .home-link {
-              font-size: 16px;
+            100% {
+              transform: rotate(360deg);
             }
           }
         `}

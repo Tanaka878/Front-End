@@ -7,7 +7,6 @@ const LoanApplication = () => {
     email: '',
     loanAmount: '',
     loanTerm: '',
-    interestRate: '',
   });
 
   const navigate = useNavigate();
@@ -33,7 +32,6 @@ const LoanApplication = () => {
           email: '',
           loanAmount: '',
           loanTerm: '',
-          interestRate: '',
         });
       } else {
         alert('Failed to submit loan application');
@@ -51,7 +49,7 @@ const LoanApplication = () => {
       email: '',
       loanAmount: '',
       loanTerm: '',
-      interestRate: '',
+     
     });
     navigate("/optionPage"); 
   };
@@ -96,15 +94,7 @@ const LoanApplication = () => {
           required
         />
 
-        <label htmlFor="interestRate">Interest Rate (%):</label>
-        <input
-          type="number"
-          step="0.01"
-          name="interestRate"
-          value={formData.interestRate}
-          onChange={handleInputChange}
-          required
-        />
+        
 
         <button type="submit" className="submit-button">Apply</button>
         <button type="button" onClick={handleCancel} className="cancel-button">Cancel</button>

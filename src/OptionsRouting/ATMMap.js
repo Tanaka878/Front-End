@@ -1,34 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import axios from 'axios';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';  // Ensure Marker is imported
 
 const ATMMap = () => {
   const [atmLocations, setAtmLocations] = useState([]);
   const [currentLocation, setCurrentLocation] = useState(null);
+  const [error, setError] = useState(null);
+
+  console.log("Google Maps API Key: ", process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+
 
   useEffect(() => {
-    // Get user's current geolocation
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        setCurrentLocation({ lat: latitude, lng: longitude });
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCurrentLocation({ lat: latitude, lng: longitude });
 
-        // Call the backend to get ATM locations
-        axios
-          .get(`/api/atm/find?latitude=${latitude}&longitude=${longitude}`)
-          .then((response) => {
-            const locations = JSON.parse(response.data).results;
-            setAtmLocations(locations);
-          })
-          .catch((error) => console.error(error));
-      });
+          // Fetch ATM locations from the backend
+          fetch(`https://distinguished-happiness-production.up.railway.app/api/atm/find?latitude=${latitude}&longitude=${longitude}`)
+            .then((response) => response.text()) // Get the response as text
+            .then((data) => {
+              try {
+                const parsedData = JSON.parse(data);
+                setAtmLocations(parsedData.results);
+              } catch (error) {
+                console.error('Error parsing JSON:', error);
+                setError('Failed to parse ATM locations. Please try again later.');
+              }
+            })
+            .catch((error) => {
+              console.error('Error fetching ATM locations:', error);
+              setError('Could not load ATM locations. Please try again later.');
+            });
+        },
+        () => setError('Could not access your location. Please enable location services.')
+      );
+    } else {
+      setError('Geolocation is not supported by this browser.');
     }
   }, []);
 
   return (
     <div style={{ height: '100vh' }}>
-      {currentLocation ? (
-        <LoadScript googleMapsApiKey="YOUR_GOOGLE_MAPS_API_KEY">
+      {error ? (
+        <p>{error}</p>
+      ) : currentLocation ? (
+        <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
           <GoogleMap
             mapContainerStyle={{ width: '100%', height: '100%' }}
             center={currentLocation}
@@ -41,6 +58,7 @@ const ATMMap = () => {
                   lat: atm.geometry.location.lat,
                   lng: atm.geometry.location.lng,
                 }}
+                title={atm.name} // Display name as tooltip
               />
             ))}
           </GoogleMap>
