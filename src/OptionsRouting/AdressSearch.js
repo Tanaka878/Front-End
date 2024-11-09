@@ -9,6 +9,7 @@ const AddressSearch = ({ onATMFound }) => {
       .get(`/api/atm/geocode?address=${address}`)
       .then((response) => {
         const location = JSON.parse(response.data).results[0].geometry.location;
+        console.log('Geocode Location:', location);  // Log the location for debugging
         onATMFound(location);
       })
       .catch((error) => console.error(error));

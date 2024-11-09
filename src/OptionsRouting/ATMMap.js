@@ -16,7 +16,8 @@ const ATMMap = ({ initialLocation }) => {
         .then((data) => {
           try {
             const parsedData = JSON.parse(data);
-            setAtmLocations(parsedData.results);
+            setAtmLocations(parsedData.results || []);
+            setError(null); // Clear any previous errors
           } catch (error) {
             console.error('Error parsing JSON:', error);
             setError('Failed to parse ATM locations. Please try again later.');
