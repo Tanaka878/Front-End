@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';  // Ensure Marker is imported
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const ATMMap = () => {
   const [atmLocations, setAtmLocations] = useState([]);
   const [currentLocation, setCurrentLocation] = useState(null);
   const [error, setError] = useState(null);
 
-  console.log("Google Maps API Key: ", process.env.REACT_APP_GOOGLE_MAPS_API_KEY); // Debugging: this will print 'undefined' if the env variable isn't loaded
+  console.log("Google Maps API Key:", process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -17,7 +17,7 @@ const ATMMap = () => {
 
           // Fetch ATM locations from the backend
           fetch(`https://distinguished-happiness-production.up.railway.app/api/atm/find?latitude=${latitude}&longitude=${longitude}`)
-            .then((response) => response.text()) // Get the response as text
+            .then((response) => response.text())
             .then((data) => {
               try {
                 const parsedData = JSON.parse(data);
@@ -44,7 +44,7 @@ const ATMMap = () => {
       {error ? (
         <p>{error}</p>
       ) : currentLocation ? (
-        <LoadScript googleMapsApiKey="AIzaSyCik3ghDcozLzhHMyCfMmOlOUSwTR79420"> {/* Hardcoded API Key */}
+        <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
           <GoogleMap
             mapContainerStyle={{ width: '100%', height: '100%' }}
             center={currentLocation}
@@ -57,7 +57,7 @@ const ATMMap = () => {
                   lat: atm.geometry.location.lat,
                   lng: atm.geometry.location.lng,
                 }}
-                title={atm.name} // Display name as tooltip
+                title={atm.name}
               />
             ))}
           </GoogleMap>
