@@ -40,7 +40,7 @@ const ATMMap = () => {
   }, []);
 
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: '100vh',  width:'500px'} }>
       {error ? (
         <p>{error}</p>
       ) : currentLocation ? (
