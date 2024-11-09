@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AddressSearch from './AdressSearch';
+import AddressSearch from './AddressSearch';
 import ATMMap from './ATMMap';
 
 const Maps = () => {
