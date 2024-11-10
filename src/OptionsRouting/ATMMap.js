@@ -86,29 +86,41 @@ const ATMMap = () => {
   const voiceNavigation = (result) => {
     const steps = result.routes[0].legs[0].steps;
     let stepIndex = 0;
-
+  
     const speakStep = () => {
       if (stepIndex < steps.length) {
         const step = steps[stepIndex];
         const speech = new SpeechSynthesisUtterance(step.instructions);
+  
+        // Set voice properties for better clarity
+        speech.rate = 0.3; // Slightly slow, but not too slow
+        speech.pitch = 1.1; // Adjust pitch to improve clarity
+        speech.volume = 1;  // Max volume for projection
+  
+        // Try selecting a higher-quality voice
+        const voices = window.speechSynthesis.getVoices();
+        speech.voice = voices.find((voice) => voice.name.includes('Google')) || voices[0];
+  
+        // Speak the instruction and move to the next step
         window.speechSynthesis.speak(speech);
         stepIndex += 1;
+  
+        // Listen for when the utterance finishes to avoid overlapping
+        speech.onend = () => {
+          if (stepIndex < steps.length) {
+            setTimeout(speakStep, 5000); // Wait before next instruction
+          }
+        };
       }
     };
-
+  
+    // Start the navigation instructions
     speakStep();
-
-    const intervalId = setInterval(() => {
-      speakStep();
-      if (stepIndex >= steps.length) {
-        clearInterval(intervalId);
-      }
-    }, 3000);
   };
-
+  
   return (
     <div style={{ height: '100vh' }}>
-      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+      <LoadScript googleMapsApiKey='AIzaSyCik3ghDcozLzhHMyCfMmOlOUSwTR79420'>
         <GoogleMap
           mapContainerStyle={{ width: '100%', height: '100%' }}
           center={currentLocation || { lat: 0, lng: 0 }}
