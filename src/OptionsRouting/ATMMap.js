@@ -11,9 +11,8 @@ const ATMMap = () => {
 
   const [directionsService, setDirectionsService] = useState(null);
   const [directionsRenderer, setDirectionsRenderer] = useState(null);
-  const [mapInstance, setMapInstance] = useState(null);
+  const [map, setMap] = useState(null);
 
-  // Initialize current location and fetch ATM locations
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -31,15 +30,17 @@ const ATMMap = () => {
     }
   }, []);
 
-  // Initialize DirectionsService and DirectionsRenderer after LoadScript completes
-  const handleMapLoad = (map) => {
-    if (!directionsService && !directionsRenderer) {
-      setDirectionsService(new window.google.maps.DirectionsService());
-      const renderer = new window.google.maps.DirectionsRenderer();
-      renderer.setMap(map);
-      setDirectionsRenderer(renderer);
+  useEffect(() => {
+    if (window.google) {
+      const directionsService = new window.google.maps.DirectionsService();
+      const directionsRenderer = new window.google.maps.DirectionsRenderer();
+      setDirectionsService(directionsService);
+      setDirectionsRenderer(directionsRenderer);
     }
-    setMapInstance(map);
+  }, []);
+
+  const handleMapLoad = (map) => {
+    setMap(map);
   };
 
   const calculateDistance = (lat, lng) => {
@@ -51,14 +52,14 @@ const ATMMap = () => {
     fetch(`https://distinguished-happiness-production.up.railway.app/api/atm/distance?origin=${origin}&destination=${destination}`)
       .then((response) => response.json())
       .then((data) => {
-        setDistance(data.rows[0].elements[0].distance.text);
-        setTime(data.rows[0].elements[0].duration.text);
+        setDistance(data.rows[0].elements[0].distance.text); // Distance as text
+        setTime(data.rows[0].elements[0].duration.text); // Time to reach destination
       })
       .catch((error) => console.error('Error calculating distance:', error));
   };
 
   const startNavigation = (lat, lng) => {
-    if (!directionsService || !directionsRenderer || !mapInstance) {
+    if (!directionsService || !directionsRenderer || !map || !currentLocation) {
       console.error('Directions service, renderer, or map is not initialized yet');
       return;
     }
@@ -75,6 +76,7 @@ const ATMMap = () => {
     directionsService.route(request, (result, status) => {
       if (status === window.google.maps.DirectionsStatus.OK) {
         directionsRenderer.setDirections(result);
+        directionsRenderer.setMap(map);
         setIsNavigating(true);
         voiceNavigation(result);
       } else {
@@ -96,19 +98,21 @@ const ATMMap = () => {
       }
     };
 
+    // Trigger the first voice navigation instruction
     speakStep();
 
+    // Continue with the next voice instructions at intervals
     const intervalId = setInterval(() => {
       speakStep();
       if (stepIndex >= steps.length) {
-        clearInterval(intervalId);
+        clearInterval(intervalId); // Stop the interval when all steps are spoken
       }
-    }, 3000);
+    }, 3000); // Delay between instructions
   };
 
   return (
     <div style={{ height: '100vh' }}>
-      <LoadScript googleMapsApiKey='AIzaSyCik3ghDcozLzhHMyCfMmOlOUSwTR79420'>
+      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
         <GoogleMap
           mapContainerStyle={{ width: '100%', height: '100%' }}
           center={currentLocation || { lat: 0, lng: 0 }}
