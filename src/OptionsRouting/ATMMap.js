@@ -93,7 +93,7 @@ const ATMMap = () => {
         const speech = new SpeechSynthesisUtterance(step.instructions);
   
         // Set voice properties for better clarity
-        speech.rate = 0.7; // Slightly slow, but not too slow
+        speech.rate = 0.8; // Slightly slow, but not too slow
         speech.pitch = 1.1; // Adjust pitch to improve clarity
         speech.volume = 1;  // Max volume for projection
   
