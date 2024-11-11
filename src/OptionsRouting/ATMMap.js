@@ -13,7 +13,7 @@ const ATMMap = () => {
   const [directionsRenderer, setDirectionsRenderer] = useState(null);
   const [mapInstance, setMapInstance] = useState(null);
 
-  // Initialize current location and fetch ATM locations
+  
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -31,7 +31,6 @@ const ATMMap = () => {
     }
   }, []);
 
-  // Initialize DirectionsService and DirectionsRenderer after LoadScript completes
   const handleMapLoad = (map) => {
     if (!directionsService && !directionsRenderer) {
       setDirectionsService(new window.google.maps.DirectionsService());
@@ -92,29 +91,29 @@ const ATMMap = () => {
         const step = steps[stepIndex];
         const speech = new SpeechSynthesisUtterance(step.instructions);
   
-        // Set voice properties for better clarity
-        speech.rate = 0.8; // Slightly slow, but not too slow
-        speech.pitch = 1.1; // Adjust pitch to improve clarity
-        speech.volume = 1;  // Max volume for projection
+        
+        speech.rate = 0.8; 
+        speech.pitch = 1.1; 
+        speech.volume = 1; 
   
-        // Try selecting a higher-quality voice
+ 
         const voices = window.speechSynthesis.getVoices();
         speech.voice = voices.find((voice) => voice.name.includes('Google')) || voices[0];
   
-        // Speak the instruction and move to the next step
+     
         window.speechSynthesis.speak(speech);
         stepIndex += 1;
   
-        // Listen for when the utterance finishes to avoid overlapping
+        
         speech.onend = () => {
           if (stepIndex < steps.length) {
-            setTimeout(speakStep, 5000); // Wait before next instruction
+            setTimeout(speakStep, 5000); 
           }
         };
       }
     };
   
-    // Start the navigation instructions
+   
     speakStep();
   };
   

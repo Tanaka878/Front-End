@@ -212,7 +212,7 @@ feesNav{
 
 .submitButton:hover {
   background-color: #0056b3;
-}
+} 
 
 /* Style for conditional render message */
 .conditionalRender {
@@ -221,7 +221,7 @@ feesNav{
   margin-bottom: 15px;
 }
 
-/* Style for the footer */
+/* Style for the footer */ 
 footer {
   text-align: center;
   margin-top: 20px;
@@ -282,7 +282,7 @@ footer small {
   border-radius: 8px;
   padding: 15px;
   width: calc(25% - 20px); /* Adjust width to fit four cards per row, considering the gap */
-  text-align: center;
+  text-align: center; 
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
