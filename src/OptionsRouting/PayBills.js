@@ -138,6 +138,7 @@ const PayBills = ({ AccountHolder, bal }) => {
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 400px;
+            margin-top: 20px;
           }
 
           label {
@@ -199,6 +200,17 @@ const PayBills = ({ AccountHolder, bal }) => {
 
             label, select, input, .pay-bills, a {
               font-size: 16px;
+            }
+          }
+          
+          @media (min-width: 769px) {
+            .pay-bills-container {
+              height: 100vh; /* Ensure the container takes the full viewport height */
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              margin-left:400px;
             }
           }
         `}

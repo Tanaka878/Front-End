@@ -34,7 +34,7 @@ const ChangePassword = ({ Email }) => {
     try {
       const response = await axios.post(
         `https://distinguished-happiness-production.up.railway.app/customer/changePassword/${Email}/${formData.newPassword}`,
-        {}, // Axios requires an empty object as the body for POST without data
+        {}, 
         {
           headers: {
             "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const ChangePassword = ({ Email }) => {
 
       if (response.status === 200) {
         setSuccessMessage("Password changed successfully!");
-        navigate('/'); // Redirect to login or another page
+        navigate('/'); 
       }
     } catch (err) {
       if (err.response && err.response.status === 404) {
@@ -65,10 +65,11 @@ const ChangePassword = ({ Email }) => {
       height: '100vh',
       fontFamily: 'Roboto, sans-serif',
       backgroundColor: '#f9f9f9',
-      marginLeft:"400px"
+      padding: '0 20px',  // Adds padding for mobile
     },
     form: {
-      width: '300px',
+      width: '100%',
+      maxWidth: '400px', // Center on desktop
       padding: '20px',
       borderRadius: '10px',
       boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
