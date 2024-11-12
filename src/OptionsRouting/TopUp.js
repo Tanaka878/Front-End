@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const TopUp = (props) => {
-  const navigate = useNavigate(); // Initialize useNavigate
-  const [topUp, changeData] = React.useState({
+  const navigate = useNavigate();
+  const [topUp, setTopUp] = React.useState({
     number: '',
     amount: ''
   });
@@ -12,14 +12,16 @@ const TopUp = (props) => {
   // Handle form input changes
   function handleChange(event) {
     const { name, value } = event.target;
-    changeData((prevData) => ({
+    setTopUp((prevData) => ({
       ...prevData,
       [name]: value
     }));
   }
+
+  // Handle the top-up form submission
   function handleTopUp(event) {
-    event.preventDefault(); // Prevent page reload
-  
+    event.preventDefault();
+
     fetch(`https://distinguished-happiness-production.up.railway.app/banking/top-up/${props.Email}/${topUp.amount}/${topUp.number}`, {
       method: "POST",
       headers: {
@@ -30,16 +32,17 @@ const TopUp = (props) => {
       if (!response.ok) {
         throw new Error("Top-up failed.");
       }
-      return response.text(); // Assuming backend returns a plain text message
+      return response.text();
     })
     .then(data => {
       console.log("Top-up successful:", data);
+      alert("Top-up successful.");
     })
     .catch((error) => {
       console.error("Error:", error);
+      alert("Top-up failed. Please try again.");
     });
   }
-  
 
   return (
     <div className="topup-container">
@@ -71,26 +74,27 @@ const TopUp = (props) => {
         <button type="submit" className="topup-button">Top Up</button>
       </form>
 
-      <button onClick={() => navigate('/optionPage')} className="back-button">Back to Home</button> {/* Back button */}
-      
+      <button onClick={() => navigate('/optionPage')} className="back-button">Back to Home</button>
+
       <style>
         {`
-          /* Importing a Google font for a modern look */
+          /* Google font import */
           @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-          /* General styling */
+          /* Main container styling */
           .topup-container {
             font-family: 'Roboto', sans-serif;
             color: #333;
             padding: 20px;
             background-color: #f9f9f9;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            margin-left: 400px;
+            min-height: 100vh;
+            width: 100vw;
+            box-sizing: border-box;
           }
 
           /* Form styling */
@@ -112,6 +116,7 @@ const TopUp = (props) => {
             font-size: 18px;
           }
 
+          /* Input styling */
           .topup-input {
             width: 100%;
             padding: 12px;
@@ -127,6 +132,7 @@ const TopUp = (props) => {
             outline: none;
           }
 
+          /* Submit button styling */
           .topup-button {
             background-color: #4CAF50;
             color: white;
@@ -145,8 +151,9 @@ const TopUp = (props) => {
             background-color: #45a049;
           }
 
+          /* Back button styling */
           .back-button {
-            background-color: #f44336; /* Red background for the back button */
+            background-color: #f44336;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -159,18 +166,21 @@ const TopUp = (props) => {
           }
 
           .back-button:hover {
-            background-color: #d32f2f; /* Darker red on hover */
+            background-color: #d32f2f;
           }
 
-          /* Responsive styling */
+          /* Responsive styling for mobile devices */
           @media (max-width: 768px) {
             .topup-container {
               padding: 10px;
+              min-height: 100vh;
+              width: 100%;
             }
 
             .topup-form {
               padding: 15px;
-              width: 90%;
+              width: 100%;
+              max-width: 100%;
             }
 
             label,
