@@ -26,38 +26,40 @@ const TransactionHistory = (props) => {
   return (
     <div style={styles.transactionHistory}>
       <h2 style={styles.heading}>Transaction History</h2>
-      <table style={styles.table}>
-        <thead>
-          <tr>
-            <th style={styles.tableHeader}>Account Holder</th>
-            <th style={styles.tableHeader}>Receiver</th>
-            <th style={styles.tableHeader}>Amount</th>
-            <th style={styles.tableHeader}>Date</th>
-            <th style={styles.tableHeader}>Transaction Type</th>
-            <th style={styles.tableHeader}>Status</th>
-            <th style={styles.tableHeader}>Comment</th>
-            <th style={styles.tableHeader}>Bank Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((transaction) => (
-            <tr key={transaction.id}>
-              <td style={styles.tableCell}>{transaction.accountHolder}</td>
-              <td style={styles.tableCell}>{transaction.receiver}</td>
-              <td style={styles.tableCell}>${transaction.amount.toFixed(2)}</td>
-              <td style={styles.tableCell}>{new Date(transaction.localDate).toLocaleDateString()}</td>
-              <td style={{ ...styles.tableCell, ...styles[transaction.transactionType.toLowerCase()] }}>
-                {transaction.transactionType}
-              </td>
-              <td style={{ ...styles.tableCell, ...styles[transaction.status.toLowerCase()] }}>
-                {transaction.status}
-              </td>
-              <td style={styles.tableCell}>{transaction.comment}</td>
-              <td style={styles.tableCell}>{transaction.bankName}</td>
+      <div style={styles.tableContainer}>
+        <table style={styles.table}>
+          <thead>
+            <tr>
+              <th style={styles.tableHeader}>Account Holder</th>
+              <th style={styles.tableHeader}>Receiver</th>
+              <th style={styles.tableHeader}>Amount</th>
+              <th style={styles.tableHeader}>Date</th>
+              <th style={styles.tableHeader}>Transaction Type</th>
+              <th style={styles.tableHeader}>Status</th>
+              <th style={styles.tableHeader}>Comment</th>
+              <th style={styles.tableHeader}>Bank Name</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {transactions.map((transaction) => (
+              <tr key={transaction.id}>
+                <td style={styles.tableCell}>{transaction.accountHolder}</td>
+                <td style={styles.tableCell}>{transaction.receiver}</td>
+                <td style={styles.tableCell}>${transaction.amount.toFixed(2)}</td>
+                <td style={styles.tableCell}>{new Date(transaction.localDate).toLocaleDateString()}</td>
+                <td style={{ ...styles.tableCell, ...styles[transaction.transactionType.toLowerCase()] }}>
+                  {transaction.transactionType}
+                </td>
+                <td style={{ ...styles.tableCell, ...styles[transaction.status.toLowerCase()] }}>
+                  {transaction.status}
+                </td>
+                <td style={styles.tableCell}>{transaction.comment}</td>
+                <td style={styles.tableCell}>{transaction.bankName}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       
       <button style={styles.button} onClick={goToHome}>
         Home
@@ -70,6 +72,8 @@ const styles = {
   transactionHistory: {
     padding: '20px',
     fontFamily: 'Arial, sans-serif',
+    maxWidth: '100%',
+    overflowX: 'auto',
   },
   heading: {
     textAlign: 'center',
@@ -86,11 +90,18 @@ const styles = {
     borderRadius: '5px',
     cursor: 'pointer',
     transition: 'background-color 0.3s ease',
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  tableContainer: {
+    overflowX: 'auto', // Allow horizontal scroll on smaller screens
   },
   table: {
     width: '100%',
     borderCollapse: 'collapse',
     marginTop: '20px',
+    minWidth: '600px', // Minimum width to avoid text wrapping on small screens
   },
   tableHeader: {
     padding: '10px',
@@ -102,6 +113,7 @@ const styles = {
     padding: '10px',
     textAlign: 'center',
     border: '1px solid #ddd',
+    wordBreak: 'break-word', // Prevent overflow of long text
   },
   credit: {
     color: '#4CAF50', // Green for credit
@@ -119,6 +131,21 @@ const styles = {
   },
   pending: {
     color: '#F39C12', // Yellow for pending
+  },
+  // Media query for mobile responsiveness
+  '@media (max-width: 768px)': {
+    tableHeader: {
+      fontSize: '12px',
+      padding: '8px',
+    },
+    tableCell: {
+      fontSize: '12px',
+      padding: '8px',
+    },
+    button: {
+      fontSize: '0.9em',
+      padding: '8px 16px',
+    },
   },
 };
 
