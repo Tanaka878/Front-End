@@ -1,13 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-no-comment-text */
-import React from 'react';
+import React, { useState } from 'react';
 import BillImage from './Images/paying.webp';
 import { Link } from 'react-router-dom';
 
-const PayBills = (props) => {
-  let value = props.bal;
-
-  const [transactionData, changeTransactionData] = React.useState({
+const PayBills = ({ AccountHolder, bal }) => {
+  const [transactionData, setTransactionData] = useState({
     receiverOption: "",
     amountTobePayed: ""
   });
@@ -16,7 +14,7 @@ const PayBills = (props) => {
   async function payBillsTransaction() {
     try {
       const response = await fetch(
-        `https://distinguished-happiness-production.up.railway.app/banking/payBills/${props.AccountHolder}/${transactionData.receiverOption}/${transactionData.amountTobePayed}`, 
+        `https://distinguished-happiness-production.up.railway.app/banking/payBills/${AccountHolder}/${transactionData.receiverOption}/${transactionData.amountTobePayed}`, 
         {
           method: "POST",
           headers: {
@@ -33,15 +31,17 @@ const PayBills = (props) => {
     }
   }
 
-  async function transaction() {
-    if (value >= parseFloat(transactionData.amountTobePayed)) {
+  // Handle transaction submission
+  async function handleTransaction() {
+    if (bal >= parseFloat(transactionData.amountTobePayed)) {
       await payBillsTransaction();
-      changeTransactionData({ receiverOption: "", amountTobePayed: "" });
+      setTransactionData({ receiverOption: "", amountTobePayed: "" });
     } else {
       alert("Insufficient funds.");
     }
   }
 
+  // Handle form submission
   function handleSubmit(event) {
     event.preventDefault();
     const amount = parseFloat(transactionData.amountTobePayed);
@@ -51,12 +51,13 @@ const PayBills = (props) => {
       return;
     }
 
-    transaction();
+    handleTransaction();
   }
 
-  function handleFormChange(event) {
+  // Handle input changes
+  function handleInputChange(event) {
     const { name, value } = event.target;
-    changeTransactionData((prev) => ({
+    setTransactionData((prev) => ({
       ...prev,
       [name]: value
     }));
@@ -67,46 +68,45 @@ const PayBills = (props) => {
       <img src={BillImage} height={200} width={250} className="bill-image" />
 
       <div className="balance-display">
-        <h2>Your Current Balance: ${value}</h2>
+        <h2>Your Current Balance: ${bal}</h2>
       </div>
 
       <form onSubmit={handleSubmit} className="pay-bills-form">
-        <label htmlFor='receiverOption'>Select Receiver</label>
+        <label htmlFor="receiverOption">Select Receiver</label>
         <select
-          id='receiverOption'
-          onChange={handleFormChange}
-          name='receiverOption'
+          id="receiverOption"
+          name="receiverOption"
           value={transactionData.receiverOption}
+          onChange={handleInputChange}
         >
-          <option value='' disabled>Select an option</option>
-          <option value='ZINARA'>ZINARA</option>
-          <option value='ZIMRA'>ZIMRA</option>
-          <option value='ZINWA'>ZINWA</option>
-          <option value='ZESA'>ZESA</option>
-          <option value='LIQUID TELCOM'>LIQUID TELCOM</option>
-          <option value='TEL-ONE'>TEL-ONE</option>
+          <option value="" disabled>Select an option</option>
+          <option value="ZINARA">ZINARA</option>
+          <option value="ZIMRA">ZIMRA</option>
+          <option value="ZINWA">ZINWA</option>
+          <option value="ZESA">ZESA</option>
+          <option value="LIQUID TELCOM">LIQUID TELCOM</option>
+          <option value="TEL-ONE">TEL-ONE</option>
         </select>
 
-        <label htmlFor='amountTobePayed'>Amount $ :</label>
+        <label htmlFor="amountTobePayed">Amount $:</label>
         <input
-          type='text'
-          placeholder='Amount $'
-          name='amountTobePayed'
-          onChange={handleFormChange}
+          type="text"
+          id="amountTobePayed"
+          name="amountTobePayed"
+          placeholder="Amount $"
           value={transactionData.amountTobePayed}
+          onChange={handleInputChange}
         />
 
-        <button className='pay-bills'>Transact</button>
+        <button type="submit" className="pay-bills">Transact</button>
       </form>
 
-      <Link to={'/OptionPage'}>Home Page</Link>
+      <Link to="/OptionPage">Home Page</Link>
 
       <style>
         {`
-          /* Importing a Google font for a modern look */
           @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-          /* General styling */
           .pay-bills-container {
             font-family: 'Roboto', sans-serif;
             color: #333;
@@ -118,14 +118,12 @@ const PayBills = (props) => {
             align-items: center;
             justify-content: center;
             text-align: center;
-            margin-left: 400px;
           }
 
           .bill-image {
             margin-bottom: 20px;
           }
 
-          /* Balance display styling */
           .balance-display {
             margin: 20px 0;
             font-size: 24px;
@@ -133,7 +131,6 @@ const PayBills = (props) => {
             color: #4CAF50;
           }
 
-          /* Form styling */
           .pay-bills-form {
             background-color: white;
             padding: 20px;
@@ -141,7 +138,6 @@ const PayBills = (props) => {
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 400px;
-            margin: 0 auto;
           }
 
           label {
@@ -149,7 +145,6 @@ const PayBills = (props) => {
             margin: 15px 0 5px;
             font-weight: 700;
             color: #555;
-            font-size: 18px;
           }
 
           select, input {
@@ -157,8 +152,6 @@ const PayBills = (props) => {
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 18px;
             margin-bottom: 20px;
           }
 
@@ -177,29 +170,23 @@ const PayBills = (props) => {
             font-size: 18px;
             font-weight: 700;
             transition: background-color 0.3s ease;
-            display: block;
-            margin: 20px auto;
           }
 
           .pay-bills:hover {
             background-color: #45a049;
           }
 
-          /* Link styling */
           a {
             color: #4CAF50;
             text-decoration: none;
             font-weight: 700;
             margin-top: 20px;
-            display: block;
-            font-size: 18px;
           }
 
           a:hover {
             text-decoration: underline;
           }
 
-          /* Responsive styling */
           @media (max-width: 768px) {
             .pay-bills-container {
               padding: 10px;
@@ -210,11 +197,7 @@ const PayBills = (props) => {
               width: 90%;
             }
 
-            label,
-            select,
-            input,
-            .pay-bills,
-            a {
+            label, select, input, .pay-bills, a {
               font-size: 16px;
             }
           }
@@ -222,6 +205,6 @@ const PayBills = (props) => {
       </style>
     </div>
   );
-}
+};
 
 export default PayBills;
