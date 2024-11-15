@@ -43,21 +43,20 @@ const LoanApplication = () => {
   };
 
   const handleCancel = () => {
-    // Reset form fields and navigate back to previous page
     setFormData({
       fullName: '',
       email: '',
       loanAmount: '',
       loanTerm: '',
-     
     });
     navigate("/optionPage"); 
   };
 
   return (
     <div className="loan-application-container">
-      <h2>Loan Application</h2>
+      
       <form onSubmit={handleSubmit} className="loan-application-form">
+      <h2>Loan Application</h2>
         <label htmlFor="fullName">Full Name:</label>
         <input
           type="text"
@@ -94,119 +93,135 @@ const LoanApplication = () => {
           required
         />
 
-        
-
         <button type="submit" className="submit-button">Apply</button>
         <button type="button" onClick={handleCancel} className="cancel-button">Cancel</button>
       </form>
 
       <style>
         {`
-          /* General styling */
-          .loan-application-container {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f9f9f9;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 40px;
-            margin-left:400px;
-          }
+          
+ {
+  margin: 0;
+  padding:0;
+  box-sizing: border-box;
+}
 
-          h2 {
-            font-size: 28px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 20px;
-          }
 
-          /* Form styling */
-          .loan-application-form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 500px;
-          }
+html, body {
+  height: 100%;
+}
 
-          label {
-            display: block;
-            margin: 15px 0 5px;
-            font-weight: 700;
-            color: #555;
-            font-size: 18px;
-          }
+.loan-application-container {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-          input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 18px;
-            margin-bottom: 20px;
-          }
 
-          input:focus {
-            border-color: #4CAF50;
-            outline: none;
-          }
+.loan-application-container h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
 
-          .submit-button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: 700;
-            transition: background-color 0.3s ease;
-            display: block;
-            margin: 20px auto;
-          }
+.loan-application-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
 
-          .submit-button:hover {
-            background-color: #45a049;
-          }
+.loan-application-form label {
+  display: block;
+  margin: 15px 0 5px;
+  font-weight: 700;
+  color: #555;
+  font-size: 18px;
+}
 
-          .cancel-button {
-            background-color: #f44336;
-            color: white;
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: 700;
-            transition: background-color 0.3s ease;
-            display: block;
-            margin: 10px auto;
-          }
 
-          .cancel-button:hover {
-            background-color: #d32f2f;
-          }
+.loan-application-form input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
 
-          /* Responsive styling */
-          @media (max-width: 768px) {
-            .loan-application-container {
-              padding: 20px;
-            }
+.loan-application-form input:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
 
-            .loan-application-form {
-              padding: 15px;
-              width: 90%;
-            }
 
-            label, input, .submit-button, .cancel-button {
-              font-size: 16px;
-            }
-          }
+.loan-application-form .submit-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin: 20px auto;
+}
+
+.loan-application-form .submit-button:hover {
+  background-color: #45a049;
+}
+
+
+.loan-application-form .cancel-button {
+  background-color: #f44336;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin: 10px auto;
+}
+
+.loan-application-form .cancel-button:hover {
+  background-color: #d32f2f;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .loan-application-container {
+    padding: 20px;
+  }
+
+  .loan-application-form {
+    padding: 15px;
+    width: 90%;
+  }
+
+  .loan-application-form label,
+  .loan-application-form input,
+  .loan-application-form .submit-button,
+  .loan-application-form .cancel-button {
+    font-size: 16px;
+  }
+}
+
         `}
       </style>
     </div>
