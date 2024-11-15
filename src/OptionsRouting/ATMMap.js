@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker, InfoWindow, DirectionsRenderer } from '@react-google-maps/api';
 
 const ATMMap = () => {
   const [atmLocations, setAtmLocations] = useState([]);
@@ -7,13 +7,13 @@ const ATMMap = () => {
   const [selectedATM, setSelectedATM] = useState(null);
   const [distance, setDistance] = useState(null);
   const [time, setTime] = useState(null);
-  const [isNavigating, setIsNavigating] = useState(false);
+  const [route, setRoute] = useState(null);
+  const [navigationSteps, setNavigationSteps] = useState([]);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
-  const [directionsService, setDirectionsService] = useState(null);
-  const [directionsRenderer, setDirectionsRenderer] = useState(null);
-  const [mapInstance, setMapInstance] = useState(null);
+  const userLocationIcon = 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+  const atmLocationIcon = 'https://maps.google.com/mapfiles/ms/icons/red-dot.png';
 
-  
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -31,16 +31,6 @@ const ATMMap = () => {
     }
   }, []);
 
-  const handleMapLoad = (map) => {
-    if (!directionsService && !directionsRenderer) {
-      setDirectionsService(new window.google.maps.DirectionsService());
-      const renderer = new window.google.maps.DirectionsRenderer();
-      renderer.setMap(map);
-      setDirectionsRenderer(renderer);
-    }
-    setMapInstance(map);
-  };
-
   const calculateDistance = (lat, lng) => {
     if (!currentLocation) return;
 
@@ -56,15 +46,19 @@ const ATMMap = () => {
       .catch((error) => console.error('Error calculating distance:', error));
   };
 
-  const startNavigation = (lat, lng) => {
-    if (!directionsService || !directionsRenderer || !mapInstance) {
-      console.error('Directions service, renderer, or map is not initialized yet');
-      return;
-    }
+  const speak = (text) => {
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = 'en-US';
+    window.speechSynthesis.speak(speech);
+  };
 
-    const destination = new window.google.maps.LatLng(lat, lng);
+  const startNavigation = () => {
+    if (!currentLocation || !selectedATM) return;
+
     const origin = new window.google.maps.LatLng(currentLocation.lat, currentLocation.lng);
+    const destination = new window.google.maps.LatLng(selectedATM.geometry.location.lat, selectedATM.geometry.location.lng);
 
+    const directionsService = new window.google.maps.DirectionsService();
     const request = {
       origin: origin,
       destination: destination,
@@ -73,62 +67,75 @@ const ATMMap = () => {
 
     directionsService.route(request, (result, status) => {
       if (status === window.google.maps.DirectionsStatus.OK) {
-        directionsRenderer.setDirections(result);
-        setIsNavigating(true);
-        voiceNavigation(result);
+        setRoute(result);
+        const steps = result.routes[0].legs[0].steps;
+        setNavigationSteps(steps);
+        setCurrentStepIndex(0);
+        speak(`Starting navigation to ${selectedATM.name}`);
       } else {
         alert('Could not get directions.');
       }
     });
   };
 
-  const voiceNavigation = (result) => {
-    const steps = result.routes[0].legs[0].steps;
-    let stepIndex = 0;
-  
-    const speakStep = () => {
-      if (stepIndex < steps.length) {
-        const step = steps[stepIndex];
-        const speech = new SpeechSynthesisUtterance(step.instructions);
-  
-        
-        speech.rate = 0.8; 
-        speech.pitch = 1.1; 
-        speech.volume = 1; 
-  
- 
-        const voices = window.speechSynthesis.getVoices();
-        speech.voice = voices.find((voice) => voice.name.includes('Google')) || voices[0];
-  
-     
-        window.speechSynthesis.speak(speech);
-        stepIndex += 1;
-  
-        
-        speech.onend = () => {
-          if (stepIndex < steps.length) {
-            setTimeout(speakStep, 5000); 
-          }
-        };
-      }
-    };
-  
-   
-    speakStep();
-  };
-  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!navigationSteps.length || currentStepIndex >= navigationSteps.length) return;
+
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { lat, lng } = position.coords;
+        const nextStep = navigationSteps[currentStepIndex];
+        const nextStepLocation = nextStep.end_location;
+
+        const distance = window.google.maps.geometry.spherical.computeDistanceBetween(
+          new window.google.maps.LatLng(lat, lng),
+          new window.google.maps.LatLng(nextStepLocation.lat, nextStepLocation.lng)
+        );
+
+        if (distance < 50) {
+          setCurrentStepIndex((prevIndex) => prevIndex + 1);
+          speak(nextStep.instructions.replace(/<[^>]+>/g, ''));
+        }
+      });
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [navigationSteps, currentStepIndex]);
+
+  useEffect(() => {
+    if (currentStepIndex === navigationSteps.length && navigationSteps.length > 0) {
+      speak('You have arrived at your destination.');
+      setNavigationSteps([]);
+      setCurrentStepIndex(0);
+    }
+  }, [currentStepIndex, navigationSteps]);
+
   return (
-    <div style={{ height: '100vh' }}>
-      <LoadScript googleMapsApiKey='AIzaSyCik3ghDcozLzhHMyCfMmOlOUSwTR79420'>
+    <div className="map-container">
+      {/* Navigation Ribbon */}
+      <div className="navigation-ribbon">
+        {navigationSteps.length > 0 && currentStepIndex < navigationSteps.length && (
+          <p>{navigationSteps[currentStepIndex].instructions.replace(/<[^>]+>/g, '')}</p>
+        )}
+      </div>
+
+      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
         <GoogleMap
           mapContainerStyle={{ width: '100%', height: '100%' }}
           center={currentLocation || { lat: 0, lng: 0 }}
           zoom={14}
-          onLoad={handleMapLoad}
         >
           {currentLocation && (
-            <Marker position={currentLocation} title="Your Location" />
+            <Marker
+              position={currentLocation}
+              title="Your Location"
+              icon={{
+                url: userLocationIcon,
+                scaledSize: new window.google.maps.Size(30, 30),
+              }}
+            />
           )}
+
           {atmLocations.map((atm, index) => (
             <Marker
               key={index}
@@ -137,12 +144,17 @@ const ATMMap = () => {
                 lng: atm.geometry.location.lng,
               }}
               title={atm.name}
+              icon={{
+                url: atmLocationIcon,
+                scaledSize: new window.google.maps.Size(30, 30),
+              }}
               onClick={() => {
                 setSelectedATM(atm);
                 calculateDistance(atm.geometry.location.lat, atm.geometry.location.lng);
               }}
             />
           ))}
+
           {selectedATM && (
             <InfoWindow
               position={{
@@ -153,23 +165,58 @@ const ATMMap = () => {
                 setSelectedATM(null);
                 setDistance(null);
                 setTime(null);
-                setIsNavigating(false);
+                setRoute(null);
               }}
             >
               <div>
                 <h3>{selectedATM.name}</h3>
                 <p>{distance ? `Distance: ${distance}` : 'Calculating distance...'}</p>
                 <p>{time ? `Estimated Time: ${time}` : 'Calculating time...'}</p>
-                <button
-                  onClick={() => startNavigation(selectedATM.geometry.location.lat, selectedATM.geometry.location.lng)}
-                >
-                  Start Navigation
-                </button>
+                <button onClick={startNavigation}>Start Navigation</button>
               </div>
             </InfoWindow>
           )}
+
+          {route && (
+            <DirectionsRenderer
+              directions={route}
+              options={{
+                suppressMarkers: true,
+                polylineOptions: {
+                  strokeColor: '#007bff',
+                  strokeOpacity: 0.7,
+                  strokeWeight: 5,
+                },
+              }}
+            />
+          )}
         </GoogleMap>
       </LoadScript>
+
+      <style>
+        {`
+          .map-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f1f1f1;
+          }
+
+          .navigation-ribbon {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 16px;
+            z-index: 1000;
+          }
+        `}
+      </style>
     </div>
   );
 };
