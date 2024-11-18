@@ -93,8 +93,12 @@ const ATMMap = () => {
         );
 
         if (distance < 50) {
+          // Announce instruction
+          const instruction = nextStep.instructions.replace(/<[^>]+>/g, '');
+          speak(instruction);
+
+          // Move to next step
           setCurrentStepIndex((prevIndex) => prevIndex + 1);
-          speak(nextStep.instructions.replace(/<[^>]+>/g, ''));
         }
       });
     }, 5000);
@@ -119,7 +123,7 @@ const ATMMap = () => {
         )}
       </div>
 
-      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+      <LoadScript googleMapsApiKey="AIzaSyCik3ghDcozLzhHMyCfMmOlOUSwTR79420">
         <GoogleMap
           mapContainerStyle={{ width: '100%', height: '100%' }}
           center={currentLocation || { lat: 0, lng: 0 }}

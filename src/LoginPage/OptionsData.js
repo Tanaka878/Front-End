@@ -67,6 +67,16 @@ export default [
         "url": "pay.png",
         "textValue": "Instant Loan"
     }
+    , {
+        "id": 10,
+        "itemName": "Profile",
+        "val": true, 
+        "url": "pay.png",
+        "textValue": "Profile"
+    }
+
+   
+
 
 
 ];

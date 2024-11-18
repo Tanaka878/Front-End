@@ -17,6 +17,7 @@ import ATMMap from './OptionsRouting/ATMMap';
 import Maps from './OptionsRouting/Maps';
 import AddressSearch from './OptionsRouting/AdressSearch';
 import LoanApplication from './OptionsRouting/LoanApplication';
+import Profile from './OptionsRouting/Profile';
 
 function App() {
 
@@ -123,6 +124,13 @@ function App() {
                                 Email={userDetails.Email}/> 
                             }
                                 />
+
+        <Route exact path='/Profile' element={<Profile name={userDetails.name} 
+                                        bal={Math.trunc(userDetails.AccBalance)} 
+                                        AccountHolder={userDetails.AccountHolder}
+                                        Email={userDetails.Email}/> 
+                                    }
+                                        />
 
 
 

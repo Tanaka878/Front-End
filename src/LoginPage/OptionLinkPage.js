@@ -43,6 +43,9 @@ const OptionLinkPage = (props) => {
         else if(itemId ==9){
             navigate("/LoanApplication")
         }
+        else if(itemId === 10){
+            navigate("/Profile")
+        }
     }
 
     // Function to handle logout
