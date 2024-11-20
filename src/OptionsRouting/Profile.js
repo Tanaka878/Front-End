@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Profile = (props) => {
   const [user, setUser] = useState(null); // State to hold user data
   const [loading, setLoading] = useState(true); // State for loading indicator
   const [error, setError] = useState(null); // State for error handling
   const [showPassword, setShowPassword] = useState(false); // Toggle password visibility
+  const nav = useNavigate();
+
+  function Home(){
+   
+    nav("/")
+
+  }
 
   // Fetch data from the backend
   useEffect(() => {
@@ -61,6 +69,13 @@ const Profile = (props) => {
           <strong>Email:</strong> {user.email}
         </div>
         <div style={styles.detail}>
+          <strong>JoinDate :</strong> {user.localDate}
+        </div>
+
+        <div style={styles.detail}>
+          <strong>Address :</strong> No Data
+        </div>
+        <div style={styles.detail}>
           <strong>Password:</strong>{" "}
           <span>
             {showPassword ? user.password : "●●●●●●●●"}
@@ -71,8 +86,14 @@ const Profile = (props) => {
           >
             {showPassword ? "Hide" : "Show"}
           </button>
+
+          <hr></hr>
+
+          <button onClick={Home} className="logout">Home</button>
+          
         </div>
       </div>
+      
     </div>
   );
 };
@@ -85,9 +106,22 @@ const styles = {
     height: "100vh",
     backgroundColor: "#eaeaea",
     padding: "20px",
-    boxSizing: "border-box", 
-    marginLeft:"auto",
-    marginRight:"auto"// Ensure padding doesn't affect layout
+    boxSizing: "border-box",
+    marginLeft: "auto",
+    marginRight: "auto", // Ensure padding doesn't affect layout
+  },
+  logout: {
+    backgroundColor: "#f44336",
+    color: "white",
+    border: "none",
+    padding: "12px 24px",
+    cursor: "pointer",
+    fontSize: "1.25rem",
+    transition: "background-color 0.3s ease",
+    borderRadius: "15px",
+  },
+  logoutHover: {
+    backgroundColor: "#41bf71",
   },
   loader: {
     width: "50px",
@@ -152,7 +186,12 @@ globalStyles.innerHTML = `
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+  button.logout:hover {
+    background-color: #d32f2f;
+  }
 `;
+document.head.appendChild(globalStyles);
+
 document.head.appendChild(globalStyles);
 
 export default Profile;
