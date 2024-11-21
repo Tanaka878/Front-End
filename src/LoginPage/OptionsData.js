@@ -46,7 +46,7 @@ export default [
         "id": 7,
         "itemName": "Change Password",
         "val": true, // or false, depending on your requirement
-        "url": "pay.png",
+        "url": "passwordchange.webp",
         "textValue": "Change Password"
     },
 
@@ -54,7 +54,7 @@ export default [
         "id": 8,
         "itemName": "ATM Finder",
         "val": true, 
-        "url": "pay.png",
+        "url": "location.jpg",
         "textValue": "ATM Finder"
     }
 
@@ -64,14 +64,14 @@ export default [
         "id": 9,
         "itemName": "Instant Loan",
         "val": true, 
-        "url": "pay.png",
+        "url": "instantLoan.webp",
         "textValue": "Instant Loan"
     }
     , {
         "id": 10,
         "itemName": "Profile",
         "val": true, 
-        "url": "pay.png",
+        "url": "prof.png",
         "textValue": "Profile"
     }
 

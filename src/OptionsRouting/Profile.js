@@ -75,6 +75,10 @@ const Profile = (props) => {
         </div>
 
         <div style={styles.detail}>
+          <strong>Gender :</strong> {user.gender}
+        </div>
+
+        <div style={styles.detail}>
           <strong>Address :</strong> No Data
         </div>
         <div style={styles.detail}>

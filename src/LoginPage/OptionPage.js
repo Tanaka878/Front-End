@@ -9,10 +9,14 @@ const OptionPage = (props) => {
     onClick={()=>props.click(props.SelectionId)}>
       
       <img
-      src={`./Images/${props.i}`}
-      height={100}
-      width={100}
-      />
+  src={require(`./Images/${props.i}`)}
+  alt="Dynamic user profile"
+  height={100}
+  width={100}
+  onError={(e) => (e.target.src = require("./Images/male.jpg"))}
+  
+/>
+
 
       <h2>{props.text}</h2>
       {console.log(props.i)}  

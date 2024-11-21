@@ -164,7 +164,7 @@ const ChangePassword = ({ Email }) => {
 
           <button type="submit" style={styles.button}>Change Password</button>
         </form>
-        <button style={styles.navButton} onClick={() => navigate('/')}>
+        <button style={styles.navButton} onClick={() => navigate('/optionPage')}>
           Back to Home
         </button>
       </div>
