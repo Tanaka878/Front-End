@@ -13,13 +13,12 @@ const OptionPage = (props) => {
   alt="Dynamic user profile"
   height={100}
   width={100}
-  onError={(e) => (e.target.src = require("./Images/male.jpg"))}
   
 />
 
 
       <h2>{props.text}</h2>
-      {console.log(props.i)}  
+      {console.log("image file",props.i)}  
     </div>
   )
 }
