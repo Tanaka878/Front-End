@@ -10,7 +10,7 @@ const Profile = (props) => {
 
   function Home(){
    
-    nav("/")
+    nav("/optionPage")
 
   }
 
@@ -56,11 +56,13 @@ const Profile = (props) => {
     <div style={styles.container}>
       <div style={styles.card}>
         <div style={styles.profilePicture}>
-          <img
-            src={user.profilePicture || "https://via.placeholder.com/150"}
-            alt={`${user.name}'s profile`}
-            style={styles.image}
-          />
+         <img
+          src={user.profilePicture || require("../LoginPage/Images/male.jpg")}
+          alt={`${user.name || "User"}'s profile`}
+          style={styles.image}
+          onError={(e) => (e.target.src = require("../LoginPage/Images/male.jpg"))}
+        />
+
         </div>
         <h2 style={styles.heading}>
           {user.name} {user.surname}
