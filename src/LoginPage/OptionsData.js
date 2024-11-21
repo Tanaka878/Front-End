@@ -39,7 +39,7 @@ export default [
         "id": 6,
         "itemName": "PayPal",
         "val": true, // or false, depending on your requirement
-        "url": "Paypal.png",
+        "url": "pay.png",
         "textValue": "Top Up"
     },
     {
