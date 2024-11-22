@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const LoanHistory = () => {
+const LoanHistory = (props) => {
   const [loans, setLoans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -8,7 +8,7 @@ const LoanHistory = () => {
   useEffect(() => {
     const fetchLoans = async () => {
       try {
-        const response = await fetch('https://distinguished-happiness-production.up.railway.app/loans'); // Replace with your backend endpoint
+        const response = await fetch(`https://distinguished-happiness-production.up.railway.app/rest/loan/getLoanDetails/${props.Email}`); // Replace with your backend endpoint
         if (!response.ok) {
           throw new Error('Failed to fetch loans');
         }
