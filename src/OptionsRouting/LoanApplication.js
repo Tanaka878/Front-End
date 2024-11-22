@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const LoanApplication = (props) => {
   const [formData, setFormData] = useState({
+    email: props.Email,
     loanAmount: '',
     paybackPeriod: '',
     loanType: '',
@@ -27,8 +28,8 @@ const LoanApplication = (props) => {
       if (response.ok) {
         alert('Loan application submitted successfully');
         setFormData({
-          fullName: '',
-          email: '',
+          
+          email: props.Email,
           loanAmount: '',
           paybackPeriod: '',
           loanType: '',
