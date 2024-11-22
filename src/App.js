@@ -18,6 +18,8 @@ import Maps from './OptionsRouting/Maps';
 import AddressSearch from './OptionsRouting/AdressSearch';
 import LoanApplication from './OptionsRouting/LoanApplication';
 import Profile from './OptionsRouting/Profile';
+import LoanServices from './OptionsRouting/LoanServices';
+import LoanHistory from './OptionsRouting/LoanHistory';
 
 function App() {
 
@@ -130,7 +132,22 @@ function App() {
                                         AccountHolder={userDetails.AccountHolder}
                                         Email={userDetails.Email}/> 
                                     }
-                                        />
+          />
+
+          <Route exact path='/LoanServices' element={<LoanServices name={userDetails.name} 
+            bal={Math.trunc(userDetails.AccBalance)} 
+             AccountHolder={userDetails.AccountHolder}
+             Email={userDetails.Email}/> 
+                                              }
+          />
+
+         <Route exact path='/LoanHistory' element={<LoanHistory name={userDetails.name} 
+            bal={Math.trunc(userDetails.AccBalance)} 
+             AccountHolder={userDetails.AccountHolder}
+             Email={userDetails.Email}/> 
+                                              }
+          />
+
 
 
 
