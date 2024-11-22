@@ -8,7 +8,7 @@ const LoanHistory = () => {
   useEffect(() => {
     const fetchLoans = async () => {
       try {
-        const response = await fetch('http://localhost:8082/loans'); // Replace with your backend endpoint
+        const response = await fetch('https://distinguished-happiness-production.up.railway.app/loans'); // Replace with your backend endpoint
         if (!response.ok) {
           throw new Error('Failed to fetch loans');
         }

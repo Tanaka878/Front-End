@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const LoanApplication = () => {
+const LoanApplication = (props) => {
   const [formData, setFormData] = useState({
     loanAmount: '',
     paybackPeriod: '',
@@ -18,7 +18,7 @@ const LoanApplication = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8082/applyLoan', {
+      const response = await fetch('https://distinguished-happiness-production.up.railway.app/rest/loan/save/applyLoan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -44,8 +44,8 @@ const LoanApplication = () => {
 
   const handleCancel = () => {
     setFormData({
-      fullName: '',
-      email: '',
+     
+      email: props.Email,
       loanAmount: '',
       paybackPeriod: '',
       loanType: '',

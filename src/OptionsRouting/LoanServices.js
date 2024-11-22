@@ -13,18 +13,21 @@ const LoanServices = () => {
       <div className="content">
         <h1>Welcome to Loan Services</h1>
         <div className="options">
-          <button 
+ 
+
+        <button 
             className="option-button" 
             onClick={() => handleNavigation('/LoanApplication')}
           >
-            <img src="./Images/instantLoan" alt="Apply Icon" className="button-icon" />
-            Apply for a Loan
+            <img src="/Images/instantLoan.webp" alt="History Icon" className="button-icon" />
+            Apply Loan
           </button>
+
           <button 
             className="option-button" 
-            onClick={() => handleNavigation('/loanHistory')}
+            onClick={() => handleNavigation('/LoanHistory')}
           >
-            <img src="./Images/loanHistory" alt="History Icon" className="button-icon" />
+            <img src="/Images/loanHistory.png" alt="History Icon" className="button-icon" />
             View Loan History
           </button>
         </div>
@@ -50,6 +53,8 @@ const LoanServices = () => {
             justify-content: center;
             height: 100vh;
             padding: 20px;
+            margin-left:auto;
+            margin-right:auto;
           }
 
           .content {
