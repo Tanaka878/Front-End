@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 const LoanApplication = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
     loanAmount: '',
-    loanTerm: '',
+    paybackPeriod: '',
+    loanType: '',
   });
 
   const navigate = useNavigate();
@@ -31,7 +30,8 @@ const LoanApplication = () => {
           fullName: '',
           email: '',
           loanAmount: '',
-          loanTerm: '',
+          paybackPeriod: '',
+          loanType: '',
         });
       } else {
         alert('Failed to submit loan application');
@@ -47,33 +47,17 @@ const LoanApplication = () => {
       fullName: '',
       email: '',
       loanAmount: '',
-      loanTerm: '',
+      paybackPeriod: '',
+      loanType: '',
     });
-    navigate("/optionPage"); 
+    navigate('/optionPage');
   };
 
   return (
     <div className="loan-application-container">
-      
       <form onSubmit={handleSubmit} className="loan-application-form">
-      <h2>Loan Application</h2>
-        <label htmlFor="fullName">Full Name:</label>
-        <input
-          type="text"
-          name="fullName"
-          value={formData.fullName}
-          onChange={handleInputChange}
-          required
-        />
+        <h2>Loan Application</h2>
 
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          required
-        />
 
         <label htmlFor="loanAmount">Loan Amount:</label>
         <input
@@ -84,144 +68,165 @@ const LoanApplication = () => {
           required
         />
 
-        <label htmlFor="loanTerm">Loan Term (months):</label>
-        <input
-          type="number"
-          name="loanTerm"
-          value={formData.loanTerm}
+        <label htmlFor="paybackPeriod">Payback Period:</label>
+        <select
+          name="paybackPeriod"
+          value={formData.paybackPeriod}
           onChange={handleInputChange}
           required
-        />
+        >
+          <option value="">Select Payback Period</option>
+          <option value="3">3 Months</option>
+          <option value="9">9 Months</option>
+          <option value="12">12 Months</option>
+          <option value="12">1 Year</option>
+          <option value="84">7 Years</option>
+        </select>
+
+        <label htmlFor="loanType">Loan Type:</label>
+        <select
+          name="loanType"
+          value={formData.loanType}
+          onChange={handleInputChange}
+          required
+        >
+          <option value="">Select Loan Type</option>
+          <option value="PERSONAL_LOAN">Personal</option>
+          <option value="MORTGAGE_LOAN">Home</option>
+          <option value="AUTO_LOAN">Car</option>
+          <option value="STUDENT_LOAN">Education</option>
+        </select>
 
         <button type="submit" className="submit-button">Apply</button>
-        <button type="button" onClick={handleCancel} className="cancel-button">Cancel</button>
+        <button type="button" onClick={handleCancel} className="cancel-button">
+          Cancel
+        </button>
       </form>
 
       <style>
         {`
-          
- {
-  margin: 0;
-  padding:0;
-  box-sizing: border-box;
-}
+          /* Global Styles */
+          * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          }
 
+          html, body {
+            height: 100%;
+          }
 
-html, body {
-  height: 100%;
-}
+          .loan-application-container {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+          }
 
-.loan-application-container {
-  font-family: 'Roboto', sans-serif;
-  background-color: #f9f9f9;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
+          /* Form Styles */
+          .loan-application-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+          }
 
+          .loan-application-form h2 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+          }
 
-.loan-application-container h2 {
-  font-size: 28px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
-}
+          .loan-application-form label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: 700;
+            color: #555;
+            font-size: 18px;
+          }
 
-.loan-application-form {
-  background-color: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-}
+          .loan-application-form input,
+          .loan-application-form select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 18px;
+            margin-bottom: 20px;
+          }
 
-.loan-application-form label {
-  display: block;
-  margin: 15px 0 5px;
-  font-weight: 700;
-  color: #555;
-  font-size: 18px;
-}
+          .loan-application-form input:focus,
+          .loan-application-form select:focus {
+            border-color: #4CAF50;
+            outline: none;
+          }
 
+          /* Buttons */
+          .loan-application-form .submit-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 20px auto;
+          }
 
-.loan-application-form input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 18px;
-  margin-bottom: 20px;
-}
+          .loan-application-form .submit-button:hover {
+            background-color: #45a049;
+          }
 
-.loan-application-form input:focus {
-  border-color: #4CAF50;
-  outline: none;
-}
+          .loan-application-form .cancel-button {
+            background-color: #f44336;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 10px auto;
+          }
 
+          .loan-application-form .cancel-button:hover {
+            background-color: #d32f2f;
+          }
 
-.loan-application-form .submit-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: 700;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 20px auto;
-}
+          /* Responsive styling */
+          @media (max-width: 768px) {
+            .loan-application-container {
+              padding: 20px;
+            }
 
-.loan-application-form .submit-button:hover {
-  background-color: #45a049;
-}
+            .loan-application-form {
+              padding: 15px;
+              width: 90%;
+            }
 
-
-.loan-application-form .cancel-button {
-  background-color: #f44336;
-  color: white;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: 700;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 10px auto;
-}
-
-.loan-application-form .cancel-button:hover {
-  background-color: #d32f2f;
-}
-
-/* Responsive styling */
-@media (max-width: 768px) {
-  .loan-application-container {
-    padding: 20px;
-  }
-
-  .loan-application-form {
-    padding: 15px;
-    width: 90%;
-  }
-
-  .loan-application-form label,
-  .loan-application-form input,
-  .loan-application-form .submit-button,
-  .loan-application-form .cancel-button {
-    font-size: 16px;
-  }
-}
-
+            .loan-application-form label,
+            .loan-application-form input,
+            .loan-application-form select,
+            .loan-application-form .submit-button,
+            .loan-application-form .cancel-button {
+              font-size: 16px;
+            }
+          }
         `}
       </style>
     </div>
