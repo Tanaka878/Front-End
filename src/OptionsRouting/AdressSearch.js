@@ -6,7 +6,7 @@ const AddressSearch = () => {
 
   return (
     <div>
-      <Link to="/maps/optionPage">
+      <Link to="/optionPage">
         <button>Exit Navigation</button>
       </Link>
     </div>
