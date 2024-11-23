@@ -1,12 +1,19 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useNavigation } from 'react-router-dom';
 
 const LoanServices = () => {
   const navigate = useNavigate();
+  
 
   const handleNavigation = (path) => {
     navigate(path);
   };
+
+  function Home(){
+
+    navigate("/optionPage")
+    
+  }
 
   return (
     <div className="loan-options-container">
@@ -31,6 +38,8 @@ const LoanServices = () => {
             View Loan History
           </button>
         </div>
+
+        <button onClick={Home} className='option-button'>Home page</button>
       </div>
 
       <style>
@@ -84,6 +93,7 @@ const LoanServices = () => {
             align-items: center;
             justify-content: center;
             background-color: #4CAF50;
+            margin-top:20px;
             color: white;
             padding: 15px;
             font-size: 18px;
