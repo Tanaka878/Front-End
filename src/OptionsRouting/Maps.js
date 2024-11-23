@@ -6,7 +6,7 @@ const Maps = () => {
   const [atmLocation, setAtmLocation] = useState(null);
 
   const handleATMFound = (location) => {
-    console.log('Found location:', location);  // Log the location for debugging
+    console.log('Found location:', location);  
     setAtmLocation(location);
   };
 
