@@ -51,7 +51,7 @@ const LoanApplication = (props) => {
       paybackPeriod: '',
       loanType: '',
     });
-    navigate('/optionPage');
+    navigate('/LoanServices');
   };
 
   return (

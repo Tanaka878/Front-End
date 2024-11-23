@@ -27,7 +27,7 @@ const LoanHistory = (props) => {
   }, [props.Email]);
 
   const handleBack = () => {
-    navigate('/');
+    navigate('/LoanServices');
   };
 
   if (loading) {
