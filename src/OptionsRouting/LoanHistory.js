@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
+import PropTypes from 'prop-types';
 
 const LoanHistory = (props) => {
   const [loans, setLoans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const tableRef = useRef();
 
   useEffect(() => {
     const fetchLoans = async () => {
       try {
-        const response = await fetch(`https://distinguished-happiness-production.up.railway.app/rest/loan/getLoanDetails/${props.Email}`);
+        const response = await fetch(
+          `https://distinguished-happiness-production.up.railway.app/rest/loan/getLoanDetails/${props.Email}`
+        );
         if (!response.ok) {
           throw new Error('Failed to fetch loans');
         }
@@ -29,9 +35,59 @@ const LoanHistory = (props) => {
   const handleBack = () => {
     navigate('/LoanServices');
   };
-
+  const handleExportPDF = async () => {
+    const element = tableRef.current;
+    if (!element) {
+      console.error('Table container not found! Ensure loans are loaded.');
+      alert('No loan data available to export.');
+      return;
+    }
+  
+    // Temporarily adjust the styles to capture full content
+    const originalStyle = window.getComputedStyle(element);
+    const originalOverflow = originalStyle.overflow;
+    const originalHeight = originalStyle.height;
+    const originalWidth = originalStyle.width;
+  
+    element.style.overflow = 'visible'; // Ensure it is not clipped
+    element.style.height = 'auto'; // Ensure the table height is fully expanded
+    element.style.width = 'auto';  // Allow table to expand horizontally as well
+  
+    try {
+      // Capture the full content including both vertical and horizontal scrollable sections
+      const canvas = await html2canvas(element, { 
+        scale: 2,   // High resolution
+        useCORS: true,  // Ensure cross-origin resources are captured correctly
+        logging: false,
+        x: 0,
+        y: 0,
+        width: element.scrollWidth,  // Capture the full width
+        height: element.scrollHeight,  // Capture the full height
+        scrollX: 0,
+        scrollY: -window.scrollY,  // Adjust to capture the correct part of the element
+      });
+  
+      // Create a PDF and add the image of the table
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgData = canvas.toDataURL('image/png');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+  
+      pdf.addImage(imgData, 'PNG', 0, 10, pdfWidth, pdfHeight);
+      pdf.save('Loan_History.pdf');
+    } catch (err) {
+      console.error('Error generating PDF:', err);
+      alert('Failed to generate PDF. Please try again.');
+    } finally {
+      // Restore the original styles
+      element.style.overflow = originalOverflow;
+      element.style.height = originalHeight;
+      element.style.width = originalWidth;
+    }
+  };
+  
   if (loading) {
-    return <div className="loading">Loading loan history...</div>;
+    return <div className="loading" aria-live="polite">Loading loan history...</div>;
   }
 
   if (error) {
@@ -44,12 +100,19 @@ const LoanHistory = (props) => {
       <button className="back-button" onClick={handleBack}>
         Back to Home
       </button>
+
+      <button
+        className="export-button"
+        onClick={handleExportPDF}
+        disabled={loans.length === 0}
+      >
+        Download as PDF
+      </button>
+
       {loans.length === 0 ? (
-        //
-        
         <p>No loans found.</p>
       ) : (
-        <div className="table-container">
+        <div className="table-container" ref={tableRef}>
           <table className="loan-table">
             <thead>
               <tr>
@@ -123,7 +186,7 @@ const LoanHistory = (props) => {
           }
 
           .table-container {
-            overflow-x: auto; /* Enable horizontal scrolling for small screens */
+            overflow-x: auto;
           }
 
           .loan-table {
@@ -153,7 +216,6 @@ const LoanHistory = (props) => {
             background-color: #f1f1f1;
           }
 
-          /* Conditional styling for loan statuses */
           .status-pending {
             color: blue;
             font-weight: bold;
@@ -179,7 +241,6 @@ const LoanHistory = (props) => {
             color: red;
           }
 
-          /* Responsive styling */
           @media (max-width: 768px) {
             .loan-history-container {
               padding: 10px;
@@ -204,6 +265,10 @@ const LoanHistory = (props) => {
       </style>
     </div>
   );
+};
+
+LoanHistory.propTypes = {
+  Email: PropTypes.string.isRequired,
 };
 
 export default LoanHistory;
