@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const TransactionHistory = (props) => {
   const [transactions, setTransactions] = useState([]);
   const navigate = useNavigate();
+  const tableRef = useRef();
 
   const goToHome = () => {
     navigate("/optionPage");
@@ -23,10 +26,79 @@ const TransactionHistory = (props) => {
     fetchTransactions();
   }, [props.Email]);
 
+  const handleExportPDF = async () => {
+    const element = tableRef.current;
+    if (!element) {
+      console.error('Table container not found! Ensure transactions are loaded.');
+      alert('No transaction data available to export.');
+      return;
+    }
+
+    // Temporarily adjust the styles to capture full content
+    const originalStyle = window.getComputedStyle(element);
+    const originalOverflow = originalStyle.overflow;
+    const originalHeight = originalStyle.height;
+    const originalWidth = originalStyle.width;
+
+    element.style.overflow = 'visible'; // Ensure it is not clipped
+    element.style.height = 'auto'; // Ensure the table height is fully expanded
+    element.style.width = 'auto';  // Allow table to expand horizontally as well
+
+    try {
+      // Capture the full content including both vertical and horizontal scrollable sections
+      const canvas = await html2canvas(element, { 
+        scale: 2,   // High resolution
+        useCORS: true,  // Ensure cross-origin resources are captured correctly
+        logging: false,
+        x: 0,
+        y: 0,
+        width: element.scrollWidth,  // Capture the full width
+        height: element.scrollHeight,  // Capture the full height
+        scrollX: 0,
+        scrollY: -window.scrollY,  // Adjust to capture the correct part of the element
+      });
+
+      // Create a PDF and add the image of the table
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgData = canvas.toDataURL('image/png');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 10, pdfWidth, pdfHeight);
+      pdf.save('Transaction_History.pdf');
+    } catch (err) {
+      console.error('Error generating PDF:', err);
+      alert('Failed to generate PDF. Please try again.');
+    } finally {
+      // Restore the original styles
+      element.style.overflow = originalOverflow;
+      element.style.height = originalHeight;
+      element.style.width = originalWidth;
+    }
+  };
+
   return (
+    
     <div style={styles.transactionHistory}>
       <h2 style={styles.heading}>Transaction History</h2>
-      <div style={styles.tableContainer}>
+      
+      <nav style={{display:'flex'}}>
+      <button style={styles.button} onClick={goToHome}>
+        Home
+      </button>
+
+      <button 
+        style={styles.button} 
+        onClick={handleExportPDF} 
+        disabled={transactions.length === 0}
+      >
+        Download as PDF
+      </button>
+
+
+      </nav>
+     
+      <div style={styles.tableContainer} ref={tableRef}>
         <table style={styles.table}>
           <thead>
             <tr>
@@ -60,10 +132,6 @@ const TransactionHistory = (props) => {
           </tbody>
         </table>
       </div>
-      
-      <button style={styles.button} onClick={goToHome}>
-        Home
-      </button>
     </div>
   );
 };
