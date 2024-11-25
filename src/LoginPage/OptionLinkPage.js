@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import OptionPage from './OptionPage';
 import OptionsData from './OptionsData';
 import { useNavigate } from 'react-router-dom';
@@ -6,13 +7,14 @@ import { useNavigate } from 'react-router-dom';
 const OptionLinkPage = (props) => {
     const infoArray = OptionsData;
     const navigate = useNavigate();
+    const [balance, setBalance] = useState(props.bal);
 
     let d = infoArray.map(function(item) {
         return (
             <OptionPage
                 key={item.id}  // Add a key to avoid React warnings
                 SelectionId={item.id}
-                bal={item.itemName}
+                bal={balance}
                 value={item.val}
                 i={item.url}
                 text={item.textValue}
@@ -48,10 +50,19 @@ const OptionLinkPage = (props) => {
         }
     }
 
+    // Separate fetchBalance function
+  const fetchBalance = async () => {
+    try {
+      const response = await fetch(`https://distinguished-happiness-production.up.railway.app/banking/getBalance/${props.Email}`);
+      const updatedBalance = await response.text();
+      setBalance(updatedBalance);
+    } catch (error) {
+      console.error("Failed to fetch balance:", error);
+    }
+  };
     // Function to handle logout
     const handleLogout = () => {
-        // You can clear any session or localStorage data if necessary
-        // localStorage.removeItem("userData");  // Example if user data is stored in localStorage
+        
         navigate('/');  // Redirect to home page
     };
 
@@ -60,7 +71,7 @@ const OptionLinkPage = (props) => {
             <nav className="OptionDivHeader">
                 <h6>NAME: {props.name}</h6>
                 <h5>ACCOUNT HOLDER: {props.AccountHolder}</h5>
-                <h5>ACCOUNT BALANCE: {props.bal}</h5>
+                <h5>ACCOUNT BALANCE: {balance}</h5>
             </nav>
 
             <div className="optionDivs">

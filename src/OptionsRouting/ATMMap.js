@@ -123,7 +123,7 @@ const ATMMap = () => {
         )}
       </div>
 
-      <LoadScript googleMapsApiKey="AIzaSyCik3ghDcozLzhHMyCfMmOlOUSwTR79420">
+      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
         <GoogleMap
           mapContainerStyle={{ width: '100%', height: '100%' }}
           center={currentLocation || { lat: 0, lng: 0 }}
