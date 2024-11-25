@@ -8,60 +8,58 @@ const FeesPayment = (props) => {
   const [feesData, setFeesData] = useState({
     schoolAccount: "",
     amount: "",
-    bankName: "FBC" // Set a default value if desired
+    bankName: "FBC", // Default bank name
   });
 
-  const [conditionalRender, setConditionalRender] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  function sendTransactionDetails() {
-    const objectToSend = {
-      accountHolder: props.AccountHolder,
-      receiver: feesData.schoolAccount,
-      amount: feesData.amount,
-      bankName: feesData.bankName,
-    };
-
-    fetch(`http://localhost:8082/receiveHistory`, {
-      method: "POST",
-      body: JSON.stringify(objectToSend),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-    .then(response => response.text())
-    .then(data => alert(data))
-    .catch(error => console.error("Error sending transaction:", error));
-  }
-
-  function updateUserDetails() {
-    fetch(`http://localhost:8082/${props.AccountHolder}?balance=${feesData.amount}`, {
-      method: "PUT",
-      body: JSON.stringify(feesData),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-    .catch(error => console.error("Error updating user details:", error));
-  }
-
+  // Handle input changes
   function handleFormChange(event) {
     const { name, value } = event.target;
-    setFeesData(prev => ({
+    setFeesData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   }
 
+  // Handle form submission
   function handleSubmit(event) {
     event.preventDefault();
 
-    if (feesData.amount > props.bal) {
-      setConditionalRender(true);
-    } else if (feesData.schoolAccount.length > 4 && feesData.amount <= props.bal) {
-      navigate('/optionPage');
-      sendTransactionDetails();
-      updateUserDetails();
+    if (parseFloat(feesData.amount) > props.bal) {
+      setErrorMessage("Insufficient funds.");
+      return;
     }
+
+    if (feesData.schoolAccount.length < 5) {
+      setErrorMessage("Invalid school account number.");
+      return;
+    }
+
+    setErrorMessage(null); // Clear any previous error messages
+
+    // Construct the URL with path variables
+    const url = `https://distinguished-happiness-production.up.railway.app/banking/payFees/${props.Email}/${feesData.schoolAccount}/${feesData.amount}/${feesData.bankName}`;
+
+    // Make the POST request
+    fetch(url, {
+      method: "POST",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.text();
+        } else {
+          throw new Error("Transaction failed.");
+        }
+      })
+      .then((data) => {
+        alert(data); // Success message
+        navigate("/optionPage");
+      })
+      .catch((error) => {
+        console.error("Error processing payment:", error);
+        setErrorMessage("Transaction failed. Please try again.");
+      });
   }
 
   return (
@@ -74,7 +72,7 @@ const FeesPayment = (props) => {
       <nav style={styles.feesHeader}>
         <small>Account Holder: {props.name}</small>
         <hr />
-        <small>Remaining Balance: {props.bal}</small>
+        <small>Remaining Balance: ${props.bal.toFixed(2)}</small>
       </nav>
 
       <form onSubmit={handleSubmit} style={styles.feesSubmitForm}>
@@ -93,6 +91,7 @@ const FeesPayment = (props) => {
           <input
             placeholder="Enter Amount"
             name="amount"
+            type="number"
             onChange={handleFormChange}
             style={styles.input}
           />
@@ -115,14 +114,14 @@ const FeesPayment = (props) => {
         <button type="submit" style={styles.button}>Transact</button>
       </form>
 
-      {conditionalRender && (
-        <nav style={styles.error}>Insufficient funds</nav>
+      {errorMessage && (
+        <nav style={styles.error}>{errorMessage}</nav>
       )}
 
       <Link to="/optionPage" style={styles.homeLink}>Home Page</Link>
     </div>
   );
-}
+};
 
 const styles = {
   container: {
@@ -136,32 +135,32 @@ const styles = {
     padding: '20px',
     backgroundColor: '#f9f9f9',
     borderRadius: '10px',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
   },
   header: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   image: {
     width: '100%',
-    maxWidth: '200px'
+    maxWidth: '200px',
   },
   feesHeader: {
     width: '100%',
     marginTop: '10px',
     fontSize: '1.2em',
-    color: '#555'
+    color: '#555',
   },
   feesSubmitForm: {
     width: '100%',
-    marginTop: '20px'
+    marginTop: '20px',
   },
   feesNav: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
-    marginBottom: '15px'
+    marginBottom: '15px',
   },
   input: {
     width: '100%',
@@ -169,7 +168,7 @@ const styles = {
     fontSize: '1em',
     borderRadius: '5px',
     border: '1px solid #ccc',
-    marginTop: '5px'
+    marginTop: '5px',
   },
   button: {
     backgroundColor: '#4CAF50',
@@ -180,18 +179,18 @@ const styles = {
     borderRadius: '5px',
     cursor: 'pointer',
     width: '100%',
-    marginTop: '15px'
+    marginTop: '15px',
   },
   error: {
     color: 'red',
     marginTop: '15px',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   homeLink: {
     marginTop: '20px',
     color: '#007BFF',
-    textDecoration: 'none'
-  }
-}
+    textDecoration: 'none',
+  },
+};
 
 export default FeesPayment;

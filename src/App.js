@@ -64,10 +64,12 @@ function App() {
         <Routes>
         <Route exact path='/' element={<LoginPage getDetails={User}/>}/>
          <Route exact path='/optionPage' element={<OptionLinkPage name={userDetails.name}
-         bal={Math.trunc(userDetails.AccBalance)} AccountHolder={userDetails.AccountHolder} />}/>
+         bal={Math.trunc(userDetails.AccBalance)} AccountHolder={userDetails.AccountHolder}
+         Email={userDetails.Email} />}/>
          
          <Route exact path='/feesPayment' element={<FeesPayment name={userDetails.name}
-         bal={Math.trunc(userDetails.AccBalance)} AccountHolder={userDetails.AccountHolder}/>}/>
+         bal={Math.trunc(userDetails.AccBalance)} AccountHolder={userDetails.AccountHolder}
+         Email={userDetails.Email} />}/>
 
         <Route exact path='/buyAirTime' element={<BuyAirTime name={userDetails.name}
          bal={Math.trunc(userDetails.AccBalance)} AccountHolder={userDetails.AccountHolder}/>}/>
