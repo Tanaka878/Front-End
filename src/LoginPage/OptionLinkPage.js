@@ -74,7 +74,7 @@ const OptionLinkPage = (props) => {
                 <h5>ACCOUNT BALANCE: {balance}</h5>
             </nav>
 
-            <div className="optionDivs">
+            <div className="optionDivs" style={{padding:"30px"}}>
                 {d}
             </div>
 
