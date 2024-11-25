@@ -66,10 +66,28 @@ const OptionLinkPage = (props) => {
         navigate('/');  // Redirect to home page
     };
 
+    ///finding a greeting to pass to the user
+    function getGreeting() {
+        const now = new Date();
+        const hours = now.getHours(); // Get the current hour (0-23)
+      
+        if (hours >= 5 && hours < 12) {
+          return "Good Morning";
+        } else if (hours >= 12 && hours < 18) {
+          return "Good Afternoon";
+        } else if (hours >= 18 && hours < 22) {
+          return "Good Evening";
+        } else {
+          return "Good Night"; // Late night greeting (optional)
+        }
+      }
+      
+      const greeting = getGreeting();
+
     return (
         <div className="optionPageContainer">
             <nav className="OptionDivHeader">
-                <h6>NAME: {props.name}</h6>
+                <h2>{greeting} {props.name}</h2>
                 <h5>ACCOUNT HOLDER: {props.AccountHolder}</h5>
                 <h5>ACCOUNT BALANCE: {balance}</h5>
             </nav>
