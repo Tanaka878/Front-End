@@ -13,6 +13,13 @@ import TopUp from './OptionsRouting/TopUp';
 import ResetPassword from './OptionsRouting/ResetPassword'
 import ChangePassword from './OptionsRouting/ChangePassword';
 import TransactionHistory from './OptionsRouting/TransactionHistory';
+import ATMMap from './OptionsRouting/ATMMap';
+import Maps from './OptionsRouting/Maps';
+import AddressSearch from './OptionsRouting/AdressSearch';
+import LoanApplication from './OptionsRouting/LoanApplication';
+import Profile from './OptionsRouting/Profile';
+import LoanServices from './OptionsRouting/LoanServices';
+import LoanHistory from './OptionsRouting/LoanHistory';
 
 function App() {
 
@@ -100,6 +107,49 @@ function App() {
                         Email={userDetails.Email}/> 
                     }
                         />
+
+        <Route exact path='/ATM Finder' element={<ATMMap /> 
+                    }
+                        />
+
+        <Route exact path='/Maps' element={<Maps /> 
+                    }
+                        />
+
+        <Route exact path='/AdressSearch' element={<AddressSearch /> 
+                            }
+                                        />
+
+        <Route exact path='/LoanApplication' element={<LoanApplication name={userDetails.name} 
+                                bal={Math.trunc(userDetails.AccBalance)} 
+                                AccountHolder={userDetails.AccountHolder}
+                                Email={userDetails.Email}/> 
+                            }
+                                />
+
+        <Route exact path='/Profile' element={<Profile name={userDetails.name} 
+                                        bal={Math.trunc(userDetails.AccBalance)} 
+                                        AccountHolder={userDetails.AccountHolder}
+                                        Email={userDetails.Email}/> 
+                                    }
+          />
+
+          <Route exact path='/LoanServices' element={<LoanServices name={userDetails.name} 
+            bal={Math.trunc(userDetails.AccBalance)} 
+             AccountHolder={userDetails.AccountHolder}
+             Email={userDetails.Email}/> 
+                                              }
+          />
+
+         <Route exact path='/LoanHistory' element={<LoanHistory name={userDetails.name} 
+            bal={Math.trunc(userDetails.AccBalance)} 
+             AccountHolder={userDetails.AccountHolder}
+             Email={userDetails.Email}/> 
+                                              }
+          />
+
+
+
 
 
          

@@ -34,7 +34,7 @@ const ChangePassword = ({ Email }) => {
     try {
       const response = await axios.post(
         `https://distinguished-happiness-production.up.railway.app/customer/changePassword/${Email}/${formData.newPassword}`,
-        {}, // Axios requires an empty object as the body for POST without data
+        {}, 
         {
           headers: {
             "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const ChangePassword = ({ Email }) => {
 
       if (response.status === 200) {
         setSuccessMessage("Password changed successfully!");
-        navigate('/'); // Redirect to login or another page
+        navigate('/'); 
       }
     } catch (err) {
       if (err.response && err.response.status === 404) {
@@ -62,23 +62,30 @@ const ChangePassword = ({ Email }) => {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      height: '100vh',
+      minHeight: '100vh',
+      width: '100%',
       fontFamily: 'Roboto, sans-serif',
       backgroundColor: '#f9f9f9',
-      marginLeft:"400px"
+      padding: '20px',
     },
-    form: {
-      width: '300px',
+    formContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '100%',
+      maxWidth: '400px',
       padding: '20px',
       borderRadius: '10px',
       boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
       backgroundColor: '#fff',
       textAlign: 'center',
+      margin: '0 auto',
     },
     heading: {
       fontSize: '24px',
       marginBottom: '20px',
       color: '#333',
+      textAlign: 'center',
     },
     label: {
       display: 'block',
@@ -103,11 +110,12 @@ const ChangePassword = ({ Email }) => {
       border: 'none',
       borderRadius: '5px',
       cursor: 'pointer',
+      transition: 'background-color 0.3s ease',
     },
     message: {
       marginTop: '10px',
       fontSize: '14px',
-      color: error ? 'red' : 'green',
+      color: 'red',
     },
     navButton: {
       marginTop: '15px',
@@ -120,43 +128,46 @@ const ChangePassword = ({ Email }) => {
       cursor: 'pointer',
     }
   };
+  
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.heading}>Change Password</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <div>
-          <label htmlFor="newPassword" style={styles.label}>New Password:</label>
-          <input
-            type="password"
-            name="newPassword"
-            required
-            onChange={handleChange}
-            value={formData.newPassword}
-            style={styles.input}
-          />
-        </div>
+      <div style={styles.formContainer}>
+        <h2 style={styles.heading}>Change Password</h2>
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <div>
+            <label htmlFor="newPassword" style={styles.label}>New Password:</label>
+            <input
+              type="password"
+              name="newPassword"
+              required
+              onChange={handleChange}
+              value={formData.newPassword}
+              style={styles.input}
+            />
+          </div>
 
-        <div>
-          <label htmlFor="confirmPassword" style={styles.label}>Confirm New Password:</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            required
-            onChange={handleChange}
-            value={formData.confirmPassword}
-            style={styles.input}
-          />
-        </div>
+          <div>
+            <label htmlFor="confirmPassword" style={styles.label}>Confirm New Password:</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              required
+              onChange={handleChange}
+              value={formData.confirmPassword}
+              style={styles.input}
+            />
+          </div>
 
-        {error && <div style={{ ...styles.message, color: 'red' }}>{error}</div>}
-        {successMessage && <div style={{ ...styles.message, color: 'green' }}>{successMessage}</div>}
+          {error && <div style={{ ...styles.message, color: 'red' }}>{error}</div>}
+          {successMessage && <div style={{ ...styles.message, color: 'green' }}>{successMessage}</div>}
 
-        <button type="submit" style={styles.button}>Change Password</button>
-      </form>
-      <button style={styles.navButton} onClick={() => navigate('/')}>
-        Back to Home
-      </button>
+          <button type="submit" style={styles.button}>Change Password</button>
+        </form>
+        <button style={styles.navButton} onClick={() => navigate('/optionPage')}>
+          Back to Home
+        </button>
+      </div>
     </div>
   );
 };

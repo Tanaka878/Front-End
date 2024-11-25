@@ -12,7 +12,7 @@ export default [
         "itemName": "feesImage",
         "val": false,
         "url": "PayFees.png",
-        "textValue": "PAY FEES"
+        "textValue": "Pay Fees"
     },
     {
         "id": 3,
@@ -39,14 +39,44 @@ export default [
         "id": 6,
         "itemName": "PayPal",
         "val": true, // or false, depending on your requirement
-        "url": "Paypal.png",
+        "url": "pay.png",
         "textValue": "Top Up"
     },
     {
         "id": 7,
         "itemName": "Change Password",
         "val": true, // or false, depending on your requirement
-        "url": "pay.png",
+        "url": "passwordchange.webp",
         "textValue": "Change Password"
+    },
+
+    {
+        "id": 8,
+        "itemName": "ATM Finder",
+        "val": true, 
+        "url": "location.jpg",
+        "textValue": "ATM Finder"
     }
+
+    ,
+
+    {
+        "id": 9,
+        "itemName": "Instant Loan",
+        "val": true, 
+        "url": "instantLoan.webp",
+        "textValue": "Instant Loan"
+    }
+    , {
+        "id": 10,
+        "itemName": "Profile",
+        "val": true, 
+        "url": "prof.png",
+        "textValue": "Profile"
+    }
+
+   
+
+
+
 ];

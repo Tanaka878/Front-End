@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const NewUser = () => {
-  const navigate = useNavigate(); // Move useNavigate to the top for better visibility
+  const navigate = useNavigate(); 
 
   const [user, changeUser] = React.useState({
     firstName: "",
@@ -10,7 +10,9 @@ const NewUser = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    accountType: "" // Include account type in the state
+    accountType: "", 
+    gender:""
+
   });
 
   function handleChange(event) {
@@ -41,7 +43,8 @@ const NewUser = () => {
       surname: user.lastName,
       email: user.email,
       password: user.password,
-      accountType: user.accountType // Include account type in the data sent
+      accountType: user.accountType ,// Include account type in the data sent
+      gender:user.gender
     };
 
     fetch(`https://distinguished-happiness-production.up.railway.app/customer/createAccount`, {
@@ -74,6 +77,16 @@ const NewUser = () => {
           <label htmlFor='lastName'>Last Name:</label>
           <input name='lastName' required onChange={handleChange} />
         </div>
+
+        <div className="formElement">
+            <label htmlFor="gender">Gender:</label>
+            <select name="gender" required onChange={handleChange} defaultValue="">
+              <option value="" disabled>Select Gender</option>
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </div>
 
         <div className='formElement'>
           <label htmlFor='email'>Email:</label>
