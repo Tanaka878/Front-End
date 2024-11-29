@@ -22,7 +22,7 @@ const TopUp = (props) => {
   function handleTopUp(event) {
     event.preventDefault();
 
-    fetch(`https://distinguished-happiness-production.up.railway.app/banking/top-up/${props.Email}/${topUp.amount}/${topUp.number}`, {
+    fetch(`https://distinguished-happiness-production.up.railway.app/banking/topUp/${props.Email}/${topUp.amount}/${topUp.number}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
