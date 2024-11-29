@@ -72,7 +72,8 @@ function App() {
          Email={userDetails.Email} />}/>
 
         <Route exact path='/buyAirTime' element={<BuyAirTime name={userDetails.name}
-         bal={Math.trunc(userDetails.AccBalance)} AccountHolder={userDetails.AccountHolder}/>}/>
+         bal={Math.trunc(userDetails.AccBalance)} AccountHolder={userDetails.AccountHolder}
+         Email={userDetails.Email}/>}/>
 
         <Route exact path='/ZIPIT' element={<InterBankTransfer name={userDetails.name}
          bal={Math.trunc(userDetails.AccBalance)} AccountHolder={userDetails.AccountHolder}/>}/> 

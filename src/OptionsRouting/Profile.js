@@ -116,22 +116,22 @@ const styles = {
     padding: "20px",
     boxSizing: "border-box",
     marginLeft: "auto",
-    marginRight: "auto", // Ensure padding doesn't affect layout
+    marginRight: "auto", 
   },
   logout: {
     display: "inline-block",
     marginBottom: "20px",
-    padding: "12px 24px", // Increased padding for better proportions
-    fontSize: "14px", // Larger font for better readability
-    fontWeight: "bold", // Adds emphasis to the text
-    color: "white", // Keeps the text color white for contrast
-    backgroundColor: "#e53935", // A more vibrant red
-    border: "none", // No border for a clean look
-    borderRadius: "25px", // Rounded edges for a softer look
-    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow for depth
+    padding: "12px 24px", 
+    fontSize: "14px", 
+    fontWeight: "bold", 
+    color: "white", 
+    backgroundColor: "#e53935", 
+    border: "none", 
+    borderRadius: "25px", 
+    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", 
     cursor: "pointer",
     marginLeft: "20px",
-    transition: "all 0.3s ease", // Applies transition to multiple properties
+    transition: "all 0.3s ease", 
   },
   loader: {
     width: "50px",
@@ -147,8 +147,8 @@ const styles = {
     borderRadius: "12px",
     boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 123, 255, 0.5)",
     maxWidth: "400px",
-    width: "100%", // Take full width of the screen
-    minHeight: "90vh", // Make the card fill most of the screen on mobile
+    width: "100%", 
+    minHeight: "90vh", 
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

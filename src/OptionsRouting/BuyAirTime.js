@@ -43,7 +43,7 @@ const BuyAirTime = (props) => {
 
     if (amount > balance) {
       changeConditionalRender(true);
-    } else if (phoneNumber.length === 9) {
+    } else if (phoneNumber.length >9) {
       buyAirtimeTransaction();
     }
   }
@@ -80,11 +80,11 @@ const BuyAirTime = (props) => {
       </div>
 
       <div className="account-info">
-        <small>Account Holder: {props.name}</small>
+        <h1>Account Holder: {props.name}</h1>
         <br />
-        <small>Account Number: {props.AccountHolder}</small>
+        <h2>Account Number: {props.AccountHolder}</h2>
         <br />
-        <small>Remaining Balance: ${balance}</small>
+        <h2> ${balance}</h2>
       </div>
 
       <form onSubmit={handleSubmit} className="buy-airtime-form">
