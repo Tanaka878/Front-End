@@ -8,10 +8,8 @@ const Profile = (props) => {
   const [showPassword, setShowPassword] = useState(false); // Toggle password visibility
   const nav = useNavigate();
 
-  function Home(){
-   
-    nav("/optionPage")
-
+  function Home() {
+    nav("/optionPage");
   }
 
   // Fetch data from the backend
@@ -56,13 +54,12 @@ const Profile = (props) => {
     <div style={styles.container}>
       <div style={styles.card}>
         <div style={styles.profilePicture}>
-         <img
-          src={user.profilePicture || require("../LoginPage/Images/male.jpg")}
-          alt={`${user.name || "User"}'s profile`}
-          style={styles.image}
-          onError={(e) => (e.target.src = require("../LoginPage/Images/male.jpg"))}
-        />
-
+          <img
+            src={user.profilePicture || require("../LoginPage/Images/male.jpg")}
+            alt={`${user.name || "User"}'s profile`}
+            style={styles.image}
+            onError={(e) => (e.target.src = require("../LoginPage/Images/male.jpg"))}
+          />
         </div>
         <h2 style={styles.heading}>
           {user.name} {user.surname}
@@ -95,11 +92,16 @@ const Profile = (props) => {
 
           <hr></hr>
 
-          <button onClick={Home} className="logout">Home</button>
-          
+          <button
+            onClick={Home}
+            style={styles.logout}
+            onMouseEnter={(e) => (e.target.style.backgroundColor = "#d32f2f")}
+            onMouseLeave={(e) => (e.target.style.backgroundColor = "#e53935")}
+          >
+            Home
+          </button>
         </div>
       </div>
-      
     </div>
   );
 };
@@ -117,17 +119,19 @@ const styles = {
     marginRight: "auto", // Ensure padding doesn't affect layout
   },
   logout: {
-    backgroundColor: "#f44336",
-    color: "white",
-    border: "none",
-    padding: "12px 24px",
+    display: "inline-block",
+    marginBottom: "20px",
+    padding: "12px 24px", // Increased padding for better proportions
+    fontSize: "14px", // Larger font for better readability
+    fontWeight: "bold", // Adds emphasis to the text
+    color: "white", // Keeps the text color white for contrast
+    backgroundColor: "#e53935", // A more vibrant red
+    border: "none", // No border for a clean look
+    borderRadius: "25px", // Rounded edges for a softer look
+    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow for depth
     cursor: "pointer",
-    fontSize: "1.25rem",
-    transition: "background-color 0.3s ease",
-    borderRadius: "15px",
-  },
-  logoutHover: {
-    backgroundColor: "#41bf71",
+    marginLeft: "20px",
+    transition: "all 0.3s ease", // Applies transition to multiple properties
   },
   loader: {
     width: "50px",
@@ -184,20 +188,5 @@ const styles = {
     cursor: "pointer",
   },
 };
-
-// Add CSS keyframes for the loader animation
-const globalStyles = document.createElement("style");
-globalStyles.innerHTML = `
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  button.logout:hover {
-    background-color: #d32f2f;
-  }
-`;
-document.head.appendChild(globalStyles);
-
-document.head.appendChild(globalStyles);
 
 export default Profile;
