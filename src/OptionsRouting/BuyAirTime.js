@@ -13,7 +13,7 @@ const BuyAirTime = (props) => {
   const [conditionalRender, changeConditionalRender] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Separate fetchBalance function
+  
   const fetchBalance = async () => {
     try {
       const response = await fetch(`https://distinguished-happiness-production.up.railway.app/banking/getBalance/${props.Email}`);
@@ -25,7 +25,7 @@ const BuyAirTime = (props) => {
   };
 
   useEffect(() => {
-    // Fetch balance initially and when props.AccountHolder changes
+    
     fetchBalance();
   }, [props.AccountHolder]);
 
@@ -62,7 +62,7 @@ const BuyAirTime = (props) => {
         alert(data);
         if (data.includes("successful")) {
           nav('/optionPage');
-          fetchBalance();  // Re-fetch balance after a successful transaction
+          fetchBalance();  
         }
       })
       .catch(error => {

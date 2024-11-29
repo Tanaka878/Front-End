@@ -8,7 +8,7 @@ const OptionLinkPage = (props) => {
     const navigate = useNavigate();
     const [balance, setBalance] = useState(props.bal);
 
-    // Fetch balance from the endpoint
+    
     const fetchBalance = async () => {
         try {
             const response = await fetch(`https://distinguished-happiness-production.up.railway.app/banking/getBalance/${props.Email}`);
@@ -23,14 +23,14 @@ const OptionLinkPage = (props) => {
         }
     };
 
-    // UseEffect to fetch balance on mount
+   
     useEffect(() => {
         fetchBalance();
-    }, []); // Empty dependency array ensures this runs only once on component mount
+    }, []); 
 
     const d = infoArray.map((item) => (
         <OptionPage
-            key={item.id} // Add a key to avoid React warnings
+            key={item.id} 
             SelectionId={item.id}
             bal={balance}
             value={item.val}
@@ -59,15 +59,15 @@ const OptionLinkPage = (props) => {
         }
     }
 
-    // Function to handle logout
+   
     const handleLogout = () => {
-        navigate('/'); // Redirect to home page
+        navigate('/');
     };
 
-    // Get a greeting based on the time of day
+    
     function getGreeting() {
         const now = new Date();
-        const hours = now.getHours(); // Get the current hour (0-23)
+        const hours = now.getHours(); 
 
         if (hours >= 5 && hours < 12) {
             return "Good Morning";
@@ -76,7 +76,7 @@ const OptionLinkPage = (props) => {
         } else if (hours >= 18 && hours < 22) {
             return "Good Evening";
         } else {
-            return "Good Night"; // Late-night greeting
+            return "Good Night"; 
         }
     }
 
@@ -147,22 +147,22 @@ const OptionLinkPage = (props) => {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 20px;
         width: 100%;
-        max-width: 900px; /* Further increased max-width for larger screens */
+        max-width: 900px; 
         justify-items: center;
         align-items: center;
     }
 
     .optionDivs > div {
         background-color: #ffffff;
-        padding: 12px; /* Increased padding for extra space */
+        padding: 12px; 
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 150px; /* Slightly larger width */
-        height: 150px; /* Slightly larger height */
+        width: 150px; 
+        height: 150px;
         text-align: center;
         font-size: 14px;
         transition: transform 0.3s ease;
@@ -171,7 +171,7 @@ const OptionLinkPage = (props) => {
     }
 
     .optionDivs > div img {
-        max-width: 65px; /* Adjusted for larger container */
+        max-width: 65px; 
         max-height: 65px;
         margin-bottom: 8px;
         object-fit: contain;
@@ -182,7 +182,7 @@ const OptionLinkPage = (props) => {
         font-size: 13px;
         text-align: center;
         line-height: 1.2;
-        white-space: normal; /* Ensures text wraps within the container */
+        white-space: normal; 
         overflow-wrap: break-word;
         word-break: break-word;
     }

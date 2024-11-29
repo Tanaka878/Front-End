@@ -43,31 +43,29 @@ const LoanHistory = (props) => {
       return;
     }
   
-    // Temporarily adjust the styles to capture full content
+   
     const originalStyle = window.getComputedStyle(element);
     const originalOverflow = originalStyle.overflow;
     const originalHeight = originalStyle.height;
     const originalWidth = originalStyle.width;
   
-    element.style.overflow = 'visible'; // Ensure it is not clipped
-    element.style.height = 'auto'; // Ensure the table height is fully expanded
-    element.style.width = 'auto';  // Allow table to expand horizontally as well
+    element.style.overflow = 'visible'; 
+    element.style.height = 'auto'; 
+    element.style.width = 'auto'; 
   
     try {
-      // Capture the full content including both vertical and horizontal scrollable sections
       const canvas = await html2canvas(element, { 
-        scale: 2,   // High resolution
-        useCORS: true,  // Ensure cross-origin resources are captured correctly
+        scale: 2,  
+        useCORS: true,  
         logging: false,
         x: 0,
         y: 0,
-        width: element.scrollWidth,  // Capture the full width
-        height: element.scrollHeight,  // Capture the full height
+        width: element.scrollWidth,  
+        height: element.scrollHeight,  
         scrollX: 0,
-        scrollY: -window.scrollY,  // Adjust to capture the correct part of the element
+        scrollY: -window.scrollY,  
       });
   
-      // Create a PDF and add the image of the table
       const pdf = new jsPDF('p', 'mm', 'a4');
       const imgData = canvas.toDataURL('image/png');
       const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -79,7 +77,7 @@ const LoanHistory = (props) => {
       console.error('Error generating PDF:', err);
       alert('Failed to generate PDF. Please try again.');
     } finally {
-      // Restore the original styles
+      
       element.style.overflow = originalOverflow;
       element.style.height = originalHeight;
       element.style.width = originalWidth;

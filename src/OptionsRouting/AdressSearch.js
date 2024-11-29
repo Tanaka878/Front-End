@@ -7,8 +7,9 @@ const AddressSearch = () => {
   return (
     <div>
       <Link to="/optionPage">
-        <button>Exit Navigation</button>
+        <button style={{borderRadius:'10px', }}>Exit Navigation</button>
       </Link>
+      
     </div>
   );
 };

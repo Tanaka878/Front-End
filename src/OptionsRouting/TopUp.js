@@ -9,7 +9,7 @@ const TopUp = (props) => {
     amount: ''
   });
 
-  // Handle form input changes
+  
   function handleChange(event) {
     const { name, value } = event.target;
     setTopUp((prevData) => ({
@@ -18,7 +18,6 @@ const TopUp = (props) => {
     }));
   }
 
-  // Handle the top-up form submission
   function handleTopUp(event) {
     event.preventDefault();
 

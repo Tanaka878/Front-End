@@ -17,35 +17,35 @@ export default [
     {
         "id": 3,
         "itemName": "phone",
-        "val": true, // or false, depending on your requirement
+        "val": true, 
         "url": "phone.png",
         "textValue": "BUY AIRTIME"
     },
     {
         "id": 4,
         "itemName": "Cash",
-        "val": true, // or false, depending on your requirement
+        "val": true, 
         "url": "Money.png",
         "textValue": "ZIP IT TRANSFER"
     },
     {
         "id": 5,
         "itemName": "Bills",
-        "val": true, // or false, depending on your requirement
+        "val": true, 
         "url": "paying.webp",
         "textValue": "Bill Payments"
     },
     {
         "id": 6,
         "itemName": "PayPal",
-        "val": true, // or false, depending on your requirement
+        "val": true, 
         "url": "pay.png",
         "textValue": "Top Up"
     },
     {
         "id": 7,
         "itemName": "Change Password",
-        "val": true, // or false, depending on your requirement
+        "val": true, 
         "url": "passwordchange.webp",
         "textValue": "Change Password"
     },

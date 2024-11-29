@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Profile = (props) => {
-  const [user, setUser] = useState(null); // State to hold user data
-  const [loading, setLoading] = useState(true); // State for loading indicator
-  const [error, setError] = useState(null); // State for error handling
-  const [showPassword, setShowPassword] = useState(false); // Toggle password visibility
+  const [user, setUser] = useState(null); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const nav = useNavigate();
 
   function Home() {
     nav("/optionPage");
   }
 
-  // Fetch data from the backend
+ 
   useEffect(() => {
     const fetchUser = async () => {
       try {

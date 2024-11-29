@@ -25,7 +25,7 @@ const NewUser = () => {
   }
 
   function cancelCreateAccount() {
-    navigate("/"); // Back to home page
+    navigate("/"); 
   }
 
   function handleSubmit(event) {
@@ -33,7 +33,7 @@ const NewUser = () => {
 
     if (user.password !== user.confirmPassword) {
       console.log("The passwords do not match");
-      return; // Prevent further processing
+      return; 
     } 
 
     console.log("Submitted Information");
@@ -43,7 +43,7 @@ const NewUser = () => {
       surname: user.lastName,
       email: user.email,
       password: user.password,
-      accountType: user.accountType ,// Include account type in the data sent
+      accountType: user.accountType ,
       gender:user.gender
     };
 
