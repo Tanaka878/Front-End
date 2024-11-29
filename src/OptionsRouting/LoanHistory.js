@@ -102,7 +102,7 @@ const LoanHistory = (props) => {
       </button>
 
       <button
-        className="export-button"
+        className="back-button"
         onClick={handleExportPDF}
         disabled={loans.length === 0}
       >
@@ -178,6 +178,7 @@ const LoanHistory = (props) => {
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-left:20px;
             transition: background-color 0.3s ease;
           }
 
