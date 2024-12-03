@@ -19,14 +19,14 @@ export default [
         "itemName": "phone",
         "val": true, 
         "url": "phone.png",
-        "textValue": "BUY AIRTIME"
+        "textValue": "Buy Airtime"
     },
     {
         "id": 4,
         "itemName": "Cash",
         "val": true, 
         "url": "Money.png",
-        "textValue": "ZIP IT TRANSFER"
+        "textValue": "ZIPIT Transfer"
     },
     {
         "id": 5,
