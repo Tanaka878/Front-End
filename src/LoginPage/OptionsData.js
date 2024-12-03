@@ -32,7 +32,7 @@ export default [
         "id": 5,
         "itemName": "Bills",
         "val": true, 
-        "url": "paying.webp",
+        "url": "paying.png",
         "textValue": "Bill Payments"
     },
     {
