@@ -6,7 +6,11 @@ import React from 'react'
 const OptionPage = (props) => {
   return (
     <div className='optionPage' 
-    onClick={()=>props.click(props.SelectionId)}>
+    onClick={()=>props.click(props.SelectionId)}
+    style={{
+      boxShadow: '0 0 10px 0 rgba(52, 105, 191)'
+
+    }}>
       
       <img
   src={require(`./Images/${props.i}`)}
