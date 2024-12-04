@@ -12,8 +12,12 @@ const NewUser = () => {
     confirmPassword: "",
     accountType: "", 
     gender:""
-
   });
+
+  const [emailError, setEmailError] = React.useState("");
+
+  // Regex for basic email validation
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   function handleChange(event) {
     const { name, value, type } = event.target;
@@ -22,6 +26,15 @@ const NewUser = () => {
       ...prev,
       [name]: type === 'checkbox' ? event.target.checked : value
     }));
+
+    // Email validation on change
+    if (name === 'email') {
+      if (!emailRegex.test(value)) {
+        setEmailError("Please enter a valid email address.");
+      } else {
+        setEmailError("");
+      }
+    }
   }
 
   function cancelCreateAccount() {
@@ -31,10 +44,17 @@ const NewUser = () => {
   function handleSubmit(event) {
     event.preventDefault();
 
+    // Check if passwords match
     if (user.password !== user.confirmPassword) {
       console.log("The passwords do not match");
       return; 
     } 
+
+    // If email is invalid, prevent submission
+    if (emailError) {
+      console.log("Please correct the email address");
+      return;
+    }
 
     console.log("Submitted Information");
 
@@ -43,8 +63,8 @@ const NewUser = () => {
       surname: user.lastName,
       email: user.email,
       password: user.password,
-      accountType: user.accountType ,
-      gender:user.gender
+      accountType: user.accountType,
+      gender: user.gender
     };
 
     fetch(`https://distinguished-happiness-production.up.railway.app/customer/createAccount`, {
@@ -54,9 +74,9 @@ const NewUser = () => {
         "Content-Type": "application/json; charset=UTF-8",
       },
     })
-      .then(response => response.text())
-      .then(data => alert(data))
-      .catch(err => console.error('Error:', err));
+    .then(response => response.text())
+    .then(data => alert(data))
+    .catch(err => console.error('Error:', err));
   }
 
   return (
@@ -79,18 +99,26 @@ const NewUser = () => {
         </div>
 
         <div className="formElement">
-            <label htmlFor="gender">Gender:</label>
-            <select name="gender" required onChange={handleChange} defaultValue="">
-              <option value="" disabled>Select Gender</option>
-              <option value="MALE">Male</option>
-              <option value="FEMALE">Female</option>
-              <option value="OTHER">Other</option>
-            </select>
-          </div>
+          <label htmlFor="gender">Gender:</label>
+          <select name="gender" required onChange={handleChange} defaultValue="">
+            <option value="" disabled >Select Gender</option>
+            <option value="MALE">Male</option>
+            <option value="FEMALE">Female</option>
+            <option value="OTHER">Other</option>
+          </select>
+        </div>
 
         <div className='formElement'>
           <label htmlFor='email'>Email:</label>
-          <input type='email' required onChange={handleChange} name='email' />
+          <input
+            type='email'
+            name='email'
+            required
+            onChange={handleChange}
+            value={user.email}
+            placeholder="Enter your email"
+          />
+          {emailError && <span style={{ color: 'red' }}>{emailError}</span>}
         </div>
 
         <div className='formElement'>
