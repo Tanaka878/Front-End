@@ -124,6 +124,9 @@ const BuyAirTime = (props) => {
       )}
 
       <Link to="/optionPage" className="home-link">Home Page</Link>
+      <footer className='NewUserFooter'>
+        <small>Accute Banking Services 2024 &copy; All rights reserved</small>
+      </footer>
 
       <style>
         {`

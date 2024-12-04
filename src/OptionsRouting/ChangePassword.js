@@ -167,6 +167,9 @@ const ChangePassword = ({ Email }) => {
         <button style={styles.navButton} onClick={() => navigate('/optionPage')}>
           Back to Home
         </button>
+        <footer className='NewUserFooter'>
+        <small>Accute Banking Services 2024 &copy; All rights reserved</small>
+      </footer>
       </div>
     </div>
   );

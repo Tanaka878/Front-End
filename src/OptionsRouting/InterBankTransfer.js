@@ -105,6 +105,9 @@ const InterBankTransfer = (props) => {
       )}
 
       <Link to={'/optionPage'} style={styles.homeLink}>Home Page</Link>
+      <footer className='NewUserFooter'>
+        <small>Accute Banking Services 2024 &copy; All rights reserved</small>
+      </footer>
     </div>
   );
 }

@@ -100,6 +100,9 @@ const Profile = (props) => {
           >
             Home
           </button>
+          <footer className='NewUserFooter'>
+        <small>Accute Banking Services 2024 &copy; All rights reserved</small>
+      </footer>
         </div>
       </div>
     </div>

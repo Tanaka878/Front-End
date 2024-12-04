@@ -102,6 +102,9 @@ const PayBills = ({ AccountHolder, bal }) => {
       </form>
 
       <Link to="/OptionPage">Home Page</Link>
+      <footer className='NewUserFooter'>
+        <small>Accute Banking Services 2024 &copy; All rights reserved</small>
+      </footer>
 
       <style>
         {`

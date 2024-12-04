@@ -74,6 +74,9 @@ const TopUp = (props) => {
       </form>
 
       <button onClick={() => navigate('/optionPage')} className="back-button">Back to Home</button>
+      <footer className='NewUserFooter'>
+        <small>Accute Banking Services 2024 &copy; All rights reserved</small>
+      </footer>
 
       <style>
         {`

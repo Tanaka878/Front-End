@@ -102,6 +102,9 @@ const LoanApplication = (props) => {
         <button type="button" onClick={handleCancel} className="cancel-button">
           Cancel
         </button>
+        <footer className='NewUserFooter'>
+        <small>Accute Banking Services 2024 &copy; All rights reserved</small>
+      </footer>
       </form>
 
       <style>

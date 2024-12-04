@@ -145,6 +145,9 @@ const LoanHistory = (props) => {
               ))}
             </tbody>
           </table>
+          <footer className='NewUserFooter'>
+        <small>Accute Banking Services 2024 &copy; All rights reserved</small>
+      </footer>
         </div>
       )}
 

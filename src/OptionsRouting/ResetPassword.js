@@ -55,6 +55,9 @@ const ResetPassword = () => {
             <br></br>
             
             <button onClick={LoginPage}>Home</button>
+            <footer className='NewUserFooter'>
+        <small>Accute Banking Services 2024 &copy; All rights reserved</small>
+      </footer>
             {responseMessage && (
                 <div className="response-message">{responseMessage}</div>
             )}

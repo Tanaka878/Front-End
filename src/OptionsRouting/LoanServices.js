@@ -40,6 +40,9 @@ const LoanServices = () => {
         </div>
 
         <button onClick={Home} className='option-button'>Home page</button>
+        <footer className='NewUserFooter'>
+        <small>Accute Banking Services 2024 &copy; All rights reserved</small>
+      </footer>
       </div>
 
       <style>
