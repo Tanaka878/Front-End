@@ -8,7 +8,7 @@ const OptionPage = (props) => {
     <div className='optionPage' 
     onClick={()=>props.click(props.SelectionId)}
     style={{
-      boxShadow: '0 0 10px 0 rgba(52, 105, 191)'
+      boxShadow: '0 0 12px 1px rgba(52, 105, 191)'
 
     }}>
       
