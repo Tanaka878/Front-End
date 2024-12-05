@@ -55,7 +55,7 @@ const InterBankTransfer = (props) => {
 
     if (InterBankData.amount > balance) {
       changeConditionalRender(true);
-    } else if (InterBankData.AccountNumber.length > 3 && InterBankData.amount <= balance) {
+    } else if (InterBankData.AccountNumber.length > 9 && InterBankData.amount <= balance) {
       sendTransactionDetails();
     } else {
       console.error('Invalid receiver details');
@@ -78,7 +78,7 @@ const InterBankTransfer = (props) => {
       <form onSubmit={handleSubmit} style={styles.feesSubmitForm}>
         <div style={styles.feesNav}>
           <label htmlFor='AccountNumber'>Receiver Account:</label>
-          <input placeholder='0780001324' name='AccountNumber' onChange={handleFormChange} style={styles.input} />
+          <input placeholder='0780001324' name='AccountNumber' onChange={handleFormChange} style={styles.input} minLength={10} maxLength={20} />
         </div>
 
         <div style={styles.feesNav}>
@@ -92,7 +92,7 @@ const InterBankTransfer = (props) => {
 
         <div style={styles.feesNav}>
           <label htmlFor='amount'>Amount:</label>
-          <input placeholder='Enter Amount' name='amount' onChange={handleFormChange} style={styles.input} />
+          <input placeholder='Enter Amount' name='amount' onChange={handleFormChange} style={styles.input} minLength={1}/>
         </div>
 
         <div>

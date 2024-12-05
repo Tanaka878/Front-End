@@ -67,6 +67,7 @@ const LoanApplication = (props) => {
           value={formData.loanAmount}
           onChange={handleInputChange}
           required
+          minLength={20}
         />
 
         <label htmlFor="paybackPeriod">Payback Period:</label>
@@ -75,6 +76,7 @@ const LoanApplication = (props) => {
           value={formData.paybackPeriod}
           onChange={handleInputChange}
           required
+          
         >
           <option value="">Select Payback Period</option>
           <option value="3">3 Months</option>

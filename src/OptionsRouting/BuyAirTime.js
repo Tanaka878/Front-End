@@ -97,6 +97,7 @@ const BuyAirTime = (props) => {
             pattern="\d{9}"
             value={AirTimeData.phoneNumber}
             onChange={handleFormChange}
+            minLength={7}
             className="input"
           />
         </div>
@@ -110,6 +111,7 @@ const BuyAirTime = (props) => {
             min="0"
             value={AirTimeData.amount}
             onChange={handleFormChange}
+            minLength={1}
             className="input"
           />
         </div>

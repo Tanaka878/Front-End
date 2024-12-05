@@ -144,6 +144,7 @@ const ChangePassword = ({ Email }) => {
               onChange={handleChange}
               value={formData.newPassword}
               style={styles.input}
+              minLength={4}
             />
           </div>
 
@@ -156,6 +157,7 @@ const ChangePassword = ({ Email }) => {
               onChange={handleChange}
               value={formData.confirmPassword}
               style={styles.input}
+              minLength={4}
             />
           </div>
 

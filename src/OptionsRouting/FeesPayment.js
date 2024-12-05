@@ -31,7 +31,7 @@ const FeesPayment = (props) => {
       return;
     }
 
-    if (feesData.schoolAccount.length < 5) {
+    if (feesData.schoolAccount.length < 8) {
       setErrorMessage("Invalid school account number.");
       return;
     }
@@ -83,6 +83,8 @@ const FeesPayment = (props) => {
             name="schoolAccount"
             onChange={handleFormChange}
             style={styles.input}
+            minLength={9}
+            maxLength={20}
           />
         </div>
 
@@ -94,6 +96,7 @@ const FeesPayment = (props) => {
             type="number"
             onChange={handleFormChange}
             style={styles.input}
+            minLength={1}
           />
         </div>
 

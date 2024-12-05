@@ -57,6 +57,7 @@ const NewUser = () => {
     }
 
     console.log("Submitted Information");
+    
 
     const objectToSend = {
       name: user.firstName,
@@ -73,10 +74,14 @@ const NewUser = () => {
       headers: {
         "Content-Type": "application/json; charset=UTF-8",
       },
+      
     })
     .then(response => response.text())
     .then(data => alert(data))
     .catch(err => console.error('Error:', err));
+
+    navigate("/"); 
+
   }
 
   return (

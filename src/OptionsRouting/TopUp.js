@@ -48,13 +48,15 @@ const TopUp = (props) => {
       <form onSubmit={handleTopUp} className="topup-form">
         <h1>Top Up Account with Ecocash</h1>
         
-        <label htmlFor="ecocashNumber">Ecocash Number:</label>
+        <label htmlFor="ecocashNumber">Phone Number:</label>
         <input
-          type="text"
+          type="number"
           name="number"
           value={topUp.number}
           onChange={handleChange}
           placeholder="Enter phone number"
+          minLength={7}
+          maxLength={12}
           className="topup-input"
         />
         <br />
@@ -66,6 +68,7 @@ const TopUp = (props) => {
           value={topUp.amount}
           onChange={handleChange}
           placeholder="Enter Amount"
+          minLength={1}
           className="topup-input"
         />
         <br />
