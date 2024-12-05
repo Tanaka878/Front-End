@@ -132,12 +132,12 @@ const NewUser = () => {
         <div className='formElement'>
           <h2>Enter New Password</h2>
           <label>New Password</label>
-          <input type='password' required onChange={handleChange} name='password' />
+          <input type='password' required onChange={handleChange} name='password' minLength={4}/>
         </div>
 
         <div className='formElement'>
           <label>Confirm Password:</label>
-          <input type='password' required onChange={handleChange} name='confirmPassword' />
+          <input type='password' required onChange={handleChange} name='confirmPassword' minLength={4} />
         </div>
 
         <div className='formElement'>

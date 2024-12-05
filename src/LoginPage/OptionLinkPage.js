@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import OptionPage from './OptionPage';
 import OptionsData from './OptionsData';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +9,15 @@ const OptionLinkPage = (props) => {
     const infoArray = OptionsData;
     const navigate = useNavigate();
     const [balance, setBalance] = useState(props.bal);
+    const [isHidden, setIsHidden] = useState(false);
+
+
+     // Format the account number
+     const formatAccountNumber = (accountNumber) => {
+        if (!accountNumber) return "";
+        const accountStr = accountNumber.toString().padStart(10, "0");
+        return `${accountStr.substring(0, 3)}-${accountStr.substring(3, 6)}-${accountStr.substring(6)}`;
+    };
 
     
     const fetchBalance = async () => {
@@ -86,8 +97,17 @@ const OptionLinkPage = (props) => {
         <div className="optionPageContainer">
             <nav className="OptionDivHeader">
                 <h2>{greeting} {props.name}</h2>
-                <h5>ACCOUNT HOLDER: {props.AccountHolder}</h5>
-                <h5>ACCOUNT BALANCE: {balance}</h5>
+                <div>
+            <h5>
+                ACCOUNT NUMBER: {isHidden ? "****-***-****" : formatAccountNumber(props.AccountHolder)}
+                <FontAwesomeIcon
+                    icon={isHidden ? faEye : faEyeSlash}
+                    style={{ marginLeft: "10px", cursor: "pointer" }}
+                    onClick={() => setIsHidden(!isHidden)}
+                />
+            </h5>
+        </div>
+                <h5> {balance}</h5>
                 <button className="refresh-btn" onClick={fetchBalance}>Refresh Balance</button>
             </nav>
 

@@ -170,7 +170,7 @@ const LoginPage = (props) => {
             <div className='loginContainer'>
                 <form onSubmit={submitButton} className='loginPage'>
                     <img src={accuteImage} alt="bank logo" height={150} width={300} />
-                    <h1 className='LoginHeader'>Welcome To Accute Banking Online Services</h1>
+                    <h1 className='LoginHeader'>Accute Banking Online Services</h1>
 
                     <label htmlFor='AccountNumber'>Email Account:</label>
                     <input
