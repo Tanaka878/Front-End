@@ -1,6 +1,8 @@
 import React from 'react';
 import accuteImage from './Images/accute.jpg';
 import { Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 
 const LoginPage = (props) => {
     const navigate = useNavigate();
@@ -11,6 +13,10 @@ const LoginPage = (props) => {
 
     const [userData, setUserData] = React.useState(null);
     const [conditionalRender, changeConditionalRender] = React.useState(false);
+
+    // State to track if the user has started typing
+    const [isTypingEmail, setIsTypingEmail] = React.useState(false);
+    const [isTypingPassword, setIsTypingPassword] = React.useState(false);
 
     async function submitButton(event) {
         event.preventDefault();
@@ -39,10 +45,19 @@ const LoginPage = (props) => {
     }
 
     function handleChange(event) {
+        const { name, value } = event.target;
         setEnteredValues(prevData => ({
             ...prevData,
-            [event.target.name]: event.target.value
+            [name]: value
         }));
+
+        // Track if the user is typing in the email or password input
+        if (name === "accountNumber") {
+            setIsTypingEmail(value.length > 0);
+        }
+        if (name === "Pin") {
+            setIsTypingPassword(value.length > 0);
+        }
     }
 
     return (
@@ -94,7 +109,7 @@ const LoginPage = (props) => {
 
                     .loginPage input {
                         width: 100%;
-                        padding: 10px;
+                        padding: 10px 10px 10px 40px; /* Adjust padding for icon */
                         font-size: 1em;
                         margin-top: 8px;
                         border: 1px solid #ddd;
@@ -173,24 +188,50 @@ const LoginPage = (props) => {
                     <h1 className='LoginHeader'>Accute Banking Online Services</h1>
 
                     <label htmlFor='AccountNumber'>Email Account:</label>
-                    <input
-                        type='text'
-                        id='AccountNumber'
-                        name='accountNumber'
-                        placeholder='Email Account'
-                        onChange={handleChange}
-                    />
+                    <div style={{ position: "relative" }}>
+                        {!isTypingEmail && (
+                            <FontAwesomeIcon 
+                                icon={faEnvelope} 
+                                style={{
+                                    position: "absolute",
+                                    left: "10px",
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    color: "#888",
+                                }} 
+                            />
+                        )}
+                        <input
+                            type='text'
+                            id='AccountNumber'
+                            name='accountNumber'
+                            onChange={handleChange}
+                        />
+                    </div>
 
                     <br /><br />
 
                     <label htmlFor='pinNumber'>Password:</label>
-                    <input
-                        type='password'
-                        id='pinNumber'
-                        placeholder='Enter Password'
-                        name='Pin'
-                        onChange={handleChange}
-                    />
+                    <div style={{ position: "relative" }}>
+                        {!isTypingPassword && (
+                            <FontAwesomeIcon 
+                                icon={faLock} 
+                                style={{
+                                    position: "absolute",
+                                    left: "10px",
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    color: "#888",
+                                }} 
+                            />
+                        )}
+                        <input
+                            type='password'
+                            id='pinNumber'
+                            name='Pin'
+                            onChange={handleChange}
+                        />
+                    </div>
 
                     {conditionalRender && <nav className='conditionalRender'>Wrong Credentials</nav>}
 
