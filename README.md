@@ -135,5 +135,5 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## Contact
 
 For any inquiries or contributions, please contact:
-- **Email**: support@accutebanking.com
-- **Website**: [Accute Banking](https://www.accutebanking.com)
+- **Email**: musungaretanaka@gmail.com
+- **Website**: [Accute Banking](https://front-end-gray-one.vercel.app/)
