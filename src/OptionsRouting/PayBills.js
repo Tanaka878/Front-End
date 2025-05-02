@@ -96,6 +96,7 @@ const PayBills = ({ AccountHolder, bal }) => {
           placeholder="Amount $"
           value={transactionData.amountTobePayed}
           onChange={handleInputChange}
+          minLength={1}
         />
 
         <button type="submit" className="pay-bills">Transact</button>
