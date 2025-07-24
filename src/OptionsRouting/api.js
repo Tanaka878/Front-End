@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://distinguished-happiness-production.up.railway.app'
+  baseURL: 'https://accutebanking.thetalisman.co.zw'
 });
 
 export default api;
