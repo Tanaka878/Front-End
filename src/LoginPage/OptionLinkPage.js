@@ -4,6 +4,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import OptionPage from './OptionPage';
 import OptionsData from './OptionsData';
 import { useNavigate } from 'react-router-dom';
+import { baseURL } from '../OptionsRouting/api';
 
 const OptionLinkPage = (props) => {
     const infoArray = OptionsData;
@@ -21,8 +22,11 @@ const OptionLinkPage = (props) => {
 
     
     const fetchBalance = async () => {
+
+        console.log("Fetching balance for email:", localStorage.getItem("email"));
+
         try {
-            const response = await fetch(`https://distinguished-happiness-production.up.railway.app/banking/getBalance/${props.Email}`);
+            const response = await fetch(`${baseURL}/banking/getBalance/${props.Email}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

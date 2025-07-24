@@ -2,6 +2,7 @@
 import React from 'react';
 import feesPayment from './Images/Money.png';
 import { Link, useNavigate } from 'react-router-dom';
+import { baseURL } from './api';
 
 const InterBankTransfer = (props) => {
   const nav = useNavigate();
@@ -22,7 +23,7 @@ const InterBankTransfer = (props) => {
       bankName: InterBankData.bankType
     };
 
-    fetch("https://distinguished-happiness-production.up.railway.app/banking/interbankTransfer", {
+    fetch(`${baseURL}/banking/interbankTransfer`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

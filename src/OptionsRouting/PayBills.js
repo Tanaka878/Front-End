@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import BillImage from './Images/paying.webp';
 import { Link } from 'react-router-dom';
+import { baseURL } from './api';
 
 const PayBills = ({ AccountHolder, bal }) => {
   const [transactionData, setTransactionData] = useState({
@@ -14,7 +15,7 @@ const PayBills = ({ AccountHolder, bal }) => {
   async function payBillsTransaction() {
     try {
       const response = await fetch(
-        `https://distinguished-happiness-production.up.railway.app/banking/payBills/${AccountHolder}/${transactionData.receiverOption}/${transactionData.amountTobePayed}`, 
+        `${baseURL}/banking/payBills/${AccountHolder}/${transactionData.receiverOption}/${transactionData.amountTobePayed}`, 
         {
           method: "POST",
           headers: {

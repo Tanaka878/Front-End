@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { baseURL } from "./api";
 
 const Profile = (props) => {
   const [user, setUser] = useState(null); 
@@ -17,7 +18,7 @@ const Profile = (props) => {
     const fetchUser = async () => {
       try {
         const response = await fetch(
-          `https://distinguished-happiness-production.up.railway.app/customer/getProfile/${props.Email}`
+          `${baseURL}/customer/getProfile/${props.Email}`
         );
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);

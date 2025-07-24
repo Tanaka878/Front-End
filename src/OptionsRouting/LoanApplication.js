@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { baseURL } from './api';
 
 const LoanApplication = (props) => {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ const LoanApplication = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://distinguished-happiness-production.up.railway.app/rest/loan/save/applyLoan', {
+      const response = await fetch(`${baseURL}/rest/loan/save/applyLoan`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker, InfoWindow, DirectionsRenderer } from '@react-google-maps/api';
+import { baseURL } from './api';
 
 const ATMMap = () => {
   const [atmLocations, setAtmLocations] = useState([]);
@@ -21,7 +22,7 @@ const ATMMap = () => {
           const { latitude, longitude } = position.coords;
           setCurrentLocation({ lat: latitude, lng: longitude });
 
-          fetch(`https://distinguished-happiness-production.up.railway.app/api/atm/find?latitude=${latitude}&longitude=${longitude}`)
+          fetch(`${baseURL}/api/atm/find?latitude=${latitude}&longitude=${longitude}`)
             .then((response) => response.json())
             .then((data) => setAtmLocations(data.results))
             .catch((error) => console.error('Error fetching ATM locations:', error));
@@ -37,7 +38,7 @@ const ATMMap = () => {
     const origin = `${currentLocation.lat},${currentLocation.lng}`;
     const destination = `${lat},${lng}`;
 
-    fetch(`https://distinguished-happiness-production.up.railway.app/api/atm/distance?origin=${origin}&destination=${destination}`)
+    fetch(`${baseURL}/api/atm/distance?origin=${origin}&destination=${destination}`)
       .then((response) => response.json())
       .then((data) => {
         setDistance(data.rows[0].elements[0].distance.text);

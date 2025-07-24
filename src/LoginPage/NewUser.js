@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { baseURL } from '../OptionsRouting/api';
 
 const NewUser = () => {
   const navigate = useNavigate(); 
@@ -68,7 +69,7 @@ const NewUser = () => {
       gender: user.gender
     };
 
-    fetch(`https://accutebanking.thetalisman.co.zw/customer/createAccount`, {
+    fetch(`${baseURL}/customer/createAccount`, {
       method: "POST",
       body: JSON.stringify(objectToSend),
       headers: {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import feesPayment from './Images/phone.png';
 import { Link, useNavigate } from 'react-router-dom';
+import { baseURL } from './api';
 
 const BuyAirTime = (props) => {
   const nav = useNavigate();
@@ -16,7 +17,7 @@ const BuyAirTime = (props) => {
   
   const fetchBalance = async () => {
     try {
-      const response = await fetch(`https://distinguished-happiness-production.up.railway.app/banking/getBalance/${props.Email}`);
+      const response = await fetch(`${baseURL}/banking/getBalance/${props.Email}`);
       const updatedBalance = await response.text();
       setBalance(updatedBalance);
     } catch (error) {
@@ -50,7 +51,7 @@ const BuyAirTime = (props) => {
 
   function buyAirtimeTransaction() {
     setIsSubmitting(true);
-    fetch(`https://distinguished-happiness-production.up.railway.app/banking/buyAirtime/${props.AccountHolder}/${AirTimeData.phoneNumber}/${AirTimeData.amount}`, {
+    fetch(`${baseURL}/banking/buyAirtime/${props.AccountHolder}/${AirTimeData.phoneNumber}/${AirTimeData.amount}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json; charset=UTF-8",

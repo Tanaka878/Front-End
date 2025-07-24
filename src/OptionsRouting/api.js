@@ -1,7 +1,10 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://accutebanking.thetalisman.co.zw'
+  baseURL: 'http://localhost:8082'
 });
 
 export default api;
+
+
+export const baseURL = 'http://localhost:8082';

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { baseURL } from './api';
 
 const ChangePassword = ({ Email }) => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const ChangePassword = ({ Email }) => {
 
     try {
       const response = await axios.post(
-        `https://distinguished-happiness-production.up.railway.app/customer/changePassword/${Email}/${formData.newPassword}`,
+        `${baseURL}/customer/changePassword/${Email}/${formData.newPassword}`,
         {}, 
         {
           headers: {

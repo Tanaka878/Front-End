@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { baseURL } from './api';
 
 const ResetPassword = () => {
     const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ const ResetPassword = () => {
         event.preventDefault(); // Prevent default form submission
         
         try {
-            const response = await fetch(`https://distinguished-happiness-production.up.railway.app/customer/resetPassword/${encodeURIComponent(email)}`, {
+            const response = await fetch(`${baseURL}/customer/resetPassword/${encodeURIComponent(email)}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

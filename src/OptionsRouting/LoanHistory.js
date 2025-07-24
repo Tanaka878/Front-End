@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import PropTypes from 'prop-types';
+import { baseURL } from './api';
 
 const LoanHistory = (props) => {
   const [loans, setLoans] = useState([]);
@@ -15,7 +16,7 @@ const LoanHistory = (props) => {
     const fetchLoans = async () => {
       try {
         const response = await fetch(
-          `https://distinguished-happiness-production.up.railway.app/rest/loan/getLoanDetails/${props.Email}`
+          `${baseURL}/rest/loan/getLoanDetails/${props.Email}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch loans');

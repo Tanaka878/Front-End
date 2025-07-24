@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import feesPayment from './Images/PayFees.png';
 import { Link, useNavigate } from 'react-router-dom';
+import { baseURL } from './api';
 
 const FeesPayment = (props) => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const FeesPayment = (props) => {
     setErrorMessage(null); // Clear any previous error messages
 
     // Construct the URL with path variables
-    const url = `https://distinguished-happiness-production.up.railway.app/banking/payFees/${props.Email}/${feesData.schoolAccount}/${feesData.amount}/${feesData.bankName}`;
+    const url = `${baseURL}/banking/payFees/${props.Email}/${feesData.schoolAccount}/${feesData.amount}/${feesData.bankName}`;
 
     // Make the POST request
     fetch(url, {

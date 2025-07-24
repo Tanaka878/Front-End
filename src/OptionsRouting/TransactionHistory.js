@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import { baseURL } from './api';
 
 const TransactionHistory = (props) => {
   const [transactions, setTransactions] = useState([]);
@@ -16,7 +17,7 @@ const TransactionHistory = (props) => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get(`https://distinguished-happiness-production.up.railway.app/transactionHistory/history/${props.Email}`);
+        const response = await axios.get(`${baseURL}/transactionHistory/history/${props.Email}`);
         setTransactions(response.data);
       } catch (error) {
         console.error('Error fetching transaction data:', error);

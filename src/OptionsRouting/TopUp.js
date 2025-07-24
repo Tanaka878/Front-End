@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { baseURL } from './api';
 
 const TopUp = (props) => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const TopUp = (props) => {
   function handleTopUp(event) {
     event.preventDefault();
 
-    fetch(`https://distinguished-happiness-production.up.railway.app/banking/topUp/${props.Email}/${topUp.amount}/${topUp.number}`, {
+    fetch(`${baseURL}/banking/topUp/${props.Email}/${topUp.amount}/${topUp.number}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json; charset=UTF-8",

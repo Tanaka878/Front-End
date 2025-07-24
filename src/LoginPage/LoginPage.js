@@ -3,6 +3,7 @@ import accuteImage from './Images/accute.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
+import api, { baseURL } from '../OptionsRouting/api';
 
 const LoginPage = (props) => {
     const navigate = useNavigate();
@@ -22,12 +23,15 @@ const LoginPage = (props) => {
         event.preventDefault();
 
         try {
-            const response = await fetch(`https://accutebanking.thetalisman.co.zw/customer/${enteredValues.accountNumber}`);
+            // Remove encodeURIComponent since fetch will handle encoding
+        const email = enteredValues.accountNumber;
+        const response = await fetch(`${baseURL}/customer/${email}`);
             const data = await response.json();
 
             if (data) {
                 setUserData(data);
                 const userEmail = data.email;
+                localStorage.setItem('email', userEmail);
 
                 if (data.password === enteredValues.Pin) {
                     props.getDetails(data.name, data.balance, data.accountNumber, userEmail);
