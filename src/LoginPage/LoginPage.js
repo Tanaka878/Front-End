@@ -22,7 +22,7 @@ const LoginPage = (props) => {
         event.preventDefault();
 
         try {
-            const response = await fetch(`https://distinguished-happiness-production.up.railway.app/customer/${enteredValues.accountNumber}`);
+            const response = await fetch(`https://accutebanking.thetalisman.co.zw/customer/${enteredValues.accountNumber}`);
             const data = await response.json();
 
             if (data) {

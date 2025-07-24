@@ -68,7 +68,7 @@ const NewUser = () => {
       gender: user.gender
     };
 
-    fetch(`https://distinguished-happiness-production.up.railway.app/customer/createAccount`, {
+    fetch(`https://accutebanking.thetalisman.co.zw/customer/createAccount`, {
       method: "POST",
       body: JSON.stringify(objectToSend),
       headers: {
