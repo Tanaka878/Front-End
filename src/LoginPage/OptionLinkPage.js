@@ -20,18 +20,22 @@ const OptionLinkPage = (props) => {
         return `${accountStr.substring(0, 3)}-${accountStr.substring(3, 6)}-${accountStr.substring(6)}`;
     };
 
-    
     const fetchBalance = async () => {
+        const email = localStorage.getItem("email");
+        if (!email) {
+            console.error("Email is missing in localStorage!");
+            return;
+        }
 
-        console.log("Fetching balance for email:", localStorage.getItem("email"));
+        console.log("Fetching balance for email:", email);
 
         try {
-            const response = await fetch(`${baseURL}/banking/getBalance/${props.Email}`);
+            const response = await fetch(`${baseURL}/banking/getBalance/${email}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const updatedBalance = await response.text();
-            console.log("The balanace :",updatedBalance);
+            console.log("The balance :", updatedBalance);
             setBalance(updatedBalance);
         } catch (error) {
             console.error("Failed to fetch balance:", error);
@@ -103,7 +107,7 @@ const OptionLinkPage = (props) => {
                 <h2>{greeting} {props.name}</h2>
                 <div>
             <h5>
-                ACCOUNT NUMBER: {isHidden ? "****-***-****" : formatAccountNumber(props.AccountHolder)}
+                ACCOUNT NUMBER: {isHidden ? "****-***-****" : formatAccountNumber(localStorage.getItem("accountNumber"))}
                 <FontAwesomeIcon
                     icon={isHidden ? faEye : faEyeSlash}
                     style={{ marginLeft: "10px", cursor: "pointer" }}

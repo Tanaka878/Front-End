@@ -23,7 +23,6 @@ const LoginPage = (props) => {
         event.preventDefault();
 
         try {
-            // Remove encodeURIComponent since fetch will handle encoding
         const email = enteredValues.accountNumber;
         const response = await fetch(`${baseURL}/customer/${email}`);
             const data = await response.json();
@@ -32,6 +31,7 @@ const LoginPage = (props) => {
                 setUserData(data);
                 const userEmail = data.email;
                 localStorage.setItem('email', userEmail);
+                localStorage.setItem('accountNumber', data.accountNumber);
 
                 if (data.password === enteredValues.Pin) {
                     props.getDetails(data.name, data.balance, data.accountNumber, userEmail);
